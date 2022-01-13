@@ -1,9 +1,9 @@
 # ConAction
 
-<img src="imgs/trinity_of_covariation.png" alt='Trinity of Interaction' width="300"/>
+<img src="imgs/trinity_of_covariation.png" alt='Trinity of Covariation' width="300"/>
 
 ## Project Description
-The ConAction library provides scientific functions that are developed from the metaphor of the Trinity of Interaction.
+The ConAction library provides scientific functions that are developed from the metaphor of the Trinity of Covariation.
 
 Supervisory Committee Members
 
@@ -16,8 +16,6 @@ Supervisory Committee Members
 The code in this repository is intended to support researchers analyzing multivariate data.
 
 For questions and comments contact the developer directly at: <seilis@unbc.ca>.
-
-This package is name after Sir Francis Galton whose intuitive thinking was pivotal in motivating the notion of statistical correlation. While Francis Galton had a tabular method of calculating correlation, and Auguste Bravais had previously developed an equivalent calculation before, it was Karl Pearson who formulated the product-moment correlation coefficient that bears his name.
 
 ## Installation
 ConAction is available through [PyPi](https://pypi.org/project/conaction/), and can be installed via `pip` using
