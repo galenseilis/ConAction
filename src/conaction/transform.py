@@ -98,10 +98,3 @@ class SVDProjection(tf.keras.Model):
         else:
             self.fit(X)
             return tf.matmul(X, self.V)
-
-
-if __name__ == '__main__':
-    import matplotlib.pyplot as plt
-
-    x = np.random.normal(size=1000).reshape(500,2)
-    x = tf.constant(x, dtype=tf.float64)

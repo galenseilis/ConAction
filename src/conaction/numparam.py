@@ -12,6 +12,34 @@ from scipy import integrate
 from pathos.multiprocessing import ProcessingPool as Pool
 
 def mean(f, I, *args, **kwargs):
+    '''
+    Numerically computes the definite
+    integral representing the mean value of a
+    function using uniform probability measure.
+
+    Parameters
+    ----------
+    f: function.
+        Function to be integrated.
+    I: array-like
+        Integration bounds.
+
+    Returns
+    -------
+    result: float
+        Definite integral.
+
+    Examples
+    --------
+    >>> F = lambda x,y: x+y
+    >>> I = [(0,1)]*2
+    >>> mean(F, I)
+    1.0
+
+    .. warning::
+        The length and order of `I` must correspond
+        to the variables in f.
+    '''
     lower = np.array(I)[:,0]
     upper = np.array(I)[:,1]
     scale = upper - lower
@@ -22,6 +50,39 @@ def mean(f, I, *args, **kwargs):
     return result
 
 def minkowski_deviation(f, I, p=2, *args, **kwargs):
+    '''
+    Numerically computes the definite
+    integral representing the Minkowski deviation value of a
+    function using uniform probability measure. The Minkowski
+    deviation of order 2 is t he standard deviation.
+
+    Parameters
+    ----------
+    f: function.
+        Function to be integrated.
+    I: array-like
+        Integration bounds.
+
+    Returns
+    -------
+    result: float
+        Definite integral.
+
+    Examples
+    --------
+    >>> F = lambda x,y: x+y
+    >>> I = [(0,1)]*2
+    >>> minkowski_deviation(F, I)
+    0.408248290463863
+
+    .. warning::
+        The length and order of `I` must correspond
+        to the variables in f.
+
+    .. warning::
+        A sufficiently large input value for p can
+        result numerical issues such as `arithmetic underflow underflow <https://en.wikipedia.org/wiki/Arithmetic_underflow>`_.
+    '''
     lower = np.array(I)[:,0]
     upper = np.array(I)[:,1]
     scale = np.prod(upper - lower)
@@ -35,6 +96,36 @@ def minkowski_deviation(f, I, p=2, *args, **kwargs):
     return result
 
 def covariance(F, I, *args, **kwargs):
+    '''
+    Numerically computes the definite
+    integral representing the multilinear covariance value of a
+    function using uniform probability measure. The covariance
+    here is generalized to include mixed-centered product
+    moments.
+
+    Parameters
+    ----------
+    F: array-like[function].
+        Functions to be integrated.
+    I: array-like
+        Integration bounds.
+
+    Returns
+    -------
+    result: float
+        Definite integral.
+
+    Examples
+    --------
+    >>> F = [lambda x,y: x+y for i in range(2)]
+    >>> I = [(0,1)]*2
+    >>> pearson_correlation(F, I)
+    0.16666666666666666
+
+    .. warning::
+        The length and order of `I` must correspond
+        to the variables in F.
+    '''
     lower = np.array(I)[:,0]
     upper = np.array(I)[:,1]
     scale = np.prod(upper - lower)
@@ -49,6 +140,36 @@ def covariance(F, I, *args, **kwargs):
     return result
 
 def pearson_correlation(F, I, *args, **kwargs):
+    '''
+    Numerically computes the definite
+    integral representing the multilinear Pearson product-moment
+    value of a function using uniform probability measure. The
+    Pearson's product-moment correlation coefficient here has
+    been generalized to allow more than two variables.
+
+    Parameters
+    ----------
+    F: array-like[function].
+        Functions to be integrated.
+    I: array-like
+        Integration bounds.
+
+    Returns
+    -------
+    result: float
+        Definite integral.
+
+    Examples
+    --------
+    >>> F = [lambda x,y: x+y for i in range(2)]
+    >>> I = [(0,1)]*2
+    >>> pearson_correlation(F, I)
+    1.0
+
+    .. warning::
+        The length and order of `I` must correspond
+        to the variables in F.
+    '''
     numerator = covariance(F, I, *args, **kwargs)
     p = Pool()
     poolf = lambda f: minkowski_deviation(f, I, p=len(F), *args, **kwargs)
@@ -57,6 +178,6 @@ def pearson_correlation(F, I, *args, **kwargs):
     return numerator / denominator
 
 if __name__ == "__main__":
-    F = [lambda x,y,z: x+y+z for i in range(11)]
-    I = [(0,1)]*len(F)
-    print(pearson_correlation(F[:3], I[:3]))
+    F = lambda x,y: x+y
+    I = [(0,1)]*2
+    print(mean(F, I))
