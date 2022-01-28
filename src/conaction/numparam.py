@@ -119,7 +119,7 @@ def covariance(F, I, *args, **kwargs):
     --------
     >>> F = [lambda x,y: x+y for i in range(2)]
     >>> I = [(0,1)]*2
-    >>> pearson_correlation(F, I)
+    >>> covariance(F, I)
     0.16666666666666666
 
     .. warning::
