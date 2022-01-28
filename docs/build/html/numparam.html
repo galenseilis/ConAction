@@ -90,7 +90,7 @@ moments.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>f</strong> (<em>function.</em>) – Function to be integrated.</p></li>
+<li><p><strong>F</strong> (<em>array-like</em><em>[</em><em>function</em><em>]</em><em></em>) – Functions to be integrated.</p></li>
 <li><p><strong>I</strong> (<em>array-like</em>) – Integration bounds.</p></li>
 </ul>
 </dd>
@@ -104,7 +104,7 @@ moments.</p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">F</span> <span class="o">=</span> <span class="p">[</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">I</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)]</span><span class="o">*</span><span class="mi">2</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">pearson_correlation</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">I</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">covariance</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">I</span><span class="p">)</span>
 <span class="go">0.16666666666666666</span>
 </pre></div>
 </div>
@@ -184,9 +184,8 @@ to the variables in f.</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>A sufficiently large input value for <cite>p</cite> can
-result numerical issues such as numerical
-underflow. See <a class="reference external" href="https://en.wikipedia.org/wiki/Arithmetic_underflow">Arithmetic underflow</a>.</p>
+<p>A sufficiently large input value for p can
+result numerical issues such as <a class="reference external" href="https://en.wikipedia.org/wiki/Arithmetic_underflow">arithmetic underflow underflow</a>.</p>
 </div>
 </dd></dl>
 
@@ -201,7 +200,7 @@ been generalized to allow more than two variables.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>f</strong> (<em>function.</em>) – Function to be integrated.</p></li>
+<li><p><strong>F</strong> (<em>array-like</em><em>[</em><em>function</em><em>]</em><em></em>) – Functions to be integrated.</p></li>
 <li><p><strong>I</strong> (<em>array-like</em>) – Integration bounds.</p></li>
 </ul>
 </dd>

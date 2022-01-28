@@ -74,15 +74,21 @@
              
   <section id="module-conaction.estimators">
 <span id="estimators"></span><h1>Estimators<a class="headerlink" href="#module-conaction.estimators" title="Permalink to this headline"></a></h1>
+<p>The Estimators module contains a variety of statistical estimators that can be applied to multivariate datasets.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="conaction.estimators.angular_disimilarity">
 <span class="sig-prename descclassname"><span class="pre">conaction.estimators.</span></span><span class="sig-name descname"><span class="pre">angular_disimilarity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.float64</span></span></span><a class="headerlink" href="#conaction.estimators.angular_disimilarity" title="Permalink to this definition"></a></dt>
 <dd><p>Computes the multilinear angular disimilarity.
 When given an m x 2 data matrix, it is equivalent
 to the angular distance.</p>
+<p>This function computes</p>
+<div class="math notranslate nohighlight">
+\[\text{angular disimilarity} \triangleq \frac{\theta}{\pi}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\theta\)</span> is the result of computing the arccosine on
+the reflective correlation coefficient.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>X</strong> (<em>array_like</em>) – m x n data matrix</p>
+<dd class="field-odd"><p><strong>X</strong> (<em>array-like</em>) – m x n data matrix</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>angular disimilarity</p>
@@ -100,6 +106,13 @@ to the angular distance.</p>
 <dd><p>“What is the exact and precise definition of an ANGLE?”, <a class="reference external" href="https://math.stackexchange.com/questions/583066/what-is-the-exact-and-precise-definition-of-an-angle">https://math.stackexchange.com/questions/583066/what-is-the-exact-and-precise-definition-of-an-angle</a></p>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">angular_disimilarity</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="go">0.00981604173368436</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py function">
@@ -108,6 +121,9 @@ to the angular distance.</p>
 <dd><p>This function calculates the n-ary circular correlation
 coefficient. When given an m x 2 data matrix, it is equivalent
 to the circular correlation coefficient.</p>
+<p>This function estimates</p>
+<div class="math notranslate nohighlight">
+\[R_c \left[ X_1, \cdots, X_n \right] = \frac{\mathbb{E} \left[ \prod_{j=1}^{n} \sin \left( X_j - \mathbb{E}[X_j] \right) \right]}{\prod_{j=1}^{n} \sqrt[n]{\mathbb{E}\left[ |\sin \left( X_j - \mathbb{E}[X_j] \right)|^n \right]}}\]</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>(</strong><strong>array-like</strong><strong>)</strong> (<em>X</em>) – </p>
@@ -147,9 +163,18 @@ classic Fisher’s correlation ratio is a special case.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>X</strong> (<em>array_like</em>) – m x n data matrix</p></li>
-<li><p><strong>y</strong> (<em>array_like</em>) – m-dimensional vector of class labels</p></li>
+<li><p><strong>X</strong> (<em>array-like</em>) – m x n data matrix</p></li>
+<li><p><strong>y</strong> (<em>array-like</em>) – m-dimensional vector of class labels</p></li>
 </ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Correlation ratio score.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>np.float64</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>NotImplementedError</strong> – </p>
 </dd>
 </dl>
 <p class="rubric">References</p>
@@ -158,15 +183,126 @@ classic Fisher’s correlation ratio is a special case.</p>
 <dd><p>“Correlation Ratio”, <a class="reference external" href="https://en.wikipedia.org/wiki/Correlation_ratio">https://en.wikipedia.org/wiki/Correlation_ratio</a></p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="conaction.estimators.grade_entropy">
+<span class="sig-prename descclassname"><span class="pre">conaction.estimators.</span></span><span class="sig-name descname"><span class="pre">grade_entropy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.float64</span></span></span><a class="headerlink" href="#conaction.estimators.grade_entropy" title="Permalink to this definition"></a></dt>
+<dd><p>Computes grade entropy for a strict product order
+on the row space points.</p>
+<p>A strict product order on embeddings of the real
+numbers gives a partial order. On a particular data
+set it may be desirable to quantify the extent to
+which there is a total order vs noorder at all.</p>
+<p>Under such an order, two points <span class="math notranslate nohighlight">\(\vec{x}, \vec{y} \in \mathbb{R}^n\)</span>
+hold the relation <span class="math notranslate nohighlight">\(\vec{x} &lt; \vec{y}\)</span> if-and-only-if
+<span class="math notranslate nohighlight">\(x_j &lt; y_j\ \forall j \in \{1, \cdots, n\}\)</span>.</p>
+<p>This function computes</p>
+<div class="math notranslate nohighlight">
+\[H_g = \frac{-\sum_{i=1}^{m} p \circ g(x_i) \ln (p \circ g(x_i))}{\ln{m}}\]</div>
+<p>where <span class="math notranslate nohighlight">\(p\)</span> is a probability distribution over the grades <span class="math notranslate nohighlight">\(g\)</span>
+of the point <span class="math notranslate nohighlight">\(x_i\)</span> among the indexed set of points <span class="math notranslate nohighlight">\(i \in \{1, \cdots, m\}\)</span>
+according to a strict product order relation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>array-like</em>) – An m x n data matrix.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>entropy</strong> – Grade entropy of product order.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>np.float64</p>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<dl class="footnote brackets">
+<dt class="label" id="id5"><span class="brackets">1</span></dt>
+<dd><p>“Graded Poset.”, <a class="reference external" href="https://en.wikipedia.org/wiki/Graded_poset">https://en.wikipedia.org/wiki/Graded_poset</a></p>
+</dd>
+<dt class="label" id="id6"><span class="brackets">2</span></dt>
+<dd><p>“Entropy (Information Theory).”, <a class="reference external" href="https://en.wikipedia.org/wiki/Entropy_(information_theory">https://en.wikipedia.org/wiki/Entropy_(information_theory</a>)</p>
+</dd>
+<dt class="label" id="id7"><span class="brackets">3</span></dt>
+<dd><p>“Partially Ordered Set.”, <a class="reference external" href="https://en.wikipedia.org/wiki/Partially_ordered_set">https://en.wikipedia.org/wiki/Partially_ordered_set</a></p>
+</dd>
+<dt class="label" id="id8"><span class="brackets">4</span></dt>
+<dd><p>“Partially Ordered Set.”, <a class="reference external" href="https://mathworld.wolfram.com/PartiallyOrderedSet.html">https://mathworld.wolfram.com/PartiallyOrderedSet.html</a></p>
+</dd>
+<dt class="label" id="id9"><span class="brackets">5</span></dt>
+<dd><p>“Product Order.”, <a class="reference external" href="https://en.wikipedia.org/wiki/Product_order">https://en.wikipedia.org/wiki/Product_order</a></p>
+</dd>
+<dt class="label" id="id10"><span class="brackets">6</span></dt>
+<dd><p>“Ranked Poset.”, <a class="reference external" href="https://en.wikipedia.org/wiki/Ranked_poset">https://en.wikipedia.org/wiki/Ranked_poset</a></p>
+</dd>
+<dt class="label" id="id11"><span class="brackets">7</span></dt>
+<dd><p>“Total Order.”, <a class="reference external" href="https://en.wikipedia.org/wiki/Total_order">https://en.wikipedia.org/wiki/Total_order</a></p>
+</dd>
+</dl>
 <p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">grade_entropy</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="go">1.0</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The underlying tqdm tool that achieves parallel processing will also print a progress bar. This printout can be needlessly obscure in certain environments such as IDLE. The progress bar should print normally from a BASH environment.</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="conaction.estimators.kendall_tau">
+<span class="sig-prename descclassname"><span class="pre">conaction.estimators.</span></span><span class="sig-name descname"><span class="pre">kendall_tau</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'A'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.float64</span></span></span><a class="headerlink" href="#conaction.estimators.kendall_tau" title="Permalink to this definition"></a></dt>
+<dd><p>Multivariate Kendall’s tau.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>array-like</em>) – An m x n data matrix.</p></li>
+<li><p><strong>method</strong> (<em>{'A'</em><em>, </em><em>'B'</em><em>, </em><em>'C'}</em><em>, </em><em>optional</em>) – <dl class="simple">
+<dt>The method used to account for tied points.</dt><dd><p>The following methods are available (default is ‘a’):</p>
+</dd>
+</dl>
+<ul>
+<li><p>’A’: Original Kendall’s Tau.</p></li>
+<li><p>’B’: <span class="math notranslate nohighlight">\(\tau_B = \frac{m_c - m_d}{\sqrt[n]{\prod_{j=1}^{n} (m_0 - m_j)}}\)</span></p></li>
+<li><p>’C’: :math:`        au_C = frac{2 (m_c - m_d) }{m^2 frac{(max(m,n) - 1)}{max(m,n)}}`</p></li>
+</ul>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Multivariate Kendall’s tau score</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>np.float64</p>
+</dd>
+</dl>
+<p>:raises NotImplementedError : Method B is not implemented yet.:</p>
+<p class="rubric">References</p>
+<dl class="footnote brackets">
+<dt class="label" id="id12"><span class="brackets">1</span></dt>
+<dd><p>“Kendall’s Tau.”, <a class="reference external" href="https://en.wikipedia.org/wiki/Kendall_rank_correlation_coefficient">https://en.wikipedia.org/wiki/Kendall_rank_correlation_coefficient</a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kendall_tau</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="go">1.0</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="conaction.estimators.minkowski_deviation">
 <span class="sig-prename descclassname"><span class="pre">conaction.estimators.</span></span><span class="sig-name descname"><span class="pre">minkowski_deviation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.float64</span></span></span><a class="headerlink" href="#conaction.estimators.minkowski_deviation" title="Permalink to this definition"></a></dt>
-<dd><p>Calculates the Minkowski deviation of
-order p. When the order = 2, it is the
-same as the standard deviation.</p>
+<dd><p>Calculates the Minkowski deviation of order p.
+When the order = 2, it is the same as the standard
+deviation.</p>
+<p>This function estimates</p>
+<div class="math notranslate nohighlight">
+\[\text{Dev}_p \left[ X \right] \triangleq \sqrt[p]{\mathbb{E}\left[ |X - \mathbb{E}[X]|^p \right]}\]</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>x</strong> (<em>array-like.</em>) – </p>
@@ -178,11 +314,24 @@ same as the standard deviation.</p>
 <dd class="field-odd"><p>np.float64</p>
 </dd>
 </dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.std</span></code></dt><dd><p>Standard deviation.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">References</p>
+<dl class="footnote brackets">
+<dt class="label" id="id13"><span class="brackets">1</span></dt>
+<dd><p>“Standard Deviation.”, <a class="reference external" href="https://en.wikipedia.org/wiki/Standard_deviation">https://en.wikipedia.org/wiki/Standard_deviation</a></p>
+</dd>
+</dl>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">minkowski_deviation</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-<span class="go">5.338539126015656</span>
+<span class="go">2.8722813232690143</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -190,13 +339,14 @@ same as the standard deviation.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="conaction.estimators.misiak_correlation">
 <span class="sig-prename descclassname"><span class="pre">conaction.estimators.</span></span><span class="sig-name descname"><span class="pre">misiak_correlation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.float64</span></span></span><a class="headerlink" href="#conaction.estimators.misiak_correlation" title="Permalink to this definition"></a></dt>
-<dd><p>Misiak’s n-inner correlation coefficient.</p>
+<dd><p>Misiak’s n-inner correlation coefficient based on the n-inner product space
+presented in Misiak and Ryz 2000.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>x</strong> (<em>array_like</em>) – 1-D data vector</p></li>
-<li><p><strong>y</strong> (<em>array_like</em>) – 1-D data vector</p></li>
-<li><p><strong>X</strong> (<em>array_like</em>) – m x n data matrix</p></li>
+<li><p><strong>x</strong> (<em>array-like</em>) – 1-D data vector</p></li>
+<li><p><strong>y</strong> (<em>array-like</em>) – 1-D data vector</p></li>
+<li><p><strong>X</strong> (<em>array-like</em>) – m x n data matrix</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -206,6 +356,22 @@ same as the standard deviation.</p>
 <dd class="field-odd"><p>np.float64</p>
 </dd>
 </dl>
+<p class="rubric">References</p>
+<dl class="footnote brackets">
+<dt class="label" id="id14"><span class="brackets">1</span></dt>
+<dd><p>Misiak, Aleksander. Ryz, Alicja. 2000. “n-Inner Product Spaces and Projections.”, <a class="reference external" href="https://www.emis.de/journals/MB/125.1/mb125_1_5.pdf">https://www.emis.de/journals/MB/125.1/mb125_1_5.pdf</a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">misiak_correlation</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">X</span><span class="p">)</span>
+<span class="go">-0.11209570083901074</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py function">
@@ -219,24 +385,40 @@ which is a generalization of the notion of a
 seminorm.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>X</strong> (<em>array_like</em>) – m x n data matrix</p>
+<dd class="field-odd"><p><strong>X</strong> (<em>array-like</em>) – m x n data matrix</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Multisemideviation score.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>float</p>
+<dd class="field-odd"><p>np.float64</p>
 </dd>
 </dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.std</span></code></dt><dd><p>Standard deviation.</p>
+</dd>
+<dt><a class="reference internal" href="#conaction.estimators.minkowski_deviation" title="conaction.estimators.minkowski_deviation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">minkowski_deviation</span></code></a></dt><dd><p>Minkowski deviation of order p.</p>
+</dd>
+</dl>
+</div>
 <p class="rubric">References</p>
 <dl class="footnote brackets">
-<dt class="label" id="id5"><span class="brackets">1</span></dt>
+<dt class="label" id="id15"><span class="brackets">1</span></dt>
 <dd><p>“Seminorm”, <a class="reference external" href="https://mathworld.wolfram.com/Seminorm.html">https://mathworld.wolfram.com/Seminorm.html</a></p>
 </dd>
-<dt class="label" id="id6"><span class="brackets">2</span></dt>
+<dt class="label" id="id16"><span class="brackets">2</span></dt>
 <dd><p>“Seminorm”, <a class="reference external" href="https://en.wikipedia.org/wiki/Seminorm">https://en.wikipedia.org/wiki/Seminorm</a></p>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">multisemideviation</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="go">7381024072265624.0</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py function">
@@ -245,9 +427,12 @@ seminorm.</p>
 <dd><p>This function calculates the n-ary Pearson’s r correlation
 coefficient. When given an m x 2 data matrix, it is equivalent
 to the Pearson’s r correlation coefficient.</p>
+<p>This function estimates</p>
+<div class="math notranslate nohighlight">
+\[R_p \left[ X_1, \cdots, X_n \right] = \frac{\mathbb{E} \left[ \prod_{j=1}^{n} \left( X_j - \mathbb{E}[X_j] \right) \right]}{\prod_{j=1}^{n} \sqrt[n]{\mathbb{E}\left[ |X_n- \mathbb{E}[X_j]|^n \right]}}\]</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>X</strong> (<em>array-like</em>) – The m x n data matrix.</p>
+<dd class="field-odd"><p><strong>X</strong> (<em>array-like</em>) – An m x n data matrix.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><strong>r</strong> – The calculated Pearson r correlation coefficient.</p>
@@ -273,9 +458,12 @@ to the Pearson’s r correlation coefficient.</p>
 <dd><p>Calculates the multilinear reflective correlation coefficient.
 When given an m x 2 data matrix, it is equivalent to the
 reflective correlation coefficient.</p>
+<p>This function estimates</p>
+<div class="math notranslate nohighlight">
+\[R_r \left[ X_1, \cdots, X_n \right] = \frac{\mathbb{E} \left[ \prod_{j=1}^{n} X_j \right]}{\prod_{j=1}^{n} \sqrt[n]{\mathbb{E}\left[ |X_n|^n \right]}}\]</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>X</strong> (<em>array_like</em>) – The m x n data matrix.</p>
+<dd class="field-odd"><p><strong>X</strong> (<em>array-like</em>) – The m x n data matrix.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><strong>r</strong> – Reflective correlation coefficient score.</p>
@@ -286,7 +474,7 @@ reflective correlation coefficient.</p>
 </dl>
 <p class="rubric">References</p>
 <dl class="footnote brackets">
-<dt class="label" id="id7"><span class="brackets">1</span></dt>
+<dt class="label" id="id17"><span class="brackets">1</span></dt>
 <dd><p>“Reflective Correlation Coefficient.”, <a class="reference external" href="https://en.wikipedia.org/wiki/Pearson_correlation_coefficient#Reflective_correlation_coefficient">https://en.wikipedia.org/wiki/Pearson_correlation_coefficient#Reflective_correlation_coefficient</a></p>
 </dd>
 </dl>
@@ -303,9 +491,12 @@ reflective correlation coefficient.</p>
 <dt class="sig sig-object py" id="conaction.estimators.signum_correlation">
 <span class="sig-prename descclassname"><span class="pre">conaction.estimators.</span></span><span class="sig-name descname"><span class="pre">signum_correlation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.float64</span></span></span><a class="headerlink" href="#conaction.estimators.signum_correlation" title="Permalink to this definition"></a></dt>
 <dd><p>Signum correlation coefficient.</p>
+<p>This function estimates</p>
+<div class="math notranslate nohighlight">
+\[R_{\{sign}} \left[ X_1, \cdots, X_n \right] = \frac{\mathbb{E} \left[ \prod_{j=1}^{n} \text{sign} \left( X_j - \mathbb{E}[X_j] \right) \right]}{\prod_{j=1}^{n} \sqrt[n]{\mathbb{E}\left[ |\text{sign} \left( X_j - \mathbb{E}[X_j] \right)|^n \right]}}\]</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>X</strong> (<em>array_like</em>) – m x n data matrix</p>
+<dd class="field-odd"><p><strong>X</strong> (<em>array-like</em>) – m x n data matrix</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Signum correlation score.</p>
@@ -314,6 +505,22 @@ reflective correlation coefficient.</p>
 <dd class="field-odd"><p>float</p>
 </dd>
 </dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">scipy.stats.kendalltau</span></code></dt><dd><p>Kendall’s <span class="math notranslate nohighlight">\(\tau\)</span></p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Notes</p>
+<p>On the face of it this coefficient seems the same as Kendall’s <span class="math notranslate nohighlight">\(\tau\)</span> due to taking products of signs, however they are distinct. Kendall’s <span class="math notranslate nohighlight">\(\tau\)</span> computes an average of the discordant pairs subtracted from the concordant pairs of points.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">signum_correlation</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="go">0.9999999999999998</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py function">
@@ -322,11 +529,13 @@ reflective correlation coefficient.</p>
 <dd><p>This function calculates the n-ary Spearman correlation
 coefficient. When given an m x 2 data matrix, it is equivalent
 to the Spearman’s Rho correlation coefficient.</p>
-<p>The available data ranking options are directly from <cite>scipy.stats.rankdata</cite>.</p>
+<p>This function estimates</p>
+<div class="math notranslate nohighlight">
+\[R_c \left[ X_1, \cdots, X_n \right] = \frac{\mathbb{E} \left[ \prod_{j=1}^{n} \text{rank} \left( X_j \right) - \mathbb{E}[\text{rank} \left( X_j \right)] \right]}{\prod_{j=1}^{n} \sqrt[n]{\mathbb{E}\left[ |\text{rank} \left( X_j \right) - \mathbb{E}[\text{rank} \left( X_j \right)]|^n \right]}}\]</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>X</strong> (<em>array_like</em>) – m x n data matrix.</p></li>
+<li><p><strong>X</strong> (<em>array-like</em>) – m x n data matrix.</p></li>
 <li><p><strong>method</strong> (<em>{'average'</em><em>, </em><em>'min'</em><em>, </em><em>'max'</em><em>, </em><em>'dense'</em><em>, </em><em>'ordinal'}</em><em>, </em><em>optional</em>) – <dl class="simple">
 <dt>The method used to assign ranks to tied elements.</dt><dd><p>The following methods are available (default is ‘average’):</p>
 </dd>
@@ -355,18 +564,27 @@ the order that the values occur in <cite>a</cite>.</p></li>
 <dd class="field-odd"><p>np.float64</p>
 </dd>
 </dl>
-<p class="rubric">References</p>
-<dl class="footnote brackets">
-<dt class="label" id="id8"><span class="brackets">1</span></dt>
-<dd><p>“Spearman%27s_rank_correlation_coefficient”, <a class="reference external" href="https://en.wikipedia.org/wiki/Spearman%27s_rank_correlation_coefficient">https://en.wikipedia.org/wiki/Spearman%27s_rank_correlation_coefficient</a></p>
-</dd>
-<dt class="label" id="id9"><span class="brackets">2</span></dt>
-<dd><p>“scipy.stats.rankdata”, <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.rankdata.html">https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.rankdata.html</a></p>
-</dd>
-</dl>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><code class="xref py py-obj docutils literal notranslate"><span class="pre">scipy.stats.rankdata</span></code></p>
+</div>
+<p class="rubric">Notes</p>
+<p>The available data ranking options are directly from <cite>scipy.stats.rankdata</cite>.</p>
+<p class="rubric">References</p>
+<dl class="footnote brackets">
+<dt class="label" id="id18"><span class="brackets">1</span></dt>
+<dd><p>“Spearman%27s_rank_correlation_coefficient”, <a class="reference external" href="https://en.wikipedia.org/wiki/Spearman%27s_rank_correlation_coefficient">https://en.wikipedia.org/wiki/Spearman%27s_rank_correlation_coefficient</a></p>
+</dd>
+<dt class="label" id="id19"><span class="brackets">2</span></dt>
+<dd><p>“scipy.stats.rankdata”, <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.rankdata.html">https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.rankdata.html</a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">spearman_correlation</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="go">0.9999999999999991</span>
+</pre></div>
 </div>
 </dd></dl>
 
@@ -374,20 +592,38 @@ the order that the values occur in <cite>a</cite>.</p></li>
 <dt class="sig sig-object py" id="conaction.estimators.taylor_correlation">
 <span class="sig-prename descclassname"><span class="pre">conaction.estimators.</span></span><span class="sig-name descname"><span class="pre">taylor_correlation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.float64</span></span></span><a class="headerlink" href="#conaction.estimators.taylor_correlation" title="Permalink to this definition"></a></dt>
 <dd><p>Taylor’s multi-way correlation coefficient.</p>
-<p class="rubric">References</p>
-<dl class="footnote brackets">
-<dt class="label" id="id10"><span class="brackets">1</span></dt>
-<dd><p>Taylor, BM. 2020. “A Multi-Way Correlation Coefficient”, <a class="reference external" href="https://arxiv.org/abs/2003.02561">https://arxiv.org/abs/2003.02561</a></p>
-</dd>
-</dl>
-<p class="rubric">Notes</p>
 <p>Taylor 2020 defines this function to be</p>
 <div class="math notranslate nohighlight">
 \[\frac{1}{\sqrt{d}} \sqrt{\frac{1}{d-1} \sum_{i}^{d} ( \lambda_i -  \bar{\lambda})^2 }\]</div>
 <p>where <span class="math notranslate nohighlight">\(d\)</span> is the number of variables, <span class="math notranslate nohighlight">\(\lambda_1, \cdots, \lambda_d\)</span> are the eigenvalues of
-the correlation matrix for a given set of variables, and <span class="math notranslate nohighlight">\(\bar{\lambda}\)</span> is the mean of those eigenvalues.
-Thus Taylor’s multi-way correlation coefficient is a rescaling of the Bessel-corrected standard deviation of the
+the correlation matrix for a given set of variables, and <span class="math notranslate nohighlight">\(\bar{\lambda}\)</span> is the mean of those eigenvalues.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>array-like</em>) – m x n data matrix</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Taylor correlation score</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>np.float64</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Taylor’s multi-way correlation coefficient is a rescaling of the Bessel-corrected standard deviation of the
 eigenvalues of the correlation matrix of the set of variables.</p>
+<p class="rubric">References</p>
+<dl class="footnote brackets">
+<dt class="label" id="id20"><span class="brackets">1</span></dt>
+<dd><p>Taylor, BM. 2020. “A Multi-Way Correlation Coefficient”, <a class="reference external" href="https://arxiv.org/abs/2003.02561">https://arxiv.org/abs/2003.02561</a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">taylor_correlation</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="go">0.9486832980505138</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py function">
@@ -399,29 +635,47 @@ on Trencevski and Melceski 2006.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>X</strong> (<em>array_like</em>) – m x n data matrix</p></li>
-<li><p><strong>Y</strong> (<em>array_like</em>) – m x n data matrix</p></li>
+<li><p><strong>X</strong> (<em>array-like</em>) – m x n data matrix</p></li>
+<li><p><strong>Y</strong> (<em>array-like</em>) – m x n data matrix</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Correlation score.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>float</p>
+<dd class="field-odd"><p>np.float64</p>
 </dd>
 </dl>
 <p class="rubric">References</p>
 <dl class="footnote brackets">
-<dt class="label" id="id11"><span class="brackets">1</span></dt>
+<dt class="label" id="id21"><span class="brackets">1</span></dt>
 <dd><p>Trencevski, Kostadin. Malceski, Risto. 2006. “On a generalized n-inner product and the corresponding Cauchy-Schwarz inequality”, <a class="reference external" href="https://www.researchgate.net/publication/268999118_On_a_generalized_n-inner_product_and_the_corresponding_Cauchy-Schwarz_inequality">https://www.researchgate.net/publication/268999118_On_a_generalized_n-inner_product_and_the_corresponding_Cauchy-Schwarz_inequality</a></p>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trencevski_malceski_correlation</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">)</span>
+<span class="go">3.1886981411745035e-08</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="conaction.estimators.wang_zheng_correlation">
 <span class="sig-prename descclassname"><span class="pre">conaction.estimators.</span></span><span class="sig-name descname"><span class="pre">wang_zheng_correlation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.float64</span></span></span><a class="headerlink" href="#conaction.estimators.wang_zheng_correlation" title="Permalink to this definition"></a></dt>
-<dd><dl class="field-list simple">
+<dd><p>Correlation coefficient due to Wang &amp; Zheng 2014.</p>
+<p>This correlation coefficient is equivalent to</p>
+<div class="math notranslate nohighlight">
+\[R_{wz} \triangleq 1 - \det (R_{n \times n})\]</div>
+<p>where <span class="math notranslate nohighlight">\(R_{n \times n}\)</span> is the correlation
+matrix computed on a collection of n variables. In
+other words, this correlation coefficient is the
+complement of the determinant of the correlation
+matrix.</p>
+<dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>X</strong> (<em>array-like</em>) – m x n data matrix</p>
 </dd>
@@ -432,14 +686,37 @@ on Trencevski and Melceski 2006.</p>
 <dd class="field-odd"><p>np.float64</p>
 </dd>
 </dl>
+<p class="rubric">Notes</p>
+<p>The complement of this statistic is the unsigned incorrelation coefficient.</p>
 <p class="rubric">References</p>
 <dl class="footnote brackets">
-<dt class="label" id="id12"><span class="brackets">1</span></dt>
+<dt class="label" id="id22"><span class="brackets">1</span></dt>
 <dd><p>Wang, Jianji. Zheng, Nanning. 2014. “Measures of Correlation for Multiple Variables”, <a class="reference external" href="https://arxiv.org/abs/1401.4827">https://arxiv.org/abs/1401.4827</a></p>
 </dd>
 </dl>
-<p class="rubric">Notes</p>
-<p>The complement of this statistic is the unsigned incorrelation coefficient.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wang_zheng_correlation</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="go">1.0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="conaction.estimators.weak_inner_correlation">
+<span class="sig-prename descclassname"><span class="pre">conaction.estimators.</span></span><span class="sig-name descname"><span class="pre">weak_inner_correlation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#conaction.estimators.weak_inner_correlation" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>NotImplementedError</strong> – </p>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<dl class="footnote brackets">
+<dt class="label" id="id23"><span class="brackets">1</span></dt>
+<dd><p><a class="reference external" href="https://arxiv.org/pdf/1904.09542.pdf">https://arxiv.org/pdf/1904.09542.pdf</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 </section>
