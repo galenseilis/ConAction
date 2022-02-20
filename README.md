@@ -7,8 +7,7 @@ The ConAction library provides mathematical functions that are inspired from the
 
 Supervisory Committee Members
 
-- Supervisor: [Dr. Alex Aravind](https://web.unbc.ca/~csalex/) ([Department of Computer Science](https://www2.unbc.ca/computer-science))
-- Interim Supervisor: [Dr. Edward Dobrowolski](https://www2.unbc.ca/people/dobrowolski-dr-edward) ([Department of Mathematics and Statistics, UNBC](https://www2.unbc.ca/math-statistics))
+- Supervisor: [Dr. Edward Dobrowolski](https://www2.unbc.ca/people/dobrowolski-dr-edward) ([Department of Mathematics and Statistics, UNBC](https://www2.unbc.ca/math-statistics))
 - Committee Member: [Dr. Brent Murray](https://web.unbc.ca/~murrayb/) ([Department of Biology, UNBC](https://www2.unbc.ca/biology))
 - Committee Member: [Dr. Mohammad El Smaily](https://smaily.opened.ca/) ([Department of Mathematics and Statistics, UNBC](https://www2.unbc.ca/math-statistics))
 - External Examiner: TBA
