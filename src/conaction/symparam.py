@@ -555,9 +555,9 @@ def wang_zheng_correlation(F, var, a, b):
     return result
     
 
-def partial_galtonian(F, var, order):
+def partial_differential_covariance(F, var, order):
     '''
-    Computes the partial Galtonian of a
+    Computes the partial differential covariance of a
     given order with respect to a given
     variable.
 
@@ -568,7 +568,7 @@ def partial_galtonian(F, var, order):
     var : SymPy Symbol
         Independent parameter for differentiation/integration.
     order : int
-        Order of the partial Galtonian.
+        Order of the partial differential covariance.
 
     Returns
     -------
@@ -578,7 +578,7 @@ def partial_galtonian(F, var, order):
     --------
     >>> t = sympy.Symbol('t')
     >>> F = [t**i for i in range(1,4)]
-    >>> partial_galtonian(F, t, 2)
+    >>> partial_differential_covariance(F, t, 2)
     0
     '''
     if not isinstance(order, int):
@@ -600,11 +600,11 @@ def partial_galtonian(F, var, order):
             result *= fi
         return result
 
-def multi_partial_galtonian(F, Vars, order):
+def multi_partial_differential_covariance(F, Vars, order):
     '''
-    Computes the partial multi-Galtonian of a
-    given order with respect to a given collection
-    of variables.
+    Computes the multi-partial differential covariance
+     of a given order with respect to a given collection of 
+     variables.
 
     Parameters
     ----------
@@ -613,7 +613,7 @@ def multi_partial_galtonian(F, Vars, order):
     Vars : array-like[SymPy Symbols]
         Independent parameters for differentiation/integration.
     order : int
-        Order of the partial multi-Galtonian.
+        Order of the multi-partial differential covariance.
 
     Returns
     -------
@@ -623,12 +623,12 @@ def multi_partial_galtonian(F, Vars, order):
     --------
     >>> t1, t2 = sympy.var('t1 t2')
     >>> F = [(t1+i)**(t2+i) for i in range(1,4)]
-    >>> multi_partial_galtonian(F, [t1, t2], 0)
+    >>> multi_partial_differential_covariance(F, [t1, t2], 0)
     (t1 + 1)**(2*t2 + 2)*(t1 + 2)**(2*t2 + 4)*(t1 + 3)**(2*t2 + 6)
     '''
     result = 1
     for var in Vars:
-        result *= partial_galtonian(F, var, order)
+        result *= partial_differential_covariance(F, var, order)
     return result
 
 if __name__ == "__main__":

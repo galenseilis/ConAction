@@ -7,6 +7,7 @@ References
 .. [1] "Resampling.", https://en.wikipedia.org/wiki/Resampling_(statistics)
 '''
 
+from itertools import combinations
 import numpy as np
 import tqdm
 
@@ -91,38 +92,102 @@ def statistic_permute(X, stat_func=lambda x: x, iters=100):
         y.append(stat_func(permute_columns(X)))
     return y
 
-def powerset_search():
+def powerset_search(f, X, leastarity=1):
     '''
     Computes a set function on the whole powerset
     of sets of variables.
 
-    Raises
-    ------
-    NotImplementedError
+    Parameters
+    ----------
+    f : function
+    	Estimator
+    X : np.ndarray-like
+    	Data matrix
+    	
+    Returns
+    -------
+    results : dict
+    	Computing values of f.
     '''
-    raise NotImplementedError
+    n = X.shape[1]
+    for arity in range(leastarity, n+1):
+        for comb in combinations(range(n), arity):
+            results[comb] = f(X[:,comb])
+    return results
 
-def isoarity_search():
+def isoarity_search(f, X, arity):
     '''
     For a given arity of relation,
     compute set function on all sets
     whose cardinality equals that arity.
 
-    Raises
-    ------
-    NotImplementedError
+    Parameters
+    ----------
+    f : function
+    	Estimator
+    X : np.ndarray-like
+    	Data matrix
+    arity : int
+    	Arity to compute f at; number of variables.
+    	
+    Returns
+    -------
+    results : dict
+    	Results of computing function f on columns of X.
     '''
-    raise NotImplementedError
+    n = X.shape[1]
+    results = {}
+    for comb in combinations(range(n), arity):
+    	results[comb] = f(X[:, comb])
+    return results
 
-def heuristic_monotonic_closure_search():
+def heuristic_downward_closure_search(f, X, tau=0.1, abscomp=False, leastarity=2):
     '''
-    Compute a search of statistical hypotheses
-    "as-if" statistical significiance had a
-    downward closure property on the set of
-    variables.
+    Search via the downward closure heuristic.
 
-    Raises
-    ------
-    NotImplementedError
+    Parameters
+    ----------
+    f : function
+        A permutation-invariant multiary function.
+    X : ndarray
+        m x n data matrix.
+    tau : float
+        Downward closure threshold.
+    abscomp : Bool
+        Whether to compare threshold to absolute value of f.
+    leastarity : int (default=2)
+        The function arity to start search.
+
+    Returns
+    -------
+    d : dict[dict]
+    	Computing values of f.
     '''
-    raise NotImplementedError
+    d = {leastarity:{}}
+    for comb in combinations(range(X.shape[1]), leastarity):
+        d[leastarity][frozenset(comb)] = f(X[:, comb])
+
+    for arity in range(leastarity+1, X.shape[1] + 1):
+        print(arity)
+        d[arity] = {}
+        prev_keys = list(d[arity-1].keys())
+        for i, key_i in enumerate(tqdm(prev_keys)):
+            if d[arity-1][key_i] > tau or (abscomp and np.abs(d[arity-1][key_i]) > tau):
+                for j in range(i+1, len(prev_keys)):
+                    key_j = prev_keys[j]
+                    if d[arity-1][key_j] > tau or (abscomp and np.abs(d[arity-1][key_i]) > tau):
+                        union = key_i.union(key_j)
+                        if len(union) == arity:
+                            d[arity][union] = f(X[:, tuple(union)])
+                        else:
+                            continue
+                    else:
+                        continue
+            else:
+                continue
+        if not d[arity]:
+            del d[arity]
+            return d
+        else:
+            print(f'Found {len(d[arity])} results.')
+    return d

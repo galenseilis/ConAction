@@ -34,6 +34,16 @@ def tfskew(X):
     num = tf.reduce_mean(res ** 3)
     denom = tf.reduce_mean(res ** 2) ** (3 / 2)
     return denom
+
+class GradientDataSet():
+    '''
+    Use gradient descent to construct
+    a dataset with a given correlation
+    structure.
+    '''
+
+    def __init__(self):
+        pass
 ##
 if __name__ == '__main__':
     learning_rate = 10**-2
@@ -41,7 +51,7 @@ if __name__ == '__main__':
     loss = np.inf
     epoch = 0
 
-    w = tf.Variable(np.random.normal(0,1, 4000).reshape(1000,4))
+    w = tf.Variable(np.random.normal(0,1, 400).reshape(100,4))
     prev_w = w + tol * 10
 
     # 'Better' break condition: tf.math.reduce_sum(tf.abs(w - prev_w))
@@ -56,3 +66,4 @@ if __name__ == '__main__':
         grad = tape.gradient(loss, w)
         prev_w = w
         w = w - learning_rate * grad
+    print(w)

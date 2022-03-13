@@ -7,9 +7,9 @@ The Estimators module contains a variety of statistical estimators that can be a
 # TODO: Ensure code follows style guide: https://numpydoc.readthedocs.io/en/latest/format.html
 import os
 
-from numba import jit
 import numpy as np
 from pathos.pools import ProcessPool
+from scipy.fft import fft, ifft
 from scipy.stats import rankdata
 import tqdm
 
@@ -50,7 +50,6 @@ def kendall_tau(X: np.ndarray, method='A', n_jobs=1) -> np.float64:
     >>> kendall_tau(data)
     1.0
     '''
-    @jit(nopython=True, fastmath=True)
     def scorer(q):
         score_q = 0
         for j in range(X.shape[0]):
@@ -146,7 +145,6 @@ def grade_entropy(X: np.ndarray, n_jobs=1) -> np.float64:
 
     '''
     P = np.zeros((X.shape[0], X.shape[0]))
-    @jit(nopython=True, fastmath=True) # does fastmath actually improve speed here?
     def grade(q):
         v = np.zeros(X.shape[0])
         for j in range(X.shape[0]):
@@ -180,6 +178,95 @@ def grade_entropy(X: np.ndarray, n_jobs=1) -> np.float64:
     entropy = np.sum(probs * np.log(probs)) / (np.log(1/np.sum(counts)))
     return entropy
 
+def convolution(X: np.ndarray):
+    '''
+    Convolution operator on a collection of signals.
+
+    .. math::
+        \\text{M} \\left[ x_1(t), \\cdots, x_n(t) \\right] \\triangleq \\mathcal{F}^{-1} \\left{ \\prod_{j=1}^{n} \\mathcal{F} x(t) \\right}
+
+    Parameters
+    ----------
+    X : array-like[np.float64]
+        m x n data matrix
+
+    Returns
+    -------
+     : array-like[np.float64]
+        Convolved signal.
+
+    Notes
+    -----
+    Values in corresponding rows must be meaningfully paired, and the index of the rows
+    must be an ordered parameter.
+
+    References
+    ----------
+    .. [1] "Fast Fourier transform", https://docs.scipy.org/doc/scipy/tutorial/fft.html
+    .. [2] "Fourier Transform", https://mathworld.wolfram.com/FourierTransform.html
+    .. [3] "Fourier Transform", https://en.wikipedia.org/wiki/Fourier_transform
+    .. [4] "Convolution Theorem", https://mathworld.wolfram.com/ConvolutionTheorem.html
+    .. [5] "Convolution Theorem", https://en.wikipedia.org/wiki/Convolution_theorem
+
+    Examples
+    --------
+    >>> import numpy as np
+    >>> X = np.zeros((10, 3))
+    >>> t = np.linspace(-2*np.pi, 2*np.pi, 10)
+    >>> X[:,0] = np.sin(t)
+    >>> X[:,1] = np.cos(t)
+    >>> X[:,2] = t
+    >>> convolution(X)
+    array([-16.94924406+0.j, -49.80176265+0.j, -14.64303061+0.j,
+        36.46598534+0.j,  36.46598534+0.j, -14.64303061+0.j,
+       -49.80176265+0.j, -16.94924406+0.j,  44.92805198+0.j,
+        44.92805198+0.j])
+    '''
+    return ifft(np.prod(fft(X, axis=0), axis=1))
+
+def median_correlation(X: np.ndarray, transform=lambda x: x - np.median(x, axis=0)) -> np.float64:
+    '''
+    Median (multilinear) correlation.
+
+    The function estimates
+
+    .. math::
+        R_{\\mathcal{M}} \\left[ X_1, \\cdots, X_n \\right] = \\frac{\\mathcal{M} \\left[ \\prod_{j=1}^{n} \\left( X_j - \\mathcal{M}[X_j] \\right) \\right]}{\\prod_{j=1}^{n} \\sqrt[n]{\\mathcal{M}\\left[ |X_n - \\mathcal{M}[X_j]|^n \\right]}}
+
+    Parameters
+    ----------
+    X : array-like[np.float64]
+        An m x n data matrix.
+    transform : function
+        A data transform before computing coefficient.
+
+    Returns
+    -------
+    r : np.float64
+        The calculated median correlation coefficient.
+
+    References
+    ----------
+       .. [1] "Median", https://en.wikipedia.org/wiki/Median
+
+    Examples
+    ----------
+    >>> import numpy as np
+    >>> data = np.arange(100).reshape(10,10)
+    >>> median_correlation(data)
+    0.9999999999999982
+    '''
+    X = transform(X)
+    numerator = np.prod(X, axis=1)
+    numerator = np.median(numerator)
+    denominator = np.abs(X)
+    denominator = np.power(denominator, X.shape[1])
+    denominator = np.median(denominator, axis=0)
+    denominator = np.prod(denominator)
+    denominator = np.power(denominator, 1 / X.shape[1])
+    r = numerator / denominator
+    return r
+    
 def minkowski_deviation(x: np.ndarray, order=2) -> np.float64:
     '''
     Calculates the Minkowski deviation of order p.
@@ -194,6 +281,7 @@ def minkowski_deviation(x: np.ndarray, order=2) -> np.float64:
     Parameters
     ----------
     x : array-like.
+        Instances of a variable.
 
     Returns
     -------
@@ -289,7 +377,7 @@ def pearson_correlation(X: np.ndarray) -> np.float64:
 
     References
     ----------
-       https://en.wikipedia.org/wiki/Pearson_correlation_coefficient
+       .. [1] "Pearson product-moment correlation coefficient.", https://en.wikipedia.org/wiki/Pearson_correlation_coefficient
 
     Examples
     ----------
@@ -572,7 +660,7 @@ def signum_correlation(X: np.ndarray) -> np.float64:
     This function estimates
 
     .. math::
-        R_{\\{sign}} \\left[ X_1, \\cdots, X_n \\right] = \\frac{\\mathbb{E} \\left[ \\prod_{j=1}^{n} \\text{sign} \\left( X_j - \\mathbb{E}[X_j] \\right) \\right]}{\\prod_{j=1}^{n} \\sqrt[n]{\\mathbb{E}\\left[ |\\text{sign} \\left( X_j - \\mathbb{E}[X_j] \\right)|^n \\right]}}
+        R_{\\text{sign}} \\left[ X_1, \\cdots, X_n \\right] = \\frac{\\mathbb{E} \\left[ \\prod_{j=1}^{n} \\text{sign} \\left( X_j - \\mathbb{E}[X_j] \\right) \\right]}{\\prod_{j=1}^{n} \\sqrt[n]{\\mathbb{E}\\left[ |\\text{sign} \\left( X_j - \\mathbb{E}[X_j] \\right)|^n \\right]}}
 
     Parameters
     ----------
