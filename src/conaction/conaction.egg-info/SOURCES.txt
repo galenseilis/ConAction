@@ -10,6 +10,7 @@ src/conaction/naive.py
 src/conaction/numparam.py
 src/conaction/objectives.py
 src/conaction/optimizers.py
+src/conaction/sampling.py
 src/conaction/symparam.py
 src/conaction/test.py
 src/conaction/transform.py
