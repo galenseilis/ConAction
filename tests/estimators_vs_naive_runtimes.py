@@ -38,8 +38,10 @@ START = 10
 N = 10000
 STEP = 10
 
-est_funcs = [estimators.kendall_tau, estimators.grade_entropy]
-naive_funcs = [naive.kendall_tau, naive.grade_entropy]
+##est_funcs = [estimators.kendall_tau, estimators.grade_entropy]
+##naive_funcs = [naive.kendall_tau, naive.grade_entropy]
+est_funcs = [estimators.grade_entropy]
+naive_funcs = [naive.grade_entropy]
 for f1, f2 in zip(est_funcs, naive_funcs):
     for arity in [2, 3, 5, 8]:
         est_times_1 = []
