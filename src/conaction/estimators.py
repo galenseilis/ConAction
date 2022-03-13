@@ -139,10 +139,6 @@ def grade_entropy(X: np.ndarray, n_jobs=1) -> np.float64:
     >>> data = np.arange(100).reshape(10,10)
     >>> grade_entropy(data)
     1.0
-
-    .. warning::
-        The underlying tqdm tool that achieves parallel processing will also print a progress bar. This printout can be needlessly obscure in certain environments such as IDLE. The progress bar should print normally from a BASH environment.
-
     '''
     P = np.zeros((X.shape[0], X.shape[0]))
     def grade(q):
