@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sampling &mdash; ConAction 0.0.26 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="FAQ" href="frequently_asked_questions.html" />
+    <link rel="prev" title="SymParam" href="symparam.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> ConAction
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="estimators.html">Estimators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numparam.html">NumParam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="symparam.html">SymParam</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Sampling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="frequently_asked_questions.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary_of_terms.html">Glossary of Terms</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ConAction</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Sampling</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/sampling.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="module-conaction.sampling">
+<span id="sampling"></span><h1>Sampling<a class="headerlink" href="#module-conaction.sampling" title="Permalink to this headline">¶</a></h1>
+<p>The Sampling module provides functions for resampling and search methods
+suitable for functions found in the Estimators module.</p>
+<p class="rubric">References</p>
+<table class="docutils footnote" frame="void" id="id1" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td>“Resampling.”, <a class="reference external" href="https://en.wikipedia.org/wiki/Resampling_(statistics">https://en.wikipedia.org/wiki/Resampling_(statistics</a>)</td></tr>
+</tbody>
+</table>
+<dl class="function">
+<dt id="conaction.sampling.heuristic_downward_closure_search">
+<code class="descclassname">conaction.sampling.</code><code class="descname">heuristic_downward_closure_search</code><span class="sig-paren">(</span><em>f</em>, <em>X</em>, <em>tau=0.1</em>, <em>abscomp=False</em>, <em>leastarity=2</em><span class="sig-paren">)</span><a class="headerlink" href="#conaction.sampling.heuristic_downward_closure_search" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search via the downward closure heuristic.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>f</strong> (<em>function</em>) – A permutation-invariant multiary function.</li>
+<li><strong>X</strong> (<em>ndarray</em>) – m x n data matrix.</li>
+<li><strong>tau</strong> (<em>float</em>) – Downward closure threshold.</li>
+<li><strong>abscomp</strong> (<em>Bool</em>) – Whether to compare threshold to absolute value of f.</li>
+<li><strong>leastarity</strong> (<em>int</em><em> (</em><em>default=2</em><em>)</em>) – The function arity to start search.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>d</strong> – Computing values of f.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict[dict]</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="conaction.sampling.isoarity_search">
+<code class="descclassname">conaction.sampling.</code><code class="descname">isoarity_search</code><span class="sig-paren">(</span><em>f</em>, <em>X</em>, <em>arity</em><span class="sig-paren">)</span><a class="headerlink" href="#conaction.sampling.isoarity_search" title="Permalink to this definition">¶</a></dt>
+<dd><p>For a given arity of relation,
+compute set function on all sets
+whose cardinality equals that arity.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>f</strong> (<em>function</em>) – Estimator</li>
+<li><strong>X</strong> (<em>np.ndarray-like</em>) – Data matrix</li>
+<li><strong>arity</strong> (<em>int</em>) – Arity to compute f at; number of variables.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>results</strong> – Results of computing function f on columns of X.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="conaction.sampling.permute_columns">
+<code class="descclassname">conaction.sampling.</code><code class="descname">permute_columns</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="headerlink" href="#conaction.sampling.permute_columns" title="Permalink to this definition">¶</a></dt>
+<dd><p>Permutes the columns of a data matrix.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>x</strong> (<em>array-like</em>) – An m x n data matrix.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Permuted matrix.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">array-like</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">References</p>
+<table class="docutils footnote" frame="void" id="id2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td>“Permutation.”, <a class="reference external" href="https://en.wikipedia.org/wiki/Permutation">https://en.wikipedia.org/wiki/Permutation</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id3" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[2]</td><td>“Random permutation.”, <a class="reference external" href="https://en.wikipedia.org/wiki/Random_permutation">https://en.wikipedia.org/wiki/Random_permutation</a></td></tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">permute_columns</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="go">array([[60, 61, 82, 43, 34, 75, 16, 97, 78, 99],</span>
+<span class="go">   [30, 81, 92, 53, 14, 15, 26, 87, 48, 69],</span>
+<span class="go">   [80, 41, 32, 63, 24, 55, 46, 67, 58, 79],</span>
+<span class="go">   [90, 51, 22,  3, 64, 95, 76, 77, 28, 59],</span>
+<span class="go">   [40, 71, 12, 33, 54, 85,  6, 47, 88, 49],</span>
+<span class="go">   [ 0, 11,  2, 73, 94, 65, 86, 57, 18,  9],</span>
+<span class="go">   [50, 91, 62, 83,  4, 35, 96, 37, 98, 29],</span>
+<span class="go">   [10,  1, 42, 93, 84, 25, 36, 17, 68, 39],</span>
+<span class="go">   [70, 31, 72, 23, 44,  5, 56,  7, 38, 19],</span>
+<span class="go">   [20, 21, 52, 13, 74, 45, 66, 27,  8, 89]])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="conaction.sampling.powerset_search">
+<code class="descclassname">conaction.sampling.</code><code class="descname">powerset_search</code><span class="sig-paren">(</span><em>f</em>, <em>X</em>, <em>leastarity=1</em><span class="sig-paren">)</span><a class="headerlink" href="#conaction.sampling.powerset_search" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes a set function on the whole powerset
+of sets of variables.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>f</strong> (<em>function</em>) – Estimator</li>
+<li><strong>X</strong> (<em>np.ndarray-like</em>) – Data matrix</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>results</strong> – Computing values of f.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="conaction.sampling.statistic_permute">
+<code class="descclassname">conaction.sampling.</code><code class="descname">statistic_permute</code><span class="sig-paren">(</span><em>X</em>, <em>stat_func=&lt;function &lt;lambda&gt;&gt;</em>, <em>iters=100</em><span class="sig-paren">)</span><a class="headerlink" href="#conaction.sampling.statistic_permute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs a permutation Monte Carlo of a statistical
+function applied to a given dataset.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>X</strong> (<em>array-like</em>) – An m x n data matrix.</li>
+<li><strong>stat_func</strong> (<em>function</em>) – Function to be calculated on new samples. (default=lambda x: x)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>y</strong> – Resulting permutation statistics.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>This function wraps around the permute_columns function to
+sample a function of a data matrix multiple times under
+pseudo-randomly sampled permutations within the columns.</p>
+<p class="rubric">References</p>
+<table class="docutils footnote" frame="void" id="id4" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td>“Resampling.”, <a class="reference external" href="https://en.wikipedia.org/wiki/Resampling_(statistics">https://en.wikipedia.org/wiki/Resampling_(statistics</a>)</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id5" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[2]</td><td>“Permutation testing.”, <a class="reference external" href="https://en.wikipedia.org/wiki/Permutation_test">https://en.wikipedia.org/wiki/Permutation_test</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id6" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[3]</td><td>“Random permutation.”, <a class="reference external" href="https://en.wikipedia.org/wiki/Random_permutation">https://en.wikipedia.org/wiki/Random_permutation</a></td></tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">statistic_permute</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="go">[4.0, 4.0]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="symparam.html" class="btn btn-neutral float-left" title="SymParam" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="frequently_asked_questions.html" class="btn btn-neutral float-right" title="FAQ" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Galen Seilis.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

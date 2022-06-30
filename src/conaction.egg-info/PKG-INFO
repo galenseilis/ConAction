@@ -1,13 +1,11 @@
 Metadata-Version: 2.1
 Name: conaction
-Version: 0.0.26
+Version: 0.0.28
 Summary: Efficient implmenetations of instantiations of the Trinity of Covariation.
 Home-page: https://github.com/galenseilis/ConAction
 Author: Galen Seilis
 Author-email: seilis@unbc.ca
-License: UNKNOWN
 Project-URL: Bug Tracker, https://github.com/galenseilis/ConAction/issues
-Platform: UNKNOWN
 Classifier: Programming Language :: Python :: 3
 Classifier: License :: OSI Approved :: BSD License
 Classifier: Operating System :: OS Independent
@@ -103,5 +101,3 @@ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-

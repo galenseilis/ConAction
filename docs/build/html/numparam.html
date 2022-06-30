@@ -1,20 +1,19 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html4" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NumParam &mdash; ConAction 0.0.2 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <title>NumParam &mdash; ConAction 0.0.26 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/doctools.js"></script>
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -37,12 +36,12 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+              <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="estimators.html">Estimators</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">NumParam</a></li>
 <li class="toctree-l1"><a class="reference internal" href="symparam.html">SymParam</a></li>
-<li class="toctree-l1"><a class="reference internal" href="transform.html">Transform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sampling.html">Sampling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="frequently_asked_questions.html">FAQ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="glossary_of_terms.html">Glossary of Terms</a></li>
 </ul>
@@ -71,161 +70,426 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-conaction.numparam">
-<span id="numparam"></span><h1>NumParam<a class="headerlink" href="#module-conaction.numparam" title="Permalink to this headline"></a></h1>
+  <div class="section" id="module-conaction.numparam">
+<span id="numparam"></span><h1>NumParam<a class="headerlink" href="#module-conaction.numparam" title="Permalink to this headline">¶</a></h1>
 <p>This submodule contains functions for the numerical integration
 of parametric objects (e.g. curves and surfaces). It is built on
 top of NumPy and SciPy for efficient numerical integration over
 multiple bounds. Additionally, some functions use Pathos to
 parallelize the processing of expressions involving separate
 integration steps.</p>
-<dl class="py function">
-<dt class="sig sig-object py" id="conaction.numparam.covariance">
-<span class="sig-prename descclassname"><span class="pre">conaction.numparam.</span></span><span class="sig-name descname"><span class="pre">covariance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">F</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">I</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#conaction.numparam.covariance" title="Permalink to this definition"></a></dt>
+<dl class="function">
+<dt id="conaction.numparam.circular_correlation">
+<code class="descclassname">conaction.numparam.</code><code class="descname">circular_correlation</code><span class="sig-paren">(</span><em>F</em>, <em>I</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#conaction.numparam.circular_correlation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Numerically computes the definite
+integral representing the multilinear circular correlation
+of a collection of unctions using uniform probability measure. The
+circular correlation coefficient here has
+been generalized to allow more than two variables.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>F</strong> (<em>array-like</em><em>[</em><em>function</em><em>]</em><em></em>) – Functions to be integrated.</li>
+<li><strong>I</strong> (<em>array-like</em>) – Integration bounds.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>result</strong> – Definite integral.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">F</span> <span class="o">=</span> <span class="p">[</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">I</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)]</span><span class="o">*</span><span class="mi">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">circular_correlation</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">I</span><span class="p">)</span>
+<span class="go">1.0</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The length and order of <cite>I</cite> must correspond
+to the variables in F.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="conaction.numparam.covariance">
+<code class="descclassname">conaction.numparam.</code><code class="descname">covariance</code><span class="sig-paren">(</span><em>F</em>, <em>I</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#conaction.numparam.covariance" title="Permalink to this definition">¶</a></dt>
 <dd><p>Numerically computes the definite
 integral representing the multilinear covariance value of a
 function using uniform probability measure. The covariance
 here is generalized to include mixed-centered product
 moments.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>F</strong> (<em>array-like</em><em>[</em><em>function</em><em>]</em><em></em>) – Functions to be integrated.</p></li>
-<li><p><strong>I</strong> (<em>array-like</em>) – Integration bounds.</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>F</strong> (<em>array-like</em><em>[</em><em>function</em><em>]</em><em></em>) – Functions to be integrated.</li>
+<li><strong>I</strong> (<em>array-like</em>) – Integration bounds.</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>result</strong> – Definite integral.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>result</strong> – Definite integral.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
+</td>
+</tr>
+</tbody>
+</table>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">F</span> <span class="o">=</span> <span class="p">[</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">F</span> <span class="o">=</span> <span class="p">[</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">I</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)]</span><span class="o">*</span><span class="mi">2</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">covariance</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">I</span><span class="p">)</span>
 <span class="go">0.16666666666666666</span>
 </pre></div>
 </div>
 <div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>The length and order of <cite>I</cite> must correspond
+<p class="first admonition-title">Warning</p>
+<p class="last">The length and order of <cite>I</cite> must correspond
 to the variables in F.</p>
 </div>
 </dd></dl>
 
-<dl class="py function">
-<dt class="sig sig-object py" id="conaction.numparam.mean">
-<span class="sig-prename descclassname"><span class="pre">conaction.numparam.</span></span><span class="sig-name descname"><span class="pre">mean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">I</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#conaction.numparam.mean" title="Permalink to this definition"></a></dt>
+<dl class="function">
+<dt id="conaction.numparam.mean">
+<code class="descclassname">conaction.numparam.</code><code class="descname">mean</code><span class="sig-paren">(</span><em>f</em>, <em>I</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#conaction.numparam.mean" title="Permalink to this definition">¶</a></dt>
 <dd><p>Numerically computes the definite
 integral representing the mean value of a
 function using uniform probability measure.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>f</strong> (<em>function.</em>) – Function to be integrated.</p></li>
-<li><p><strong>I</strong> (<em>array-like</em>) – Integration bounds.</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>f</strong> (<em>function.</em>) – Function to be integrated.</li>
+<li><strong>I</strong> (<em>array-like</em>) – Integration bounds.</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>result</strong> – Definite integral.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>result</strong> – Definite integral.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
+</td>
+</tr>
+</tbody>
+</table>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">F</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">F</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">I</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)]</span><span class="o">*</span><span class="mi">2</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">mean</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">I</span><span class="p">)</span>
 <span class="go">1.0</span>
 </pre></div>
 </div>
 <div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>The length and order of <cite>I</cite> must correspond
+<p class="first admonition-title">Warning</p>
+<p class="last">The length and order of <cite>I</cite> must correspond
 to the variables in f.</p>
 </div>
 </dd></dl>
 
-<dl class="py function">
-<dt class="sig sig-object py" id="conaction.numparam.minkowski_deviation">
-<span class="sig-prename descclassname"><span class="pre">conaction.numparam.</span></span><span class="sig-name descname"><span class="pre">minkowski_deviation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">I</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#conaction.numparam.minkowski_deviation" title="Permalink to this definition"></a></dt>
+<dl class="function">
+<dt id="conaction.numparam.minkowski_deviation">
+<code class="descclassname">conaction.numparam.</code><code class="descname">minkowski_deviation</code><span class="sig-paren">(</span><em>f</em>, <em>I</em>, <em>p=2</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#conaction.numparam.minkowski_deviation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Numerically computes the definite
 integral representing the Minkowski deviation value of a
 function using uniform probability measure. The Minkowski
 deviation of order 2 is t he standard deviation.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>f</strong> (<em>function.</em>) – Function to be integrated.</p></li>
-<li><p><strong>I</strong> (<em>array-like</em>) – Integration bounds.</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>f</strong> (<em>function.</em>) – Function to be integrated.</li>
+<li><strong>I</strong> (<em>array-like</em>) – Integration bounds.</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>result</strong> – Definite integral.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>result</strong> – Definite integral.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
+</td>
+</tr>
+</tbody>
+</table>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">F</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">F</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">I</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)]</span><span class="o">*</span><span class="mi">2</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">minkowski_deviation</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">I</span><span class="p">)</span>
 <span class="go">0.408248290463863</span>
 </pre></div>
 </div>
 <div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>The length and order of <cite>I</cite> must correspond
+<p class="first admonition-title">Warning</p>
+<p class="last">The length and order of <cite>I</cite> must correspond
 to the variables in f.</p>
 </div>
 <div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>A sufficiently large input value for p can
+<p class="first admonition-title">Warning</p>
+<p class="last">A sufficiently large input value for p can
 result numerical issues such as <a class="reference external" href="https://en.wikipedia.org/wiki/Arithmetic_underflow">arithmetic underflow underflow</a>.</p>
 </div>
 </dd></dl>
 
-<dl class="py function">
-<dt class="sig sig-object py" id="conaction.numparam.pearson_correlation">
-<span class="sig-prename descclassname"><span class="pre">conaction.numparam.</span></span><span class="sig-name descname"><span class="pre">pearson_correlation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">F</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">I</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#conaction.numparam.pearson_correlation" title="Permalink to this definition"></a></dt>
+<dl class="function">
+<dt id="conaction.numparam.pearson_correlation">
+<code class="descclassname">conaction.numparam.</code><code class="descname">pearson_correlation</code><span class="sig-paren">(</span><em>F</em>, <em>I</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#conaction.numparam.pearson_correlation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Numerically computes the definite
 integral representing the multilinear Pearson product-moment
 value of a function using uniform probability measure. The
 Pearson’s product-moment correlation coefficient here has
 been generalized to allow more than two variables.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>F</strong> (<em>array-like</em><em>[</em><em>function</em><em>]</em><em></em>) – Functions to be integrated.</p></li>
-<li><p><strong>I</strong> (<em>array-like</em>) – Integration bounds.</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>F</strong> (<em>array-like</em><em>[</em><em>function</em><em>]</em><em></em>) – Functions to be integrated.</li>
+<li><strong>I</strong> (<em>array-like</em>) – Integration bounds.</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>result</strong> – Definite integral.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>result</strong> – Definite integral.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
+</td>
+</tr>
+</tbody>
+</table>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">F</span> <span class="o">=</span> <span class="p">[</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">F</span> <span class="o">=</span> <span class="p">[</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">I</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)]</span><span class="o">*</span><span class="mi">2</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">pearson_correlation</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">I</span><span class="p">)</span>
 <span class="go">1.0</span>
 </pre></div>
 </div>
 <div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>The length and order of <cite>I</cite> must correspond
+<p class="first admonition-title">Warning</p>
+<p class="last">The length and order of <cite>I</cite> must correspond
 to the variables in F.</p>
 </div>
 </dd></dl>
 
-</section>
+<dl class="function">
+<dt id="conaction.numparam.product_moment">
+<code class="descclassname">conaction.numparam.</code><code class="descname">product_moment</code><span class="sig-paren">(</span><em>F</em>, <em>I</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#conaction.numparam.product_moment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Numerically computes the definite
+integral representing the mixed uncentered product moment value of a
+collection of functions using uniform probability measure.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>F</strong> (<em>array-like</em><em>[</em><em>function</em><em>]</em><em></em>) – Functions to be integrated.</li>
+<li><strong>I</strong> (<em>array-like</em>) – Integration bounds.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>result</strong> – Definite integral.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">F</span> <span class="o">=</span> <span class="p">[</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">I</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)]</span><span class="o">*</span><span class="mi">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">product_moment</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">I</span><span class="p">)</span>
+<span class="go">1.1666666666666665</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The length and order of <cite>I</cite> must correspond
+to the variables in F.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="conaction.numparam.reflective_correlation">
+<code class="descclassname">conaction.numparam.</code><code class="descname">reflective_correlation</code><span class="sig-paren">(</span><em>F</em>, <em>I</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#conaction.numparam.reflective_correlation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Numerically computes the definite
+integral representing the multilinear reflective correlation
+value of a collection of functions using uniform probability measure. The
+reflective correlation coefficient here has
+been generalized to allow more than two variables.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>F</strong> (<em>array-like</em><em>[</em><em>function</em><em>]</em><em></em>) – Functions to be integrated.</li>
+<li><strong>I</strong> (<em>array-like</em>) – Integration bounds.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>result</strong> – Definite integral.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">F</span> <span class="o">=</span> <span class="p">[</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">I</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)]</span><span class="o">*</span><span class="mi">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">reflective_correlation</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">I</span><span class="p">)</span>
+<span class="go">1.0</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The length and order of <cite>I</cite> must correspond
+to the variables in F.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="conaction.numparam.root_moment">
+<code class="descclassname">conaction.numparam.</code><code class="descname">root_moment</code><span class="sig-paren">(</span><em>f</em>, <em>I</em>, <em>p=2</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#conaction.numparam.root_moment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Numerically computes the definite
+integral representing the root moment value of a
+function using uniform probability measure.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>f</strong> (<em>function.</em>) – Function to be integrated.</li>
+<li><strong>I</strong> (<em>array-like</em>) – Integration bounds.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>result</strong> – Definite integral.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">F</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">I</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)]</span><span class="o">*</span><span class="mi">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">root_moment</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">I</span><span class="p">)</span>
+<span class="go">1.0801234497346432</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The length and order of <cite>I</cite> must correspond
+to the variables in f.</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">A sufficiently large input value for p can
+result numerical issues such as <a class="reference external" href="https://en.wikipedia.org/wiki/Arithmetic_underflow">arithmetic underflow underflow</a>.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="conaction.numparam.signum_correlation">
+<code class="descclassname">conaction.numparam.</code><code class="descname">signum_correlation</code><span class="sig-paren">(</span><em>F</em>, <em>I</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#conaction.numparam.signum_correlation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Numerically computes the definite
+integral representing the multilinear circular correlation
+of a collection of unctions using uniform probability measure. The
+circular correlation coefficient here has
+been generalized to allow more than two variables.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>F</strong> (<em>array-like</em><em>[</em><em>function</em><em>]</em><em></em>) – Functions to be integrated.</li>
+<li><strong>I</strong> (<em>array-like</em>) – Integration bounds.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>result</strong> – Definite integral.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">F</span> <span class="o">=</span> <span class="p">[</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">I</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)]</span><span class="o">*</span><span class="mi">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">signum_correlation</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">I</span><span class="p">)</span>
+<span class="go">1.0</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The length and order of <cite>I</cite> must correspond
+to the variables in F.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="conaction.numparam.taylor_correlation">
+<code class="descclassname">conaction.numparam.</code><code class="descname">taylor_correlation</code><span class="sig-paren">(</span><em>F</em>, <em>I</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#conaction.numparam.taylor_correlation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Numerically computes Taylor’s multi-way correlation
+coefficient for a given collcetion of functions using
+definite integration.</p>
+<p>Taylor 2020 defines this function to be</p>
+<div class="math notranslate nohighlight">
+\[\frac{1}{\sqrt{d}} \sqrt{\frac{1}{d-1} \sum_{i}^{d} ( \lambda_i -  \bar{\lambda})^2 }\]</div>
+<p>where <span class="math notranslate nohighlight">\(d\)</span> is the number of variables, <span class="math notranslate nohighlight">\(\lambda_1, \cdots, \lambda_d\)</span> are the eigenvalues of
+the correlation matrix for a given set of variables, and <span class="math notranslate nohighlight">\(\bar{\lambda}\)</span> is the mean of those eigenvalues.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>F</strong> (<em>array-like</em><em>[</em><em>function</em><em>]</em><em></em>) – Functions to be integrated.</li>
+<li><strong>I</strong> (<em>array-like</em>) – Integration bounds.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>result</strong> – Definite integral.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>Taylor’s multi-way correlation coefficient is a rescaling of the Bessel-corrected standard deviation of the
+eigenvalues of the correlation matrix of the set of variables.</p>
+<p class="rubric">References</p>
+<table class="docutils footnote" frame="void" id="id2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td>Taylor, BM. 2020. “A Multi-Way Correlation Coefficient”, <a class="reference external" href="https://arxiv.org/abs/2003.02561">https://arxiv.org/abs/2003.02561</a></td></tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">F</span> <span class="o">=</span> <span class="p">[</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">I</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">taylor_correlation</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">I</span><span class="p">)</span>
+<span class="go">1.0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
 
 
            </div>

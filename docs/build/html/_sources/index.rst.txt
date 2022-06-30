@@ -19,7 +19,7 @@ Welcome to ConAction's documentation!
    estimators
    numparam
    symparam
-   transform
+   sampling
    frequently_asked_questions
    glossary_of_terms
 

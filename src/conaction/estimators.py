@@ -2,16 +2,42 @@
 The Estimators module contains a variety of statistical estimators that can be applied to multivariate datasets.
 '''
 
-
-# TODO: Consider suggestions at https://stackoverflow.com/questions/35673895/type-hinting-annotation-pep-484-for-numpy-ndarray
-# TODO: Ensure code follows style guide: https://numpydoc.readthedocs.io/en/latest/format.html
 import os
 
+import networkx as nx
 import numpy as np
+from numpy import mean, std as standard_deviation
 from pathos.pools import ProcessPool
-from scipy.fft import fft, ifft
 from scipy.stats import rankdata
 import tqdm
+
+def pnorm(x: np.ndarray, p=2) -> np.float64:
+    '''
+    Computes the p-norm of a given vector.
+    
+    Parameters
+    ----------
+    x : 1D array-like
+    	An m-dimensional vector.
+    p : float
+    	Order of the norm.
+    
+    Returns
+    -------
+    	: np.float64
+    	P-norm of input vector.
+    
+    References
+    ----------
+    .. [1] "Norm (mathematics).", https://en.wikipedia.org/wiki/Norm_(mathematics)
+    .. [2] "Norm.", https://mathworld.wolfram.com/Norm.html
+    .. [3] "Vector Norm.", https://mathworld.wolfram.com/VectorNorm.html
+    '''
+    result = np.abs(x)
+    result = np.power(result, p)
+    result = np.sum(result)
+    result = np.power(result, 1/p)
+    return result
 
 
 def kendall_tau(X: np.ndarray, method='A', n_jobs=1) -> np.float64:
@@ -90,24 +116,15 @@ def kendall_tau(X: np.ndarray, method='A', n_jobs=1) -> np.float64:
         return result
 
 
-def grade_entropy(X: np.ndarray, n_jobs=1) -> np.float64:
+def grade_entropy(X, normalize=True):
     '''
-    Computes grade entropy for a strict product order
+    Computes a grade entropy for a strict product order
     on the row space points.
-
-    A strict product order on embeddings of the real
-    numbers gives a partial order. On a particular data
-    set it may be desirable to quantify the extent to
-    which there is a total order vs noorder at all.
-
-    Under such an order, two points :math:`\\vec{x}, \\vec{y} \\in \\mathbb{R}^n`
-    hold the relation :math:`\\vec{x} < \\vec{y}` if-and-only-if
-    :math:`x_j < y_j\\ \\forall j \\in \\{1, \\cdots, n\\}`.
-
+    
     This function computes
 
     .. math::
-        H_g = \\frac{-\\sum_{i=1}^{m} p \\circ g(x_i) \\ln (p \\circ g(x_i))}{\\ln{m}}
+        H_g = \\frac{-\\sum_{i=1}^{k} p (g_i) \\ln (p (g_i))}{\\ln{m}}
 
     where :math:`p` is a probability distribution over the grades :math:`g`
     of the point :math:`x_i` among the indexed set of points :math:`i \\in \\{1, \\cdots, m\\}`
@@ -137,7 +154,83 @@ def grade_entropy(X: np.ndarray, n_jobs=1) -> np.float64:
     --------
     >>> import numpy as np
     >>> data = np.arange(100).reshape(10,10)
-    >>> grade_entropy(data)
+    >>> pseudograde_entropy(data)
+    1.0
+    '''
+    D = nx.DiGraph()
+    for i, xi in enumerate(X):
+        for j, xj in enumerate(X):
+            if np.all(xi < xj):
+                D.add_edge(j, i)
+
+    assert nx.is_directed_acyclic_graph(D), 'Graph is not a DAG.'
+
+    D = nx.transitive_reduction(D)
+    grades = {}
+    current_grade = 1
+    for node in nx.topological_sort(D):
+        if grades == {}:
+            grades[current_grade] = [node]
+        else:
+            for visited_node in grades[current_grade]:
+                if node in nx.descendants(D, visited_node):
+                    current_grade += 1
+                    grades[current_grade] = [node]
+                    break
+                else:
+                    continue
+            else:
+                grades[current_grade].append(node)
+
+    total = len(D.nodes())
+    grade_dist = [len(j) / total for i,j in grades.items()]
+    grade_dist = np.array(grade_dist)
+    result  = - np.sum(grade_dist * np.log2(grade_dist))
+    if normalize:
+        result /= np.log2(total)
+        return result
+    else:
+        return result
+
+def pseudograde_entropy(X: np.ndarray, n_jobs=1) -> np.float64:
+    '''
+    Computes a pseudograde entropy for a strict product order
+    on the row space points.
+
+    This function computes
+
+    .. math::
+        H_g = \\frac{-\\sum_{i=1}^{k} p (g_i) \\ln (p (g_i))}{\\ln{m}}
+
+    where :math:`p` is a probability distribution over the pseudogrades :math:`g`
+    of the point :math:`x_i` among the indexed set of points :math:`i \\in \\{1, \\cdots, m\\}`
+    according to a strict product order relation.
+
+    Parameters
+    ----------
+    X : array-like
+        An m x n data matrix.
+
+    Returns
+    -------
+    entropy : np.float64
+        Pseudograde entropy of product order.
+
+    References
+    ----------
+    .. [1] "Graded Poset.", https://en.wikipedia.org/wiki/Graded_poset
+    .. [2] "Entropy (Information Theory).", https://en.wikipedia.org/wiki/Entropy_(information_theory)
+    .. [3] "Partially Ordered Set.", https://en.wikipedia.org/wiki/Partially_ordered_set
+    .. [4] "Partially Ordered Set.", https://mathworld.wolfram.com/PartiallyOrderedSet.html
+    .. [5] "Product Order.", https://en.wikipedia.org/wiki/Product_order
+    .. [6] "Ranked Poset.", https://en.wikipedia.org/wiki/Ranked_poset
+    .. [7] "Total Order.", https://en.wikipedia.org/wiki/Total_order
+
+    Examples
+    --------
+    >>> import numpy as np
+    >>> data = np.arange(100).reshape(10,10)
+    >>> pseudograde_entropy(data)
     1.0
     '''
     P = np.zeros((X.shape[0], X.shape[0]))
@@ -173,52 +266,6 @@ def grade_entropy(X: np.ndarray, n_jobs=1) -> np.float64:
     probs = counts / np.sum(counts)
     entropy = np.sum(probs * np.log(probs)) / (np.log(1/np.sum(counts)))
     return entropy
-
-def convolution(X: np.ndarray):
-    '''
-    Convolution operator on a collection of signals.
-
-    .. math::
-        \\text{M} \\left[ x_1(t), \\cdots, x_n(t) \\right] \\triangleq \\mathcal{F}^{-1} \\left{ \\prod_{j=1}^{n} \\mathcal{F} x(t) \\right}
-
-    Parameters
-    ----------
-    X : array-like[np.float64]
-        m x n data matrix
-
-    Returns
-    -------
-     : array-like[np.float64]
-        Convolved signal.
-
-    Notes
-    -----
-    Values in corresponding rows must be meaningfully paired, and the index of the rows
-    must be an ordered parameter.
-
-    References
-    ----------
-    .. [1] "Fast Fourier transform", https://docs.scipy.org/doc/scipy/tutorial/fft.html
-    .. [2] "Fourier Transform", https://mathworld.wolfram.com/FourierTransform.html
-    .. [3] "Fourier Transform", https://en.wikipedia.org/wiki/Fourier_transform
-    .. [4] "Convolution Theorem", https://mathworld.wolfram.com/ConvolutionTheorem.html
-    .. [5] "Convolution Theorem", https://en.wikipedia.org/wiki/Convolution_theorem
-
-    Examples
-    --------
-    >>> import numpy as np
-    >>> X = np.zeros((10, 3))
-    >>> t = np.linspace(-2*np.pi, 2*np.pi, 10)
-    >>> X[:,0] = np.sin(t)
-    >>> X[:,1] = np.cos(t)
-    >>> X[:,2] = t
-    >>> convolution(X)
-    array([-16.94924406+0.j, -49.80176265+0.j, -14.64303061+0.j,
-        36.46598534+0.j,  36.46598534+0.j, -14.64303061+0.j,
-       -49.80176265+0.j, -16.94924406+0.j,  44.92805198+0.j,
-        44.92805198+0.j])
-    '''
-    return ifft(np.prod(fft(X, axis=0), axis=1))
 
 def median_correlation(X: np.ndarray, transform=lambda x: x - np.median(x, axis=0)) -> np.float64:
     '''
@@ -263,9 +310,9 @@ def median_correlation(X: np.ndarray, transform=lambda x: x - np.median(x, axis=
     r = numerator / denominator
     return r
     
-def minkowski_deviation(x: np.ndarray, order=2) -> np.float64:
+def nightingale_deviation(x: np.ndarray, p=2) -> np.float64:
     '''
-    Calculates the Minkowski deviation of order p.
+    Calculates the Nightingale deviation of order p.
     When the order = 2, it is the same as the standard
     deviation.
 
@@ -299,10 +346,8 @@ def minkowski_deviation(x: np.ndarray, order=2) -> np.float64:
     2.8722813232690143
     '''
     result = x - np.mean(x)
-    result = np.abs(result)
-    result = np.power(result, order)
-    result = np.mean(result)
-    result = np.power(result, 1 / order)
+    result = pnorm(result, p=p)
+    result *= np.power(1 / x.size, 1 / p)
     return result
 
 def reflective_correlation(X: np.ndarray) -> np.float64:
@@ -606,12 +651,12 @@ def misiak_correlation(x: np.ndarray, y: np.ndarray, X: np.ndarray) -> np.float6
     result = numerator / denominator
     return result
 
-def multisemideviation(X: np.ndarray, p=1) -> np.float64:
+def nightingale_covariance(X: np.ndarray, p=1) -> np.float64:
     '''
-    This function calculates the multisemideviation
+    This function calculates the Nightingale covariance
     which is the multisemimetric between a collection
     of random variables from their expectations. The
-    multisemimetric is induced by the multiseminorm,
+    multisemimetric is induced by a multiseminorm,
     which is a generalization of the notion of a
     seminorm.
 
@@ -623,12 +668,12 @@ def multisemideviation(X: np.ndarray, p=1) -> np.float64:
     Returns
     ----------
         : np.float64
-            Multisemideviation score.
+            Nightingale covariance.
 
     See Also
     --------
     numpy.std : Standard deviation.
-    minkowski_deviation : Minkowski deviation of order p.
+    nightingale_deviation : Nightingale's deviation of order p.
 
     References
     ----------
@@ -639,15 +684,54 @@ def multisemideviation(X: np.ndarray, p=1) -> np.float64:
     --------
     >>> import numpy as np
     >>> data = np.arange(100).reshape(10,10)
-    >>> multisemideviation(data)
+    >>> nightingale_covariance(data)
     7381024072265624.0
     '''
     result = X - np.mean(X, axis=0)
-    result = np.prod(result, axis=1)
-    result = np.power(result, p)
-    result = np.mean(result)
-    result = np.power(result, 1/p)
+    result = pnorm(result, p=p)
+    result *= np.power(1 / X.shape[0], 1 / p)
     return result
+
+def nightingale_correlation(X: np.ndarray, p=1, alphas=None):
+    '''
+    Calculates the Nightingale correlation which is a
+    normalized Nightingale covariance onto the interval
+    of [0,1].
+
+    Paramaters
+    ----------
+        X: array-like
+            m x n data matrix
+
+    Returns
+    -------
+        : np.float64
+            Nightingale correlation
+    
+    See Also
+    --------
+    nightingale_deviation : Nightingale's deviation of order p.
+    nightingale_covariance : Nightingale's covariance of order p.
+
+    References
+    --------
+        .. _Seminorm(Mathworld): https://mathworld.wolfram.com/Seminorm.html
+        .. Seminorm(Wikipedia): https://en.wikipedia.org/wiki/Seminorm
+    
+
+    '''
+    if not alphas:
+        alphas = np.ones(X.shape[1]) / X.shape[1]
+    else:
+        assert np.sum(alphas) == 1.0, 'Reciprocals of alphas must sum to one.'
+        assert np.all(alphas > 1), 'Alphas must be greater than one.'
+    
+    denominator = nightingale_covariance(X, p=p)
+    numerator = X - np.mean(X, axis=0)
+    numerator = [nightingale_deviation(numerator[:,j])\
+                 for j in range(X.shape[1])]
+    numerator = np.prod(numerator)
+    return numerator / denominator
 
 def signum_correlation(X: np.ndarray) -> np.float64:
     '''
@@ -833,3 +917,49 @@ def weak_inner_correlation():
     '''
     raise NotImplementedError
 
+
+def partial_agnesian(X: np.ndarray, t=None, k=0):
+    '''
+    Computes the partial Agnesian of order k on a
+    data matrix. If a vector of parameters is not
+    provided, then a parameter step size of unity
+    is assumed.
+
+    Parameters
+    ----------
+    X : array-like (2D)
+        m x n data matrix
+    t : array-like (1D)
+        Vector parameters corresponding to the rows of X.
+    k : Non-negative int
+        Non-negative order of the partial Agnesian operator.
+    
+    Returns
+    -------
+    : array-like[float]
+        Sequence of partial Agnesian scores.
+        
+    Examples
+    --------
+    >>> import numpy as np
+    >>> data = np.arange(5*3).reshape(5,3)
+    >>> partial_agnesian(X,k=1)
+    array([27, 27, 27, 27])
+    >>> partial_agnesian(X, k=2)
+    array([0, 0, 0])
+    >>> t = np.linspace(0, 10, 5)
+    >>> partial_agnesian(X, k=1, t=t)
+    array([1.728, 1.728, 1.728, 1.728])
+    '''
+    
+    result = np.diff(X, n=k, axis=0)
+
+    if t is not None:
+        assert t.ndim == 1, 'Parameter t must be one-dimensional.'
+        dt = np.diff(t, n=k)
+        result = result / dt[:, None]
+    
+    result = np.prod(result, axis=1)
+    return result
+
+    

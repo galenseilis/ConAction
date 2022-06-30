@@ -1,25 +1,23 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html4" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SymParam &mdash; ConAction 0.0.2 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <title>SymParam &mdash; ConAction 0.0.26 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Transform" href="transform.html" />
+    <link rel="next" title="Sampling" href="sampling.html" />
     <link rel="prev" title="NumParam" href="numparam.html" /> 
 </head>
 
@@ -38,12 +36,12 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+              <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="estimators.html">Estimators</a></li>
 <li class="toctree-l1"><a class="reference internal" href="numparam.html">NumParam</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">SymParam</a></li>
-<li class="toctree-l1"><a class="reference internal" href="transform.html">Transform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sampling.html">Sampling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="frequently_asked_questions.html">FAQ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="glossary_of_terms.html">Glossary of Terms</a></li>
 </ul>
@@ -72,50 +70,58 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-conaction.symparam">
-<span id="symparam"></span><h1>SymParam<a class="headerlink" href="#module-conaction.symparam" title="Permalink to this headline"></a></h1>
+  <div class="section" id="module-conaction.symparam">
+<span id="symparam"></span><h1>SymParam<a class="headerlink" href="#module-conaction.symparam" title="Permalink to this headline">¶</a></h1>
 <p>The SymParam module is provides functions for symbolically computing
 instantiations of the Trinity of Covariation.</p>
 <div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Sometimes the evalf() function should be used to complete
+<p class="first admonition-title">Warning</p>
+<p class="last">Sometimes the evalf() function should be used to complete
 the calculation to a floating point value. This will often depend
 on the functions being integrated and how SymPy attempts to
 handle them.</p>
 </div>
-<dl class="py function">
-<dt class="sig sig-object py" id="conaction.symparam.circular_correlation">
-<span class="sig-prename descclassname"><span class="pre">conaction.symparam.</span></span><span class="sig-name descname"><span class="pre">circular_correlation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">F</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#conaction.symparam.circular_correlation" title="Permalink to this definition"></a></dt>
+<dl class="function">
+<dt id="conaction.symparam.circular_correlation">
+<code class="descclassname">conaction.symparam.</code><code class="descname">circular_correlation</code><span class="sig-paren">(</span><em>F</em>, <em>var</em>, <em>a</em>, <em>b</em><span class="sig-paren">)</span><a class="headerlink" href="#conaction.symparam.circular_correlation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Symbolically computes the multilinear circular
 correlation coefficient on a collection of functions over a given
 interval by integrating over a shared parameter.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>F</strong> (<em>array-like</em><em>[</em><em>SymPy expressions</em><em>]</em>) – Sequence of functions to compute correlation coefficient upon.</p></li>
-<li><p><strong>var</strong> (<em>SymPy Symbol</em>) – Independent parameter for integration.</p></li>
-<li><p><strong>a</strong> (<em>Undefined.</em>) – Lower bound of integration.</p></li>
-<li><p><strong>b</strong> (<em>Undefined.</em>) – Upper bound of integration.</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>F</strong> (<em>array-like</em><em>[</em><em>SymPy expressions</em><em>]</em>) – Sequence of functions to compute correlation coefficient upon.</li>
+<li><strong>var</strong> (<em>SymPy Symbol</em>) – Independent parameter for integration.</li>
+<li><strong>a</strong> (<em>Undefined.</em>) – Lower bound of integration.</li>
+<li><strong>b</strong> (<em>Undefined.</em>) – Upper bound of integration.</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>result</strong> – Definite multilinear circular correlation.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>SymPy expression.</p>
-</dd>
-</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>result</strong> – Definite multilinear circular correlation.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">SymPy expression.</p>
+</td>
+</tr>
+</tbody>
+</table>
 <p class="rubric">References</p>
-<dl class="footnote brackets">
-<dt class="label" id="id1"><span class="brackets">1</span></dt>
-<dd><p>“Correlation.”, <a class="reference external" href="https://en.wikipedia.org/wiki/Correlation">https://en.wikipedia.org/wiki/Correlation</a></p>
-</dd>
-<dt class="label" id="id2"><span class="brackets">2</span></dt>
-<dd><p>“Circular correlation coefficient.”, <a class="reference external" href="https://en.wikipedia.org/wiki/Pearson_correlation_coefficient#Circular_correlation_coefficient">https://en.wikipedia.org/wiki/Pearson_correlation_coefficient#Circular_correlation_coefficient</a></p>
-</dd>
-</dl>
+<table class="docutils footnote" frame="void" id="id1" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td>“Correlation.”, <a class="reference external" href="https://en.wikipedia.org/wiki/Correlation">https://en.wikipedia.org/wiki/Correlation</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[2]</td><td>“Circular correlation coefficient.”, <a class="reference external" href="https://en.wikipedia.org/wiki/Pearson_correlation_coefficient#Circular_correlation_coefficient">https://en.wikipedia.org/wiki/Pearson_correlation_coefficient#Circular_correlation_coefficient</a></td></tr>
+</tbody>
+</table>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">F</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="o">**</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">circular_correlation</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">evalf</span><span class="p">()</span>
 <span class="go">-0.e-1</span>
@@ -123,39 +129,47 @@ interval by integrating over a shared parameter.</p>
 </div>
 </dd></dl>
 
-<dl class="py function">
-<dt class="sig sig-object py" id="conaction.symparam.covariance">
-<span class="sig-prename descclassname"><span class="pre">conaction.symparam.</span></span><span class="sig-name descname"><span class="pre">covariance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">F</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#conaction.symparam.covariance" title="Permalink to this definition"></a></dt>
+<dl class="function">
+<dt id="conaction.symparam.covariance">
+<code class="descclassname">conaction.symparam.</code><code class="descname">covariance</code><span class="sig-paren">(</span><em>F</em>, <em>var</em>, <em>a</em>, <em>b</em><span class="sig-paren">)</span><a class="headerlink" href="#conaction.symparam.covariance" title="Permalink to this definition">¶</a></dt>
 <dd><p>Symbolically computes the multilinear covariance of a
 collection of functions over a given interval by integrating
 over a shared parameter.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>F</strong> (<em>array-like</em><em>[</em><em>SymPy expressions</em><em>]</em>) – Sequence of functions to compute covariance upon.</p></li>
-<li><p><strong>var</strong> (<em>SymPy Symbol</em>) – Independent parameter for integration.</p></li>
-<li><p><strong>a</strong> (<em>Undefined.</em>) – Lower bound of integration.</p></li>
-<li><p><strong>b</strong> (<em>Undefined.</em>) – Upper bound of integration.</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>F</strong> (<em>array-like</em><em>[</em><em>SymPy expressions</em><em>]</em>) – Sequence of functions to compute covariance upon.</li>
+<li><strong>var</strong> (<em>SymPy Symbol</em>) – Independent parameter for integration.</li>
+<li><strong>a</strong> (<em>Undefined.</em>) – Lower bound of integration.</li>
+<li><strong>b</strong> (<em>Undefined.</em>) – Upper bound of integration.</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>result</strong> – Definite multilinear covariance.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>SymPy expression.</p>
-</dd>
-</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>result</strong> – Definite multilinear covariance.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">SymPy expression.</p>
+</td>
+</tr>
+</tbody>
+</table>
 <p class="rubric">References</p>
-<dl class="footnote brackets">
-<dt class="label" id="id3"><span class="brackets">1</span></dt>
-<dd><p>“Covariance.”, <a class="reference external" href="https://en.wikipedia.org/wiki/Covariance">https://en.wikipedia.org/wiki/Covariance</a></p>
-</dd>
-<dt class="label" id="id4"><span class="brackets">2</span></dt>
-<dd><p>“Mixed moment.”, <a class="reference external" href="https://en.wikipedia.org/wiki/Moment_(mathematics">https://en.wikipedia.org/wiki/Moment_(mathematics</a>)#Mixed_moments</p>
-</dd>
-</dl>
+<table class="docutils footnote" frame="void" id="id3" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td>“Covariance.”, <a class="reference external" href="https://en.wikipedia.org/wiki/Covariance">https://en.wikipedia.org/wiki/Covariance</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id4" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[2]</td><td>“Mixed moment.”, <a class="reference external" href="https://en.wikipedia.org/wiki/Moment_(mathematics">https://en.wikipedia.org/wiki/Moment_(mathematics</a>)#Mixed_moments</td></tr>
+</tbody>
+</table>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">F</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="o">**</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">covariance</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 <span class="go">0.0833333333333333</span>
@@ -163,98 +177,111 @@ over a shared parameter.</p>
 </div>
 </dd></dl>
 
-<dl class="py function">
-<dt class="sig sig-object py" id="conaction.symparam.mean">
-<span class="sig-prename descclassname"><span class="pre">conaction.symparam.</span></span><span class="sig-name descname"><span class="pre">mean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#conaction.symparam.mean" title="Permalink to this definition"></a></dt>
+<dl class="function">
+<dt id="conaction.symparam.mean">
+<code class="descclassname">conaction.symparam.</code><code class="descname">mean</code><span class="sig-paren">(</span><em>f</em>, <em>t</em>, <em>a</em>, <em>b</em><span class="sig-paren">)</span><a class="headerlink" href="#conaction.symparam.mean" title="Permalink to this definition">¶</a></dt>
 <dd><p>Symbolically computes the definite
 integral representing the mean value of a
 function using uniform probability measure.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>f</strong> (<em>SymPy expression.</em>) – Function to be integrated.</p></li>
-<li><p><strong>t</strong> (<cite>sympy.core.symbol.Symbol</cite>.) – Independent parameter for integration.</p></li>
-<li><p><strong>a</strong> (<em>Undefined.</em>) – Lower bound of integration.</p></li>
-<li><p><strong>b</strong> (<em>Undefined.</em>) – Upper bound of integration.</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>f</strong> (<em>SymPy expression.</em>) – Function to be integrated.</li>
+<li><strong>t</strong> (<cite>sympy.core.symbol.Symbol</cite>.) – Independent parameter for integration.</li>
+<li><strong>a</strong> (<em>Undefined.</em>) – Lower bound of integration.</li>
+<li><strong>b</strong> (<em>Undefined.</em>) – Upper bound of integration.</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>result</strong> – Definite mean of function over given interval.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>SymPy expression.</p>
-</dd>
-</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>result</strong> – Definite mean of function over given interval.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">SymPy expression.</p>
+</td>
+</tr>
+</tbody>
+</table>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">mean</span><span class="p">(</span><span class="n">x</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 <span class="go">1.33333333333333</span>
 </pre></div>
 </div>
 </dd></dl>
 
-<dl class="py function">
-<dt class="sig sig-object py" id="conaction.symparam.minkowski_deviation">
-<span class="sig-prename descclassname"><span class="pre">conaction.symparam.</span></span><span class="sig-name descname"><span class="pre">minkowski_deviation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#conaction.symparam.minkowski_deviation" title="Permalink to this definition"></a></dt>
+<dl class="function">
+<dt id="conaction.symparam.minkowski_deviation">
+<code class="descclassname">conaction.symparam.</code><code class="descname">minkowski_deviation</code><span class="sig-paren">(</span><em>f</em>, <em>var</em>, <em>a</em>, <em>b</em>, <em>p=2</em><span class="sig-paren">)</span><a class="headerlink" href="#conaction.symparam.minkowski_deviation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Symbolically computes the definite
 integral representing the Minkowski deviation of
 order p of a function using uniform probability measure.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>f</strong> (<em>SymPy expression.</em>) – Function to be integrated.</p></li>
-<li><p><strong>var</strong> (<cite>sympy.core.symbol.Symbol</cite>.) – Independent parameter for integration.</p></li>
-<li><p><strong>a</strong> (<em>Undefined.</em>) – Lower bound of integration.</p></li>
-<li><p><strong>b</strong> (<em>Undefined.</em>) – Upper bound of integration.</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>f</strong> (<em>SymPy expression.</em>) – Function to be integrated.</li>
+<li><strong>var</strong> (<cite>sympy.core.symbol.Symbol</cite>.) – Independent parameter for integration.</li>
+<li><strong>a</strong> (<em>Undefined.</em>) – Lower bound of integration.</li>
+<li><strong>b</strong> (<em>Undefined.</em>) – Upper bound of integration.</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>result</strong> – Definite Minkowski deviation of order p of function over given interval.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>SymPy expression.</p>
-</dd>
-</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>result</strong> – Definite Minkowski deviation of order p of function over given interval.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">SymPy expression.</p>
+</td>
+</tr>
+</tbody>
+</table>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">minkowski_deviation</span><span class="p">(</span><span class="n">x</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">evalf</span><span class="p">()</span>
 <span class="go">0.256600174703415</span>
 </pre></div>
 </div>
 </dd></dl>
 
-<dl class="py function">
-<dt class="sig sig-object py" id="conaction.symparam.misiak_correlation">
-<span class="sig-prename descclassname"><span class="pre">conaction.symparam.</span></span><span class="sig-name descname"><span class="pre">misiak_correlation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">F</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#conaction.symparam.misiak_correlation" title="Permalink to this definition"></a></dt>
+<dl class="function">
+<dt id="conaction.symparam.misiak_correlation">
+<code class="descclassname">conaction.symparam.</code><code class="descname">misiak_correlation</code><span class="sig-paren">(</span><em>fx</em>, <em>fy</em>, <em>F</em>, <em>var</em>, <em>a</em>, <em>b</em><span class="sig-paren">)</span><a class="headerlink" href="#conaction.symparam.misiak_correlation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Symbolically computes the Misiak correlation coefficient
 on a collection of functions over a given interval by
 integrating over a shared parameter.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>fx</strong> (<em>SymPy expression.</em>) – A function.</p></li>
-<li><p><strong>fy</strong> (<em>SymPy expression.</em>) – A function.</p></li>
-<li><p><strong>F</strong> (<em>array-like</em><em>[</em><em>SymPy expressions</em><em>]</em>) – Sequence of functions to compute correlation coefficient upon.</p></li>
-<li><p><strong>var</strong> (<em>SymPy Symbol</em>) – Independent parameter for integration.</p></li>
-<li><p><strong>a</strong> (<em>Undefined.</em>) – Lower bound of integration.</p></li>
-<li><p><strong>b</strong> (<em>Undefined.</em>) – Upper bound of integration.</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>fx</strong> (<em>SymPy expression.</em>) – A function.</li>
+<li><strong>fy</strong> (<em>SymPy expression.</em>) – A function.</li>
+<li><strong>F</strong> (<em>array-like</em><em>[</em><em>SymPy expressions</em><em>]</em>) – Sequence of functions to compute correlation coefficient upon.</li>
+<li><strong>var</strong> (<em>SymPy Symbol</em>) – Independent parameter for integration.</li>
+<li><strong>a</strong> (<em>Undefined.</em>) – Lower bound of integration.</li>
+<li><strong>b</strong> (<em>Undefined.</em>) – Upper bound of integration.</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>result</strong> – Definite misiak correlation.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>SymPy expression.</p>
-</dd>
-</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>result</strong> – Definite misiak correlation.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">SymPy expression.</p>
+</td>
+</tr>
+</tbody>
+</table>
 <p class="rubric">References</p>
-<dl class="footnote brackets">
-<dt class="label" id="id5"><span class="brackets">1</span></dt>
-<dd><p>Misiak, Aleksander. Ryz, Alicja. 2000. “n-Inner Product Spaces and Projections.”, <a class="reference external" href="https://www.emis.de/journals/MB/125.1/mb125_1_5.pdf">https://www.emis.de/journals/MB/125.1/mb125_1_5.pdf</a></p>
-</dd>
-</dl>
+<table class="docutils footnote" frame="void" id="id5" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td>Misiak, Aleksander. Ryz, Alicja. 2000. “n-Inner Product Spaces and Projections.”, <a class="reference external" href="https://www.emis.de/journals/MB/125.1/mb125_1_5.pdf">https://www.emis.de/journals/MB/125.1/mb125_1_5.pdf</a></td></tr>
+</tbody>
+</table>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fx</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fy</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">F</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">]</span>
@@ -264,99 +291,117 @@ integrating over a shared parameter.</p>
 </div>
 </dd></dl>
 
-<dl class="py function">
-<dt class="sig sig-object py" id="conaction.symparam.multi_partial_galtonian">
-<span class="sig-prename descclassname"><span class="pre">conaction.symparam.</span></span><span class="sig-name descname"><span class="pre">multi_partial_galtonian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">F</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Vars</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#conaction.symparam.multi_partial_galtonian" title="Permalink to this definition"></a></dt>
-<dd><p>Computes the partial multi-Galtonian of a
-given order with respect to a given collection
-of variables.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>F</strong> (<em>array-like</em><em>[</em><em>SymPy expressions</em><em>]</em>) – Operand functions of a given variable.</p></li>
-<li><p><strong>Vars</strong> (<em>array-like</em><em>[</em><em>SymPy Symbols</em><em>]</em>) – Independent parameters for differentiation/integration.</p></li>
-<li><p><strong>order</strong> (<em>int</em>) – Order of the partial multi-Galtonian.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>SymPy expression.</p>
-</dd>
+<dl class="function">
+<dt id="conaction.symparam.multi_partial_differential_covariance">
+<code class="descclassname">conaction.symparam.</code><code class="descname">multi_partial_differential_covariance</code><span class="sig-paren">(</span><em>F</em>, <em>Vars</em>, <em>order</em><span class="sig-paren">)</span><a class="headerlink" href="#conaction.symparam.multi_partial_differential_covariance" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Computes the multi-partial differential covariance</dt>
+<dd>of a given order with respect to a given collection of
+variables.</dd>
 </dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>F</strong> (<em>array-like</em><em>[</em><em>SymPy expressions</em><em>]</em>) – Operand functions of a given variable.</li>
+<li><strong>Vars</strong> (<em>array-like</em><em>[</em><em>SymPy Symbols</em><em>]</em>) – Independent parameters for differentiation/integration.</li>
+<li><strong>order</strong> (<em>int</em>) – Order of the multi-partial differential covariance.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">SymPy expression.</p>
+</td>
+</tr>
+</tbody>
+</table>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="s1">&#39;t1 t2&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="s1">&#39;t1 t2&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">F</span> <span class="o">=</span> <span class="p">[(</span><span class="n">t1</span><span class="o">+</span><span class="n">i</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="n">t2</span><span class="o">+</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">)]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">multi_partial_galtonian</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="p">[</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">multi_partial_differential_covariance</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="p">[</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span>
 <span class="go">(t1 + 1)**(2*t2 + 2)*(t1 + 2)**(2*t2 + 4)*(t1 + 3)**(2*t2 + 6)</span>
 </pre></div>
 </div>
 </dd></dl>
 
-<dl class="py function">
-<dt class="sig sig-object py" id="conaction.symparam.partial_galtonian">
-<span class="sig-prename descclassname"><span class="pre">conaction.symparam.</span></span><span class="sig-name descname"><span class="pre">partial_galtonian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">F</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#conaction.symparam.partial_galtonian" title="Permalink to this definition"></a></dt>
-<dd><p>Computes the partial Galtonian of a
+<dl class="function">
+<dt id="conaction.symparam.partial_differential_covariance">
+<code class="descclassname">conaction.symparam.</code><code class="descname">partial_differential_covariance</code><span class="sig-paren">(</span><em>F</em>, <em>var</em>, <em>order</em><span class="sig-paren">)</span><a class="headerlink" href="#conaction.symparam.partial_differential_covariance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the partial differential covariance of a
 given order with respect to a given
 variable.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>F</strong> (<em>array-like</em><em>[</em><em>SymPy expressions</em><em>]</em>) – Operand functions of a given variable.</p></li>
-<li><p><strong>var</strong> (<em>SymPy Symbol</em>) – Independent parameter for differentiation/integration.</p></li>
-<li><p><strong>order</strong> (<em>int</em>) – Order of the partial Galtonian.</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>F</strong> (<em>array-like</em><em>[</em><em>SymPy expressions</em><em>]</em>) – Operand functions of a given variable.</li>
+<li><strong>var</strong> (<em>SymPy Symbol</em>) – Independent parameter for differentiation/integration.</li>
+<li><strong>order</strong> (<em>int</em>) – Order of the partial differential covariance.</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>SymPy expression.</p>
-</dd>
-</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">SymPy expression.</p>
+</td>
+</tr>
+</tbody>
+</table>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">t</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;t&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">t</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;t&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">F</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span><span class="o">**</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">)]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">partial_galtonian</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">partial_differential_covariance</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 <span class="go">0</span>
 </pre></div>
 </div>
 </dd></dl>
 
-<dl class="py function">
-<dt class="sig sig-object py" id="conaction.symparam.pearson_correlation">
-<span class="sig-prename descclassname"><span class="pre">conaction.symparam.</span></span><span class="sig-name descname"><span class="pre">pearson_correlation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">F</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#conaction.symparam.pearson_correlation" title="Permalink to this definition"></a></dt>
+<dl class="function">
+<dt id="conaction.symparam.pearson_correlation">
+<code class="descclassname">conaction.symparam.</code><code class="descname">pearson_correlation</code><span class="sig-paren">(</span><em>F</em>, <em>var</em>, <em>a</em>, <em>b</em><span class="sig-paren">)</span><a class="headerlink" href="#conaction.symparam.pearson_correlation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Symbolically computes the multilinear Pearson’s product-moment
 correlation coefficient on a collection of functions over a given
 interval by integrating over a shared parameter.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>F</strong> (<em>array-like</em><em>[</em><em>SymPy expressions</em><em>]</em>) – Sequence of functions to compute correlation coefficient upon.</p></li>
-<li><p><strong>var</strong> (<em>SymPy Symbol</em>) – Independent parameter for integration.</p></li>
-<li><p><strong>a</strong> (<em>Undefined.</em>) – Lower bound of integration.</p></li>
-<li><p><strong>b</strong> (<em>Undefined.</em>) – Upper bound of integration.</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>F</strong> (<em>array-like</em><em>[</em><em>SymPy expressions</em><em>]</em>) – Sequence of functions to compute correlation coefficient upon.</li>
+<li><strong>var</strong> (<em>SymPy Symbol</em>) – Independent parameter for integration.</li>
+<li><strong>a</strong> (<em>Undefined.</em>) – Lower bound of integration.</li>
+<li><strong>b</strong> (<em>Undefined.</em>) – Upper bound of integration.</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>result</strong> – Definite multilinear Pearson’s correlation.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>SymPy expression.</p>
-</dd>
-</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>result</strong> – Definite multilinear Pearson’s correlation.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">SymPy expression.</p>
+</td>
+</tr>
+</tbody>
+</table>
 <p class="rubric">References</p>
-<dl class="footnote brackets">
-<dt class="label" id="id6"><span class="brackets">1</span></dt>
-<dd><p>“Correlation.”, <a class="reference external" href="https://en.wikipedia.org/wiki/Correlation">https://en.wikipedia.org/wiki/Correlation</a></p>
-</dd>
-<dt class="label" id="id7"><span class="brackets">2</span></dt>
-<dd><p>“Pearson correlation coefficient.”, <a class="reference external" href="https://en.wikipedia.org/wiki/Pearson_correlation_coefficient">https://en.wikipedia.org/wiki/Pearson_correlation_coefficient</a></p>
-</dd>
-</dl>
+<table class="docutils footnote" frame="void" id="id6" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td>“Correlation.”, <a class="reference external" href="https://en.wikipedia.org/wiki/Correlation">https://en.wikipedia.org/wiki/Correlation</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id7" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[2]</td><td>“Pearson correlation coefficient.”, <a class="reference external" href="https://en.wikipedia.org/wiki/Pearson_correlation_coefficient">https://en.wikipedia.org/wiki/Pearson_correlation_coefficient</a></td></tr>
+</tbody>
+</table>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">F</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="o">**</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">pearson_correlation</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">evalf</span><span class="p">()</span>
 <span class="go">0.398761062646958</span>
@@ -364,39 +409,47 @@ interval by integrating over a shared parameter.</p>
 </div>
 </dd></dl>
 
-<dl class="py function">
-<dt class="sig sig-object py" id="conaction.symparam.reflective_correlation">
-<span class="sig-prename descclassname"><span class="pre">conaction.symparam.</span></span><span class="sig-name descname"><span class="pre">reflective_correlation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">F</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#conaction.symparam.reflective_correlation" title="Permalink to this definition"></a></dt>
+<dl class="function">
+<dt id="conaction.symparam.reflective_correlation">
+<code class="descclassname">conaction.symparam.</code><code class="descname">reflective_correlation</code><span class="sig-paren">(</span><em>F</em>, <em>var</em>, <em>a</em>, <em>b</em><span class="sig-paren">)</span><a class="headerlink" href="#conaction.symparam.reflective_correlation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Symbolically computes the multilinear reflective
 correlation coefficient on a collection of functions over a given
 interval by integrating over a shared parameter.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>F</strong> (<em>array-like</em><em>[</em><em>SymPy expressions</em><em>]</em>) – Sequence of functions to compute correlation coefficient upon.</p></li>
-<li><p><strong>var</strong> (<em>SymPy Symbol</em>) – Independent parameter for integration.</p></li>
-<li><p><strong>a</strong> (<em>Undefined.</em>) – Lower bound of integration.</p></li>
-<li><p><strong>b</strong> (<em>Undefined.</em>) – Upper bound of integration.</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>F</strong> (<em>array-like</em><em>[</em><em>SymPy expressions</em><em>]</em>) – Sequence of functions to compute correlation coefficient upon.</li>
+<li><strong>var</strong> (<em>SymPy Symbol</em>) – Independent parameter for integration.</li>
+<li><strong>a</strong> (<em>Undefined.</em>) – Lower bound of integration.</li>
+<li><strong>b</strong> (<em>Undefined.</em>) – Upper bound of integration.</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>result</strong> – Definite multilinear reflective correlation.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>SymPy expression.</p>
-</dd>
-</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>result</strong> – Definite multilinear reflective correlation.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">SymPy expression.</p>
+</td>
+</tr>
+</tbody>
+</table>
 <p class="rubric">References</p>
-<dl class="footnote brackets">
-<dt class="label" id="id8"><span class="brackets">1</span></dt>
-<dd><p>“Correlation.”, <a class="reference external" href="https://en.wikipedia.org/wiki/Correlation">https://en.wikipedia.org/wiki/Correlation</a></p>
-</dd>
-<dt class="label" id="id9"><span class="brackets">2</span></dt>
-<dd><p>“Circular correlation coefficient.”, <a class="reference external" href="https://en.wikipedia.org/wiki/Pearson_correlation_coefficient#Reflective_correlation_coefficient">https://en.wikipedia.org/wiki/Pearson_correlation_coefficient#Reflective_correlation_coefficient</a></p>
-</dd>
-</dl>
+<table class="docutils footnote" frame="void" id="id8" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td>“Correlation.”, <a class="reference external" href="https://en.wikipedia.org/wiki/Correlation">https://en.wikipedia.org/wiki/Correlation</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id9" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[2]</td><td>“Circular correlation coefficient.”, <a class="reference external" href="https://en.wikipedia.org/wiki/Pearson_correlation_coefficient#Reflective_correlation_coefficient">https://en.wikipedia.org/wiki/Pearson_correlation_coefficient#Reflective_correlation_coefficient</a></td></tr>
+</tbody>
+</table>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">F</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="o">**</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">reflective_correlation</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">evalf</span><span class="p">()</span>
 <span class="go">0.968245836551854</span>
@@ -404,9 +457,9 @@ interval by integrating over a shared parameter.</p>
 </div>
 </dd></dl>
 
-<dl class="py function">
-<dt class="sig sig-object py" id="conaction.symparam.signum_correlation">
-<span class="sig-prename descclassname"><span class="pre">conaction.symparam.</span></span><span class="sig-name descname"><span class="pre">signum_correlation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">F</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#conaction.symparam.signum_correlation" title="Permalink to this definition"></a></dt>
+<dl class="function">
+<dt id="conaction.symparam.signum_correlation">
+<code class="descclassname">conaction.symparam.</code><code class="descname">signum_correlation</code><span class="sig-paren">(</span><em>F</em>, <em>var</em>, <em>a</em>, <em>b</em><span class="sig-paren">)</span><a class="headerlink" href="#conaction.symparam.signum_correlation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Signum correlation coefficient.</p>
 <p>Symbolically computes the multilinear signum
 correlation coefficient on a collection of functions over a given
@@ -414,30 +467,35 @@ interval by integrating over a shared parameter.</p>
 <p>This function estimates</p>
 <div class="math notranslate nohighlight">
 \[R_{\text{sign}} \left[ X_1, \cdots, X_n \right] = \frac{\mathbb{E} \left[ \prod_{j=1}^{n} \text{sign} \left( X_j - \mathbb{E}[X_j] \right) \right]}{\prod_{j=1}^{n} \sqrt[n]{\mathbb{E}\left[ |\text{sign} \left( X_j - \mathbb{E}[X_j] \right)|^n \right]}}\]</div>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>F</strong> (<em>array-like</em><em>[</em><em>SymPy expressions</em><em>]</em>) – Sequence of functions to compute correlation coefficient upon.</p></li>
-<li><p><strong>var</strong> (<em>SymPy Symbol</em>) – Independent parameter for integration.</p></li>
-<li><p><strong>a</strong> (<em>Undefined.</em>) – Lower bound of integration.</p></li>
-<li><p><strong>b</strong> (<em>Undefined.</em>) – Upper bound of integration.</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>F</strong> (<em>array-like</em><em>[</em><em>SymPy expressions</em><em>]</em>) – Sequence of functions to compute correlation coefficient upon.</li>
+<li><strong>var</strong> (<em>SymPy Symbol</em>) – Independent parameter for integration.</li>
+<li><strong>a</strong> (<em>Undefined.</em>) – Lower bound of integration.</li>
+<li><strong>b</strong> (<em>Undefined.</em>) – Upper bound of integration.</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>result</strong> – Definite multilinear sigum correlation.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>SymPy expression.</p>
-</dd>
-</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>result</strong> – Definite multilinear sigum correlation.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">SymPy expression.</p>
+</td>
+</tr>
+</tbody>
+</table>
 <p class="rubric">References</p>
-<dl class="footnote brackets">
-<dt class="label" id="id10"><span class="brackets">1</span></dt>
-<dd><p>“Correlation.”, <a class="reference external" href="https://en.wikipedia.org/wiki/Correlation">https://en.wikipedia.org/wiki/Correlation</a></p>
-</dd>
-</dl>
+<table class="docutils footnote" frame="void" id="id10" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td>“Correlation.”, <a class="reference external" href="https://en.wikipedia.org/wiki/Correlation">https://en.wikipedia.org/wiki/Correlation</a></td></tr>
+</tbody>
+</table>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">F</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="o">**</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">signum_correlation</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
 <span class="go">0.845299461620749</span>
@@ -445,72 +503,81 @@ interval by integrating over a shared parameter.</p>
 </div>
 </dd></dl>
 
-<dl class="py function">
-<dt class="sig sig-object py" id="conaction.symparam.standard_deviation">
-<span class="sig-prename descclassname"><span class="pre">conaction.symparam.</span></span><span class="sig-name descname"><span class="pre">standard_deviation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#conaction.symparam.standard_deviation" title="Permalink to this definition"></a></dt>
+<dl class="function">
+<dt id="conaction.symparam.standard_deviation">
+<code class="descclassname">conaction.symparam.</code><code class="descname">standard_deviation</code><span class="sig-paren">(</span><em>f</em>, <em>t</em>, <em>a</em>, <em>b</em><span class="sig-paren">)</span><a class="headerlink" href="#conaction.symparam.standard_deviation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Symbolically computes the definite
 integral representing the standard deviation of a
 function using uniform probability measure.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>f</strong> (<em>SymPy expression.</em>) – Function to be integrated.</p></li>
-<li><p><strong>t</strong> (<cite>sympy.core.symbol.Symbol</cite>.) – Independent parameter for integration.</p></li>
-<li><p><strong>a</strong> (<em>Undefined.</em>) – Lower bound of integration.</p></li>
-<li><p><strong>b</strong> (<em>Undefined.</em>) – Upper bound of integration.</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>f</strong> (<em>SymPy expression.</em>) – Function to be integrated.</li>
+<li><strong>t</strong> (<cite>sympy.core.symbol.Symbol</cite>.) – Independent parameter for integration.</li>
+<li><strong>a</strong> (<em>Undefined.</em>) – Lower bound of integration.</li>
+<li><strong>b</strong> (<em>Undefined.</em>) – Upper bound of integration.</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>result</strong> – Definite standard deviation of function over given interval.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>SymPy expression.</p>
-</dd>
-</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>result</strong> – Definite standard deviation of function over given interval.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">SymPy expression.</p>
+</td>
+</tr>
+</tbody>
+</table>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">standard_deviation</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 <span class="go">0.298142396999972</span>
 </pre></div>
 </div>
 </dd></dl>
 
-<dl class="py function">
-<dt class="sig sig-object py" id="conaction.symparam.taylor_correlation">
-<span class="sig-prename descclassname"><span class="pre">conaction.symparam.</span></span><span class="sig-name descname"><span class="pre">taylor_correlation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">F</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#conaction.symparam.taylor_correlation" title="Permalink to this definition"></a></dt>
+<dl class="function">
+<dt id="conaction.symparam.taylor_correlation">
+<code class="descclassname">conaction.symparam.</code><code class="descname">taylor_correlation</code><span class="sig-paren">(</span><em>F</em>, <em>var</em>, <em>a</em>, <em>b</em><span class="sig-paren">)</span><a class="headerlink" href="#conaction.symparam.taylor_correlation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Taylor’s multi-way correlation coefficient.</p>
 <p>Taylor 2020 defines this function to be</p>
 <div class="math notranslate nohighlight">
 \[\frac{1}{\sqrt{d}} \sqrt{\frac{1}{d-1} \sum_{i}^{d} ( \lambda_i -  \bar{\lambda})^2 }\]</div>
 <p>where <span class="math notranslate nohighlight">\(d\)</span> is the number of variables, <span class="math notranslate nohighlight">\(\lambda_1, \cdots, \lambda_d\)</span> are the eigenvalues of
 the correlation matrix for a given set of variables, and <span class="math notranslate nohighlight">\(\bar{\lambda}\)</span> is the mean of those eigenvalues.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>F</strong> (<em>array-like</em><em>[</em><em>SymPy expressions</em><em>]</em>) – Sequence of functions to compute correlation coefficient upon.</p></li>
-<li><p><strong>var</strong> (<em>SymPy Symbol</em>) – Independent parameter for integration.</p></li>
-<li><p><strong>a</strong> (<em>Undefined.</em>) – Lower bound of integration.</p></li>
-<li><p><strong>b</strong> (<em>Undefined.</em>) – Upper bound of integration.</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>F</strong> (<em>array-like</em><em>[</em><em>SymPy expressions</em><em>]</em>) – Sequence of functions to compute correlation coefficient upon.</li>
+<li><strong>var</strong> (<em>SymPy Symbol</em>) – Independent parameter for integration.</li>
+<li><strong>a</strong> (<em>Undefined.</em>) – Lower bound of integration.</li>
+<li><strong>b</strong> (<em>Undefined.</em>) – Upper bound of integration.</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>result</strong> – Definite Taylor correlation.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>SymPy expression.</p>
-</dd>
-</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>result</strong> – Definite Taylor correlation.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">SymPy expression.</p>
+</td>
+</tr>
+</tbody>
+</table>
 <p class="rubric">Notes</p>
 <p>Taylor’s multi-way correlation coefficient is a rescaling of the Bessel-corrected standard deviation of the
 eigenvalues of the correlation matrix of the set of variables.</p>
 <p class="rubric">References</p>
-<dl class="footnote brackets">
-<dt class="label" id="id11"><span class="brackets">1</span></dt>
-<dd><p>Taylor, BM. 2020. “A Multi-Way Correlation Coefficient”, <a class="reference external" href="https://arxiv.org/abs/2003.02561">https://arxiv.org/abs/2003.02561</a></p>
-</dd>
-</dl>
+<table class="docutils footnote" frame="void" id="id11" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td>Taylor, BM. 2020. “A Multi-Way Correlation Coefficient”, <a class="reference external" href="https://arxiv.org/abs/2003.02561">https://arxiv.org/abs/2003.02561</a></td></tr>
+</tbody>
+</table>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">F</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">**</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">taylor_correlation</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 <span class="go">0.957378751630761</span>
@@ -518,38 +585,45 @@ eigenvalues of the correlation matrix of the set of variables.</p>
 </div>
 </dd></dl>
 
-<dl class="py function">
-<dt class="sig sig-object py" id="conaction.symparam.trencevski_malceski_correlation">
-<span class="sig-prename descclassname"><span class="pre">conaction.symparam.</span></span><span class="sig-name descname"><span class="pre">trencevski_malceski_correlation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Fx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Fy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#conaction.symparam.trencevski_malceski_correlation" title="Permalink to this definition"></a></dt>
+<dl class="function">
+<dt id="conaction.symparam.trencevski_malceski_correlation">
+<code class="descclassname">conaction.symparam.</code><code class="descname">trencevski_malceski_correlation</code><span class="sig-paren">(</span><em>Fx</em>, <em>Fy</em>, <em>var</em>, <em>a</em>, <em>b</em><span class="sig-paren">)</span><a class="headerlink" href="#conaction.symparam.trencevski_malceski_correlation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generalized n-inner product correlation coefficient.</p>
 <p>Computes a correlation coefficient based
 on Trencevski and Melceski 2006.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>Fx</strong> (<em>array-like</em><em>[</em><em>SymPy expressions</em><em>]</em>) – Sequence of functions to compute correlation coefficient upon.</p></li>
-<li><p><strong>Fy</strong> (<em>array-like</em><em>[</em><em>SymPy expressions</em><em>]</em>) – Sequence of functions to compute correlation coefficient upon.</p></li>
-<li><p><strong>var</strong> (<em>SymPy Symbol</em>) – Independent parameter for integration.</p></li>
-<li><p><strong>a</strong> (<em>Undefined.</em>) – Lower bound of integration.</p></li>
-<li><p><strong>b</strong> (<em>Undefined.</em>) – Upper bound of integration.</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Fx</strong> (<em>array-like</em><em>[</em><em>SymPy expressions</em><em>]</em>) – Sequence of functions to compute correlation coefficient upon.</li>
+<li><strong>Fy</strong> (<em>array-like</em><em>[</em><em>SymPy expressions</em><em>]</em>) – Sequence of functions to compute correlation coefficient upon.</li>
+<li><strong>var</strong> (<em>SymPy Symbol</em>) – Independent parameter for integration.</li>
+<li><strong>a</strong> (<em>Undefined.</em>) – Lower bound of integration.</li>
+<li><strong>b</strong> (<em>Undefined.</em>) – Upper bound of integration.</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>result</strong> – Definite Trencevski and Melceski correlation.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>SymPy expression.</p>
-</dd>
-</dl>
-<p>:raises ValueError : Fx and Fy must have the same length:</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>result</strong> – Definite Trencevski and Melceski correlation.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">SymPy expression.</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last">ValueError : Fx and Fy must have the same length</p>
+</td>
+</tr>
+</tbody>
+</table>
 <p class="rubric">References</p>
-<dl class="footnote brackets">
-<dt class="label" id="id12"><span class="brackets">1</span></dt>
-<dd><p>Trencevski, Kostadin. Malceski, Risto. 2006. “On a generalized n-inner product and the corresponding Cauchy-Schwarz inequality”, <a class="reference external" href="https://www.researchgate.net/publication/268999118_On_a_generalized_n-inner_product_and_the_corresponding_Cauchy-Schwarz_inequality">https://www.researchgate.net/publication/268999118_On_a_generalized_n-inner_product_and_the_corresponding_Cauchy-Schwarz_inequality</a></p>
-</dd>
-</dl>
+<table class="docutils footnote" frame="void" id="id12" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td>Trencevski, Kostadin. Malceski, Risto. 2006. “On a generalized n-inner product and the corresponding Cauchy-Schwarz inequality”, <a class="reference external" href="https://www.researchgate.net/publication/268999118_On_a_generalized_n-inner_product_and_the_corresponding_Cauchy-Schwarz_inequality">https://www.researchgate.net/publication/268999118_On_a_generalized_n-inner_product_and_the_corresponding_Cauchy-Schwarz_inequality</a></td></tr>
+</tbody>
+</table>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Fx</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">**</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Fy</span> <span class="o">=</span> <span class="p">[</span><span class="n">sympy</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trencevski_malceski_correlation</span><span class="p">(</span><span class="n">Fx</span><span class="p">,</span> <span class="n">Fy</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
@@ -558,9 +632,9 @@ on Trencevski and Melceski 2006.</p>
 </div>
 </dd></dl>
 
-<dl class="py function">
-<dt class="sig sig-object py" id="conaction.symparam.wang_zheng_correlation">
-<span class="sig-prename descclassname"><span class="pre">conaction.symparam.</span></span><span class="sig-name descname"><span class="pre">wang_zheng_correlation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">F</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#conaction.symparam.wang_zheng_correlation" title="Permalink to this definition"></a></dt>
+<dl class="function">
+<dt id="conaction.symparam.wang_zheng_correlation">
+<code class="descclassname">conaction.symparam.</code><code class="descname">wang_zheng_correlation</code><span class="sig-paren">(</span><em>F</em>, <em>var</em>, <em>a</em>, <em>b</em><span class="sig-paren">)</span><a class="headerlink" href="#conaction.symparam.wang_zheng_correlation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Correlation coefficient due to Wang &amp; Zheng 2014.</p>
 <p>This correlation coefficient is equivalent to</p>
 <div class="math notranslate nohighlight">
@@ -570,32 +644,37 @@ matrix computed on a collection of n variables. In
 other words, this correlation coefficient is the
 complement of the determinant of the correlation
 matrix.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>F</strong> (<em>array-like</em><em>[</em><em>SymPy expressions</em><em>]</em>) – Sequence of functions to compute correlation coefficient upon.</p></li>
-<li><p><strong>var</strong> (<em>SymPy Symbol</em>) – Independent parameter for integration.</p></li>
-<li><p><strong>a</strong> (<em>Undefined.</em>) – Lower bound of integration.</p></li>
-<li><p><strong>b</strong> (<em>Undefined.</em>) – Upper bound of integration.</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>F</strong> (<em>array-like</em><em>[</em><em>SymPy expressions</em><em>]</em>) – Sequence of functions to compute correlation coefficient upon.</li>
+<li><strong>var</strong> (<em>SymPy Symbol</em>) – Independent parameter for integration.</li>
+<li><strong>a</strong> (<em>Undefined.</em>) – Lower bound of integration.</li>
+<li><strong>b</strong> (<em>Undefined.</em>) – Upper bound of integration.</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>result</strong> – Definite Wang Zheng correlation.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>SymPy expression.</p>
-</dd>
-</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>result</strong> – Definite Wang Zheng correlation.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">SymPy expression.</p>
+</td>
+</tr>
+</tbody>
+</table>
 <p class="rubric">Notes</p>
 <p>The complement of this statistic is the unsigned incorrelation coefficient.</p>
 <p class="rubric">References</p>
-<dl class="footnote brackets">
-<dt class="label" id="id13"><span class="brackets">1</span></dt>
-<dd><p>Wang, Jianji. Zheng, Nanning. 2014. “Measures of Correlation for Multiple Variables”, <a class="reference external" href="https://arxiv.org/abs/1401.4827">https://arxiv.org/abs/1401.4827</a></p>
-</dd>
-</dl>
+<table class="docutils footnote" frame="void" id="id13" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td>Wang, Jianji. Zheng, Nanning. 2014. “Measures of Correlation for Multiple Variables”, <a class="reference external" href="https://arxiv.org/abs/1401.4827">https://arxiv.org/abs/1401.4827</a></td></tr>
+</tbody>
+</table>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">F</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">**</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">wang_zheng_correlation</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 <span class="go">0.999722222222222</span>
@@ -603,14 +682,14 @@ matrix.</p>
 </div>
 </dd></dl>
 
-</section>
+</div>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="numparam.html" class="btn btn-neutral float-left" title="NumParam" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="transform.html" class="btn btn-neutral float-right" title="Transform" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="sampling.html" class="btn btn-neutral float-right" title="Sampling" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
