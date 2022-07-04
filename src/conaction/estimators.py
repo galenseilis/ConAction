@@ -154,7 +154,7 @@ def grade_entropy(X, normalize=True):
     --------
     >>> import numpy as np
     >>> data = np.arange(100).reshape(10,10)
-    >>> pseudograde_entropy(data)
+    >>> grade_entropy(data)
     1.0
     '''
     D = nx.DiGraph()
