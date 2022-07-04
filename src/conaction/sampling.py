@@ -8,8 +8,10 @@ References
 '''
 
 from itertools import combinations
+
 import numpy as np
 import tqdm
+
 
 def permute_columns(x):
     '''

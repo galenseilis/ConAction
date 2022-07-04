@@ -6,10 +6,12 @@ import os
 
 import networkx as nx
 import numpy as np
-from numpy import mean, std as standard_deviation
+import tqdm
+from numpy import mean
+from numpy import std as standard_deviation
 from pathos.pools import ProcessPool
 from scipy.stats import rankdata
-import tqdm
+
 
 def pnorm(x: np.ndarray, p=2) -> np.float64:
     '''
@@ -961,5 +963,3 @@ def partial_agnesian(X: np.ndarray, t=None, k=0):
     
     result = np.prod(result, axis=1)
     return result
-
-    

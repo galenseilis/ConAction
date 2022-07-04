@@ -9,8 +9,9 @@ instantiations of the Trinity of Covariation.
     handle them.
 '''
 
-import sympy
 import numpy as np
+import sympy
+
 
 def mean(f, t, a, b):
     '''

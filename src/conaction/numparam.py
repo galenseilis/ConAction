@@ -8,9 +8,10 @@ integration steps.
 '''
 
 import numpy as np
+from pathos.multiprocessing import ProcessingPool as Pool
 from scipy import integrate
 from scipy.linalg import svdvals
-from pathos.multiprocessing import ProcessingPool as Pool
+
 
 def mean(f, I, *args, **kwargs):
     '''
