@@ -292,7 +292,7 @@ def median_correlation(X: np.ndarray, transform=lambda x: x - np.median(x, axis=
 
     References
     ----------
-       .. [1] "Median", https://en.wikipedia.org/wiki/Median
+       .. "Median", https://en.wikipedia.org/wiki/Median
 
     Examples
     ----------
@@ -338,7 +338,7 @@ def nightingale_deviation(x: np.ndarray, p=2) -> np.float64:
 
     References
     ----------
-    .. [1] "Standard Deviation.", https://en.wikipedia.org/wiki/Standard_deviation
+    .. "Standard Deviation.", https://en.wikipedia.org/wiki/Standard_deviation
 
     Examples
     --------
@@ -375,7 +375,7 @@ def reflective_correlation(X: np.ndarray) -> np.float64:
 
     References
     ----------
-    .. [1] "Reflective Correlation Coefficient.", https://en.wikipedia.org/wiki/Pearson_correlation_coefficient#Reflective_correlation_coefficient
+    .. "Reflective Correlation Coefficient.", https://en.wikipedia.org/wiki/Pearson_correlation_coefficient#Reflective_correlation_coefficient
 
     Examples
     ----------
@@ -420,7 +420,7 @@ def pearson_correlation(X: np.ndarray) -> np.float64:
 
     References
     ----------
-       .. [1] "Pearson product-moment correlation coefficient.", https://en.wikipedia.org/wiki/Pearson_correlation_coefficient
+       .. "Pearson product-moment correlation coefficient.", https://en.wikipedia.org/wiki/Pearson_correlation_coefficient
 
     Examples
     ----------
