@@ -1,6 +1,4 @@
-.. image:: https://readthedocs.org/projects/conaction/badge/?version=latest
-    :target: https://conaction.readthedocs.io/en/latest/?badge=latest
-    :alt: Documentation Status
+[![Documentation Status](https://readthedocs.org/projects/conaction/badge/?version=latest)](https://conaction.readthedocs.io/en/latest/?badge=latest)
 
 # ConAction
 
