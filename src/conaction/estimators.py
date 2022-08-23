@@ -455,7 +455,7 @@ def circular_correlation(X: np.ndarray) -> np.float64:
 
     References
     ----------
-    .. [1] "Circular Correlation Coefficient", https://en.wikipedia.org/wiki/Pearson_correlation_coefficient#Circular_correlation_coefficient
+    .. "Circular Correlation Coefficient", https://en.wikipedia.org/wiki/Pearson_correlation_coefficient#Circular_correlation_coefficient
 
     Examples
     ----------
@@ -515,8 +515,8 @@ def spearman_correlation(X: np.ndarray, method='average') -> np.float64:
             
     References
     ----------
-    .. [1] "Spearman%27s_rank_correlation_coefficient", https://en.wikipedia.org/wiki/Spearman%27s_rank_correlation_coefficient
-    .. [2] "scipy.stats.rankdata", https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.rankdata.html
+    .. "Spearman%27s_rank_correlation_coefficient", https://en.wikipedia.org/wiki/Spearman%27s_rank_correlation_coefficient
+    .. "scipy.stats.rankdata", https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.rankdata.html
 
     Examples
     --------
@@ -555,8 +555,8 @@ def angular_disimilarity(X: np.ndarray) -> np.float64:
 
     References
     ----------
-    .. [1] "Angular distance", https://en.wikipedia.org/wiki/Cosine_similarity#Angular_distance_and_similarity
-    .. [2] "What is the exact and precise definition of an ANGLE?", https://math.stackexchange.com/questions/583066/what-is-the-exact-and-precise-definition-of-an-angle
+    .. "Angular distance", https://en.wikipedia.org/wiki/Cosine_similarity#Angular_distance_and_similarity
+    .. "What is the exact and precise definition of an ANGLE?", https://math.stackexchange.com/questions/583066/what-is-the-exact-and-precise-definition-of-an-angle
 
     Examples
     --------
@@ -595,7 +595,7 @@ def correlation_ratio(X: np.ndarray, y: np.ndarray) -> np.float64:
 
     References
     ----------
-    .. [1] "Correlation Ratio", https://en.wikipedia.org/wiki/Correlation_ratio
+    .. "Correlation Ratio", https://en.wikipedia.org/wiki/Correlation_ratio
     '''
     raise NotImplementedError
     global_means = np.mean(X, axis=0)
@@ -624,7 +624,7 @@ def misiak_correlation(x: np.ndarray, y: np.ndarray, X: np.ndarray) -> np.float6
 
     References
     ----------
-    .. [1] Misiak, Aleksander. Ryz, Alicja. 2000. "n-Inner Product Spaces and Projections.", https://www.emis.de/journals/MB/125.1/mb125_1_5.pdf
+    .. Misiak, Aleksander. Ryz, Alicja. 2000. "n-Inner Product Spaces and Projections.", https://www.emis.de/journals/MB/125.1/mb125_1_5.pdf
 
     Examples
     --------
@@ -679,8 +679,8 @@ def nightingale_covariance(X: np.ndarray, p=1) -> np.float64:
 
     References
     ----------
-    .. [1] "Seminorm", https://mathworld.wolfram.com/Seminorm.html
-    .. [2] "Seminorm", https://en.wikipedia.org/wiki/Seminorm
+    .. "Seminorm", https://mathworld.wolfram.com/Seminorm.html
+    .. "Seminorm", https://en.wikipedia.org/wiki/Seminorm
 
     Examples
     --------
@@ -717,8 +717,8 @@ def nightingale_correlation(X: np.ndarray, p=1, alphas=None):
 
     References
     --------
-        .. _Seminorm(Mathworld): https://mathworld.wolfram.com/Seminorm.html
-        .. Seminorm(Wikipedia): https://en.wikipedia.org/wiki/Seminorm
+        .. Seminorm (Mathworld): https://mathworld.wolfram.com/Seminorm.html
+        .. Seminorm (Wikipedia): https://en.wikipedia.org/wiki/Seminorm
     
 
     '''
@@ -804,7 +804,7 @@ def taylor_correlation(X: np.ndarray) -> np.float64:
 
     References
     ----------
-    .. [1] Taylor, BM. 2020. "A Multi-Way Correlation Coefficient", https://arxiv.org/abs/2003.02561
+    .. Taylor, BM. 2020. "A Multi-Way Correlation Coefficient", https://arxiv.org/abs/2003.02561
 
     Examples
     --------
@@ -841,7 +841,7 @@ def trencevski_malceski_correlation(X: np.ndarray, Y: np.ndarray) -> np.float64:
 
     References
     ----------
-    .. [1] Trencevski, Kostadin. Malceski, Risto. 2006. "On a generalized n-inner product and the corresponding Cauchy-Schwarz inequality", https://www.researchgate.net/publication/268999118_On_a_generalized_n-inner_product_and_the_corresponding_Cauchy-Schwarz_inequality
+    .. Trencevski, Kostadin. Malceski, Risto. 2006. "On a generalized n-inner product and the corresponding Cauchy-Schwarz inequality", https://www.researchgate.net/publication/268999118_On_a_generalized_n-inner_product_and_the_corresponding_Cauchy-Schwarz_inequality
 
     Examples
     --------
@@ -892,7 +892,7 @@ def wang_zheng_correlation(X: np.ndarray) -> np.float64:
 
     References
     ----------
-    .. [1] Wang, Jianji. Zheng, Nanning. 2014. "Measures of Correlation for Multiple Variables", https://arxiv.org/abs/1401.4827
+    .. Wang, Jianji. Zheng, Nanning. 2014. "Measures of Correlation for Multiple Variables", https://arxiv.org/abs/1401.4827
 
     Examples
     --------
@@ -915,7 +915,7 @@ def weak_inner_correlation():
 
     References
     ----------
-    .. [1] https://arxiv.org/pdf/1904.09542.pdf
+    .. https://arxiv.org/pdf/1904.09542.pdf
     '''
     raise NotImplementedError
 
