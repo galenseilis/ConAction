@@ -1,4 +1,4 @@
-'''
+"""
 The SymParam module is provides functions for symbolically computing
 instantiations of the Trinity of Covariation.
 
@@ -7,14 +7,14 @@ instantiations of the Trinity of Covariation.
     the calculation to a floating point value. This will often depend
     on the functions being integrated and how SymPy attempts to
     handle them.
-'''
+"""
 
 import numpy as np
 import sympy
 
 
 def mean(f, t, a, b):
-    '''
+    """
     Symbolically computes the definite
     integral representing the mean value of a
     function using uniform probability measure.
@@ -40,13 +40,14 @@ def mean(f, t, a, b):
     >>> x = sympy.Symbol('x')
     >>> mean(x ** 2, x, -2, 2)
     1.33333333333333
-    '''
+    """
     f = sympy.sympify(f)
-    result = 1/(b-a) * sympy.integrate(f, (t,a,b))
+    result = 1 / (b - a) * sympy.integrate(f, (t, a, b))
     return result
 
+
 def standard_deviation(f, t, a, b):
-    '''
+    """
     Symbolically computes the definite
     integral representing the standard deviation of a
     function using uniform probability measure.
@@ -72,12 +73,13 @@ def standard_deviation(f, t, a, b):
     >>> x = sympy.Symbol('x')
     >>> standard_deviation(x**2, x, 0, 1)
     0.298142396999972
-    '''
-    f = (sympy.sympify(f) - mean(f, t, a, b))**2
-    return sympy.sqrt(1/(b-a) * sympy.integrate(f, (t,a,b)))
+    """
+    f = (sympy.sympify(f) - mean(f, t, a, b)) ** 2
+    return sympy.sqrt(1 / (b - a) * sympy.integrate(f, (t, a, b)))
+
 
 def minkowski_deviation(f, var, a, b, p=2):
-    '''
+    """
     Symbolically computes the definite
     integral representing the Minkowski deviation of
     order p of a function using uniform probability measure.
@@ -103,18 +105,19 @@ def minkowski_deviation(f, var, a, b, p=2):
     >>> x = sympy.Symbol('x')
     >>> minkowski_deviation(x ** 2, x, 0, 1, 1).evalf()
     0.256600174703415
-    '''
+    """
     result = mean(f, var, a, b)
     result = f - result
     result = sympy.Abs(result)
     result = sympy.Pow(result, p)
     result = sympy.integrate(result, (var, a, b))
-    result = 1/(b-a) * result
-    result = sympy.Pow(result, 1/p)
+    result = 1 / (b - a) * result
+    result = sympy.Pow(result, 1 / p)
     return result
 
+
 def covariance(F, var, a, b):
-    '''
+    """
     Symbolically computes the multilinear covariance of a
     collection of functions over a given interval by integrating
     over a shared parameter.
@@ -146,15 +149,16 @@ def covariance(F, var, a, b):
     >>> F = [x ** (i+1) for i in range(2)]
     >>> covariance(F, x, 0, 1)
     0.0833333333333333
-    '''
+    """
     result = [f - mean(f, var, a, b) for f in F]
     result = np.prod(result)
     result = sympy.integrate(result, (var, a, b))
-    result = 1/(b-a) * result
+    result = 1 / (b - a) * result
     return result
 
+
 def pearson_correlation(F, var, a, b):
-    '''
+    """
     Symbolically computes the multilinear Pearson's product-moment
     correlation coefficient on a collection of functions over a given
     interval by integrating over a shared parameter.
@@ -186,15 +190,16 @@ def pearson_correlation(F, var, a, b):
     >>> F = [x ** (i+1) for i in range(3)]
     >>> pearson_correlation(F, x, 0, 100).evalf()
     0.398761062646958
-    '''
+    """
     numerator = covariance(F, var, a, b)
     denominator = [minkowski_deviation(f, var, a, b, p=len(F)) for f in F]
     denominator = np.prod(denominator)
     result = numerator / denominator
     return result
 
+
 def reflective_correlation(F, var, a, b):
-    '''
+    """
     Symbolically computes the multilinear reflective
     correlation coefficient on a collection of functions over a given
     interval by integrating over a shared parameter.
@@ -226,19 +231,20 @@ def reflective_correlation(F, var, a, b):
     >>> F = [x ** (i+1) for i in range(2)]
     >>> reflective_correlation(F, x, 0, 100).evalf()
     0.968245836551854
-    '''
+    """
     numerator = np.prod(F)
-    numerator = 1/(b-a) * sympy.integrate(numerator, (var, a, b))
+    numerator = 1 / (b - a) * sympy.integrate(numerator, (var, a, b))
     denominator = [sympy.Abs(f) for f in F]
     denominator = [sympy.Pow(f, len(F)) for f in denominator]
-    denominator = [1/(b-a) * sympy.integrate(f, (var, a, b)) for f in denominator]
-    denominator = [sympy.Pow(f, 1/len(F)) for f in denominator]
+    denominator = [1 / (b - a) * sympy.integrate(f, (var, a, b)) for f in denominator]
+    denominator = [sympy.Pow(f, 1 / len(F)) for f in denominator]
     denominator = np.prod(denominator)
     result = numerator / denominator
     return result
 
+
 def circular_correlation(F, var, a, b):
-    '''
+    """
     Symbolically computes the multilinear circular
     correlation coefficient on a collection of functions over a given
     interval by integrating over a shared parameter.
@@ -270,13 +276,14 @@ def circular_correlation(F, var, a, b):
     >>> F = [x ** (i+1) for i in range(2)]
     >>> circular_correlation(F, x, 0, 100).evalf()
     -0.e-1
-    '''
+    """
     result = [sympy.sin(f - mean(f, var, a, b)) for f in F]
     result = reflective_correlation(result, var, a, b)
     return result
 
+
 def signum_correlation(F, var, a, b):
-    '''
+    """
     Signum correlation coefficient.
 
     Symbolically computes the multilinear signum
@@ -314,13 +321,14 @@ def signum_correlation(F, var, a, b):
     >>> F = [x ** (i+1) for i in range(2)]
     >>> signum_correlation(F, x, 0, 100)
     0.845299461620749
-    '''
+    """
     result = [sympy.sign(f - mean(f, var, a, b)) for f in F]
     result = reflective_correlation(result, var, a, b)
     return result
 
+
 def misiak_correlation(fx, fy, F, var, a, b):
-    '''
+    """
     Symbolically computes the Misiak correlation coefficient
     on a collection of functions over a given interval by
     integrating over a shared parameter.
@@ -330,7 +338,7 @@ def misiak_correlation(fx, fy, F, var, a, b):
     fx : SymPy expression.
         A function.
     fy : SymPy expression.
-        A function. 
+        A function.
     F : array-like[SymPy expressions]
         Sequence of functions to compute correlation coefficient upon.
     var : SymPy Symbol
@@ -357,23 +365,23 @@ def misiak_correlation(fx, fy, F, var, a, b):
     >>> F = [x, x**2]
     >>> misiak_correlation(fx, fy, F, x, 1, 2).evalf()
     -0.999698940593851
-    '''
-    G = np.empty((len(F)+1, len(F)+1), dtype=object)
+    """
+    G = np.empty((len(F) + 1, len(F) + 1), dtype=object)
     G[0, 0] = sympy.integrate(fx * fy, (var, a, b))
     for i, fi in enumerate(F):
-        G[0, i+1] = sympy.integrate(fx * fi, (var, a, b))
-        G[i+1, 0] = sympy.integrate(fy * fi, (var, a, b))
+        G[0, i + 1] = sympy.integrate(fx * fi, (var, a, b))
+        G[i + 1, 0] = sympy.integrate(fy * fi, (var, a, b))
         for j, fj in enumerate(F):
-            G[i+1, j+1] = sympy.integrate(fi * fj, (var, a, b))
+            G[i + 1, j + 1] = sympy.integrate(fi * fj, (var, a, b))
     numerator = sympy.Matrix(G).det()
     G[0, 0] = sympy.integrate(fx * fx, (var, a, b))
     for i, fi in enumerate(F):
-        G[i+1, 0] = sympy.integrate(fx * fi, (var, a, b))
+        G[i + 1, 0] = sympy.integrate(fx * fi, (var, a, b))
     denominator = sympy.Matrix(G).det()
     G[0, 0] = sympy.integrate(fy * fy, (var, a, b))
     for i, fi in enumerate(F):
-        G[0, i+1] = sympy.integrate(fy * fi, (var, a, b))
-        G[i+1, 0] = sympy.integrate(fy * fi, (var, a, b))
+        G[0, i + 1] = sympy.integrate(fy * fi, (var, a, b))
+        G[i + 1, 0] = sympy.integrate(fy * fi, (var, a, b))
     denominator = sympy.Matrix(G).det() * denominator
     denominator = sympy.sqrt(denominator)
     result = numerator / denominator
@@ -381,7 +389,7 @@ def misiak_correlation(fx, fy, F, var, a, b):
 
 
 def taylor_correlation(F, var, a, b):
-    '''
+    """
     Taylor's multi-way correlation coefficient.
 
     Taylor 2020 defines this function to be
@@ -424,7 +432,7 @@ def taylor_correlation(F, var, a, b):
     >>> F = [x**(i+1) for i in range(3)]
     >>> taylor_correlation(F, x, 0, 1)
     0.957378751630761
-    '''
+    """
     R = np.empty((len(F), len(F)), dtype=object)
     for i, fi in enumerate(F):
         for j, fj in enumerate(F):
@@ -440,8 +448,9 @@ def taylor_correlation(F, var, a, b):
     result = result / np.sqrt(len(F))
     return result
 
+
 def trencevski_malceski_correlation(Fx, Fy, var, a, b):
-    '''
+    """
     Generalized n-inner product correlation coefficient.
 
     Computes a correlation coefficient based
@@ -480,10 +489,10 @@ def trencevski_malceski_correlation(Fx, Fy, var, a, b):
     >>> Fy = [sympy.sin(x**(i+1)) for i in range(3)]
     >>> trencevski_malceski_correlation(Fx, Fy, x, 0, 1)
     0.994375897094607
-    '''
+    """
     if len(Fx) != len(Fy):
-        raise ValueError('Fx and Fy must have the same length')
-    
+        raise ValueError("Fx and Fy must have the same length")
+
     G = np.empty((len(Fx), len(Fy)))
     for i, fi in enumerate(Fx):
         for j, fj in enumerate(Fy):
@@ -499,8 +508,9 @@ def trencevski_malceski_correlation(Fx, Fy, var, a, b):
     result = numerator / denominator
     return result
 
+
 def wang_zheng_correlation(F, var, a, b):
-    '''
+    """
     Correlation coefficient due to Wang & Zheng 2014.
 
     This correlation coefficient is equivalent to
@@ -546,7 +556,7 @@ def wang_zheng_correlation(F, var, a, b):
     >>> F = [x**(i+1) for i in range(3)]
     >>> wang_zheng_correlation(F, x, 0, 1)
     0.999722222222222
-    '''
+    """
     R = np.empty((len(F), len(F)))
     for i, fi in enumerate(F):
         for j, fj in enumerate(F):
@@ -554,10 +564,10 @@ def wang_zheng_correlation(F, var, a, b):
     result = sympy.Matrix(R).det()
     result = 1 - result
     return result
-    
+
 
 def partial_differential_covariance(F, var, order):
-    '''
+    """
     Computes the partial differential covariance of a
     given order with respect to a given
     variable.
@@ -581,30 +591,31 @@ def partial_differential_covariance(F, var, order):
     >>> F = [t**i for i in range(1,4)]
     >>> partial_differential_covariance(F, t, 2)
     0
-    '''
+    """
     if not isinstance(order, int):
-        raise ValueError('Order parameter must be an integer.')
-    
+        raise ValueError("Order parameter must be an integer.")
+
     if order == 0:
         return np.prod(F)
     elif order > 0:
         result = 1
         for f in F:
-            result *= sympy.diff(f, *(var,)*order)
+            result *= sympy.diff(f, *(var,) * order)
         return result
     else:
         result = 1
         for j, f in enumerate(F):
             fi = f
             for i in range(-order):
-                fi = sympy.integrate(fi, var) + sympy.Symbol('C_{%i,%i}' % (j,i))
+                fi = sympy.integrate(fi, var) + sympy.Symbol("C_{%i,%i}" % (j, i))
             result *= fi
         return result
 
+
 def multi_partial_differential_covariance(F, Vars, order):
-    '''
+    """
     Computes the multi-partial differential covariance
-     of a given order with respect to a given collection of 
+     of a given order with respect to a given collection of
      variables.
 
     Parameters
@@ -626,13 +637,14 @@ def multi_partial_differential_covariance(F, Vars, order):
     >>> F = [(t1+i)**(t2+i) for i in range(1,4)]
     >>> multi_partial_differential_covariance(F, [t1, t2], 0)
     (t1 + 1)**(2*t2 + 2)*(t1 + 2)**(2*t2 + 4)*(t1 + 3)**(2*t2 + 6)
-    '''
+    """
     result = 1
     for var in Vars:
         result *= partial_differential_covariance(F, var, order)
     return result
 
+
 if __name__ == "__main__":
-    x = sympy.Symbol('x')
-    F = [x ** (i+1) for i in range(2)]
+    x = sympy.Symbol("x")
+    F = [x ** (i + 1) for i in range(2)]
     print(signum_correlation(F, x, 0, 1))

@@ -1,6 +1,6 @@
-'''
+"""
 The Estimators module contains a variety of statistical estimators that can be applied to multivariate datasets.
-'''
+"""
 
 import os
 
@@ -14,36 +14,36 @@ from scipy.stats import rankdata
 
 
 def pnorm(x: np.ndarray, p=2) -> np.float64:
-    '''
+    """
     Computes the p-norm of a given vector.
-    
+
     Parameters
     ----------
     x : 1D array-like
-    	An m-dimensional vector.
+        An m-dimensional vector.
     p : float
-    	Order of the norm.
-    
+        Order of the norm.
+
     Returns
     -------
-    	: np.float64
-    	P-norm of input vector.
-    
+        : np.float64
+        P-norm of input vector.
+
     References
     ----------
     .. "Norm (mathematics).", https://en.wikipedia.org/wiki/Norm_(mathematics)
     .. "Norm.", https://mathworld.wolfram.com/Norm.html
     .. "Vector Norm.", https://mathworld.wolfram.com/VectorNorm.html
-    '''
+    """
     result = np.abs(x)
     result = np.power(result, p)
     result = np.sum(result)
-    result = np.power(result, 1/p)
+    result = np.power(result, 1 / p)
     return result
 
 
-def kendall_tau(X: np.ndarray, method='A', n_jobs=1) -> np.float64:
-    '''
+def kendall_tau(X: np.ndarray, method="A", n_jobs=1) -> np.float64:
+    """
     Multivariate Kendall's tau.
 
     Parameters
@@ -77,7 +77,8 @@ def kendall_tau(X: np.ndarray, method='A', n_jobs=1) -> np.float64:
     >>> data = np.arange(100).reshape(10,10)
     >>> kendall_tau(data)
     1.0
-    '''
+    """
+
     def scorer(q):
         score_q = 0
         for j in range(X.shape[0]):
@@ -106,23 +107,23 @@ def kendall_tau(X: np.ndarray, method='A', n_jobs=1) -> np.float64:
             score = np.sum(pool.map(scorer, range(X.shape[0])))
             pool.close()
             pool.join()
-    if method == 'A':
-        return score / ((X.shape[0] **2 - X.shape[0]))
-    elif method == 'B':
-        raise NotImplementedError ('Method B is not implemented yet.')
-    elif method == 'C':
+    if method == "A":
+        return score / ((X.shape[0] ** 2 - X.shape[0]))
+    elif method == "B":
+        raise NotImplementedError("Method B is not implemented yet.")
+    elif method == "C":
         m = np.min(X.shape)
-        result =  score
-        result /= X.shape[0]**2
-        result /= (m-1) / m
+        result = score
+        result /= X.shape[0] ** 2
+        result /= (m - 1) / m
         return result
 
 
 def grade_entropy(X, normalize=True):
-    '''
+    """
     Computes a grade entropy for a strict product order
     on the row space points.
-    
+
     This function computes
 
     .. math::
@@ -158,14 +159,14 @@ def grade_entropy(X, normalize=True):
     >>> data = np.arange(100).reshape(10,10)
     >>> grade_entropy(data)
     1.0
-    '''
+    """
     D = nx.DiGraph()
     for i, xi in enumerate(X):
         for j, xj in enumerate(X):
             if np.all(xi < xj):
                 D.add_edge(j, i)
 
-    assert nx.is_directed_acyclic_graph(D), 'Graph is not a DAG.'
+    assert nx.is_directed_acyclic_graph(D), "Graph is not a DAG."
 
     D = nx.transitive_reduction(D)
     grades = {}
@@ -185,17 +186,18 @@ def grade_entropy(X, normalize=True):
                 grades[current_grade].append(node)
 
     total = len(D.nodes())
-    grade_dist = [len(j) / total for i,j in grades.items()]
+    grade_dist = [len(j) / total for i, j in grades.items()]
     grade_dist = np.array(grade_dist)
-    result  = - np.sum(grade_dist * np.log2(grade_dist))
+    result = -np.sum(grade_dist * np.log2(grade_dist))
     if normalize:
         result /= np.log2(total)
         return result
     else:
         return result
 
+
 def pseudograde_entropy(X: np.ndarray, n_jobs=1) -> np.float64:
-    '''
+    """
     Computes a pseudograde entropy for a strict product order
     on the row space points.
 
@@ -234,8 +236,9 @@ def pseudograde_entropy(X: np.ndarray, n_jobs=1) -> np.float64:
     >>> data = np.arange(100).reshape(10,10)
     >>> pseudograde_entropy(data)
     1.0
-    '''
+    """
     P = np.zeros((X.shape[0], X.shape[0]))
+
     def grade(q):
         v = np.zeros(X.shape[0])
         for j in range(X.shape[0]):
@@ -263,14 +266,16 @@ def pseudograde_entropy(X: np.ndarray, n_jobs=1) -> np.float64:
             pool.close()
             pool.join()
 
-
     bins, counts = np.unique(np.sum(P, axis=0), return_counts=True)
     probs = counts / np.sum(counts)
-    entropy = np.sum(probs * np.log(probs)) / (np.log(1/np.sum(counts)))
+    entropy = np.sum(probs * np.log(probs)) / (np.log(1 / np.sum(counts)))
     return entropy
 
-def median_correlation(X: np.ndarray, transform=lambda x: x - np.median(x, axis=0)) -> np.float64:
-    '''
+
+def median_correlation(
+    X: np.ndarray, transform=lambda x: x - np.median(x, axis=0)
+) -> np.float64:
+    """
     Median (multilinear) correlation.
 
     The function estimates
@@ -300,7 +305,7 @@ def median_correlation(X: np.ndarray, transform=lambda x: x - np.median(x, axis=
     >>> data = np.arange(100).reshape(10,10)
     >>> median_correlation(data)
     0.9999999999999982
-    '''
+    """
     X = transform(X)
     numerator = np.prod(X, axis=1)
     numerator = np.median(numerator)
@@ -311,9 +316,10 @@ def median_correlation(X: np.ndarray, transform=lambda x: x - np.median(x, axis=
     denominator = np.power(denominator, 1 / X.shape[1])
     r = numerator / denominator
     return r
-    
+
+
 def nightingale_deviation(x: np.ndarray, p=2) -> np.float64:
-    '''
+    """
     Calculates the Nightingale deviation of order p.
     When the order = 2, it is the same as the standard
     deviation.
@@ -346,14 +352,15 @@ def nightingale_deviation(x: np.ndarray, p=2) -> np.float64:
     >>> data = np.arange(10)
     >>> minkowski_deviation(data)
     2.8722813232690143
-    '''
+    """
     result = x - np.mean(x)
     result = pnorm(result, p=p)
     result *= np.power(1 / x.size, 1 / p)
     return result
 
+
 def reflective_correlation(X: np.ndarray) -> np.float64:
-    '''
+    """
     Calculates the multilinear reflective correlation coefficient.
     When given an m x 2 data matrix, it is equivalent to the
     reflective correlation coefficient.
@@ -383,10 +390,10 @@ def reflective_correlation(X: np.ndarray) -> np.float64:
     >>> data = np.arange(100).reshape(10,10)
     >>> reflective_correlation(data)
     0.9995245464170066
-    '''
+    """
     if X.dtype != np.float64:
         X = X.astype(np.float64)
-    
+
     numerator = np.prod(X, axis=1)
     numerator = np.sum(numerator)
     denominator = np.abs(X)
@@ -397,8 +404,9 @@ def reflective_correlation(X: np.ndarray) -> np.float64:
     r = numerator / denominator
     return r
 
+
 def pearson_correlation(X: np.ndarray) -> np.float64:
-    '''
+    """
     This function calculates the n-ary Pearson's r correlation
     coefficient. When given an m x 2 data matrix, it is equivalent
     to the Pearson's r correlation coefficient.
@@ -428,13 +436,14 @@ def pearson_correlation(X: np.ndarray) -> np.float64:
     >>> data = np.arange(100).reshape(10,10)
     >>> pearson_correlation(data)
     0.9999999999999978
-    '''
+    """
     transform = X - np.mean(X, axis=0)
     r = reflective_correlation(transform)
     return r
 
+
 def circular_correlation(X: np.ndarray) -> np.float64:
-    '''
+    """
     This function calculates the n-ary circular correlation
     coefficient. When given an m x 2 data matrix, it is equivalent
     to the circular correlation coefficient.
@@ -443,7 +452,7 @@ def circular_correlation(X: np.ndarray) -> np.float64:
 
     .. math::
         R_c \\left[ X_1, \\cdots, X_n \\right] = \\frac{\\mathbb{E} \\left[ \\prod_{j=1}^{n} \\sin \\left( X_j - \\mathbb{E}[X_j] \\right) \\right]}{\\prod_{j=1}^{n} \\sqrt[n]{\\mathbb{E}\\left[ |\\sin \\left( X_j - \\mathbb{E}[X_j] \\right)|^n \\right]}}
-    
+
     Parameters
     ----------
         X (array-like): m x n data matrix
@@ -463,14 +472,15 @@ def circular_correlation(X: np.ndarray) -> np.float64:
     >>> data = np.arange(100).reshape(10,10)
     >>> circular_correlation(data)
     0.9999999999999999
-    '''
+    """
     transform = X - np.mean(X, axis=0)
     transform = np.sin(transform)
     r = reflective_correlation(transform)
     return r
 
-def spearman_correlation(X: np.ndarray, method='average') -> np.float64:
-    '''
+
+def spearman_correlation(X: np.ndarray, method="average") -> np.float64:
+    """
     This function calculates the n-ary Spearman correlation
     coefficient. When given an m x 2 data matrix, it is equivalent
     to the Spearman's Rho correlation coefficient.
@@ -479,7 +489,7 @@ def spearman_correlation(X: np.ndarray, method='average') -> np.float64:
 
     .. math::
         R_c \\left[ X_1, \\cdots, X_n \\right] = \\frac{\\mathbb{E} \\left[ \\prod_{j=1}^{n} \\text{rank} \\left( X_j \\right) - \\mathbb{E}[\\text{rank} \\left( X_j \\right)] \\right]}{\\prod_{j=1}^{n} \\sqrt[n]{\\mathbb{E}\\left[ |\\text{rank} \\left( X_j \\right) - \\mathbb{E}[\\text{rank} \\left( X_j \\right)]|^n \\right]}}
-    
+
     Parameters
     ----------
         X : array-like
@@ -512,7 +522,7 @@ def spearman_correlation(X: np.ndarray, method='average') -> np.float64:
     Notes
     -----
     The available data ranking options are directly from `scipy.stats.rankdata`.
-            
+
     References
     ----------
     .. "Spearman%27s_rank_correlation_coefficient", https://en.wikipedia.org/wiki/Spearman%27s_rank_correlation_coefficient
@@ -524,13 +534,14 @@ def spearman_correlation(X: np.ndarray, method='average') -> np.float64:
     >>> data = np.arange(100).reshape(10,10)
     >>> spearman_correlation(data)
     0.9999999999999991
-    '''
+    """
     transform = rankdata(X, axis=0, method=method)
     transform = transform - np.mean(transform, axis=0)
     return reflective_correlation(transform)
 
+
 def angular_disimilarity(X: np.ndarray) -> np.float64:
-    '''
+    """
     Computes the multilinear angular disimilarity.
     When given an m x 2 data matrix, it is equivalent
     to the angular distance.
@@ -564,15 +575,16 @@ def angular_disimilarity(X: np.ndarray) -> np.float64:
     >>> data = np.arange(100).reshape(10,10)
     >>> angular_disimilarity(data)
     0.00981604173368436
-    '''
+    """
     return np.arccos(reflective_correlation(X)) / np.pi
 
-# TODO: Implement 
+
+# TODO: Implement
 def correlation_ratio(X: np.ndarray, y: np.ndarray) -> np.float64:
-    '''
+    """
     .. warning::
         Not implemented yet.
-        
+
     This function calculates the multilinear correlation ratio of a
     collection of response variables given their classes. The
     classic Fisher's correlation ratio is a special case.
@@ -596,15 +608,15 @@ def correlation_ratio(X: np.ndarray, y: np.ndarray) -> np.float64:
     References
     ----------
     .. "Correlation Ratio", https://en.wikipedia.org/wiki/Correlation_ratio
-    '''
+    """
     raise NotImplementedError
     global_means = np.mean(X, axis=0)
     classes = set(y)
     partitions_X = [X[y == c] for c in classes]
-    
+
 
 def misiak_correlation(x: np.ndarray, y: np.ndarray, X: np.ndarray) -> np.float64:
-    '''
+    """
     Misiak's n-inner correlation coefficient based on the n-inner product space
     presented in Misiak and Ryz 2000.
 
@@ -635,26 +647,27 @@ def misiak_correlation(x: np.ndarray, y: np.ndarray, X: np.ndarray) -> np.float6
     >>> X = np.random.normal(size=100).reshape(10,10)
     >>> misiak_correlation(x,y,X)
     -0.11209570083901074
-    '''
-    G = np.empty((X.shape[1]+1, X.shape[1]+1))
+    """
+    G = np.empty((X.shape[1] + 1, X.shape[1] + 1))
     G[0, 0] = x @ y
-    G[0, 1:] = (x.reshape(-1,1).T @ X).flatten()
-    G[1:, 0] = (y.reshape(-1,1).T @ X).flatten()
+    G[0, 1:] = (x.reshape(-1, 1).T @ X).flatten()
+    G[1:, 0] = (y.reshape(-1, 1).T @ X).flatten()
     G[1:, 1:] = X.T @ X
     numerator = np.linalg.det(G)
     G[0, 0] = x @ x
-    G[1:, 0] = (x.reshape(-1,1).T @ X).flatten()
+    G[1:, 0] = (x.reshape(-1, 1).T @ X).flatten()
     denominator = np.linalg.det(G)
     G[0, 0] = y @ y
-    G[0, 1:] = (y.reshape(-1,1).T @ X).flatten()
-    G[1:, 0] = (y.reshape(-1,1).T @ X).flatten()
+    G[0, 1:] = (y.reshape(-1, 1).T @ X).flatten()
+    G[1:, 0] = (y.reshape(-1, 1).T @ X).flatten()
     denominator = denominator * np.linalg.det(G)
     denominator = np.sqrt(denominator)
     result = numerator / denominator
     return result
 
+
 def nightingale_covariance(X: np.ndarray, p=1) -> np.float64:
-    '''
+    """
     This function calculates the Nightingale covariance
     which is the multisemimetric between a collection
     of random variables from their expectations. The
@@ -688,14 +701,15 @@ def nightingale_covariance(X: np.ndarray, p=1) -> np.float64:
     >>> data = np.arange(100).reshape(10,10)
     >>> nightingale_covariance(data)
     7381024072265624.0
-    '''
+    """
     result = X - np.mean(X, axis=0)
     result = pnorm(result, p=p)
     result *= np.power(1 / X.shape[0], 1 / p)
     return result
 
+
 def nightingale_correlation(X: np.ndarray, p=1, alphas=None):
-    '''
+    """
     Calculates the Nightingale correlation which is a
     normalized Nightingale covariance onto the interval
     of [0,1].
@@ -709,7 +723,7 @@ def nightingale_correlation(X: np.ndarray, p=1, alphas=None):
     -------
         : np.float64
             Nightingale correlation
-    
+
     See Also
     --------
     nightingale_deviation : Nightingale's deviation of order p.
@@ -719,24 +733,24 @@ def nightingale_correlation(X: np.ndarray, p=1, alphas=None):
     --------
         .. Seminorm (Mathworld): https://mathworld.wolfram.com/Seminorm.html
         .. Seminorm (Wikipedia): https://en.wikipedia.org/wiki/Seminorm
-    
 
-    '''
+
+    """
     if not alphas:
         alphas = np.ones(X.shape[1]) / X.shape[1]
     else:
-        assert np.sum(alphas) == 1.0, 'Reciprocals of alphas must sum to one.'
-        assert np.all(alphas > 1), 'Alphas must be greater than one.'
-    
+        assert np.sum(alphas) == 1.0, "Reciprocals of alphas must sum to one."
+        assert np.all(alphas > 1), "Alphas must be greater than one."
+
     denominator = nightingale_covariance(X, p=p)
     numerator = X - np.mean(X, axis=0)
-    numerator = [nightingale_deviation(numerator[:,j])\
-                 for j in range(X.shape[1])]
+    numerator = [nightingale_deviation(numerator[:, j]) for j in range(X.shape[1])]
     numerator = np.prod(numerator)
     return numerator / denominator
 
+
 def signum_correlation(X: np.ndarray) -> np.float64:
-    '''
+    """
     Signum correlation coefficient.
 
     This function estimates
@@ -768,14 +782,14 @@ def signum_correlation(X: np.ndarray) -> np.float64:
     >>> data = np.arange(100).reshape(10,10)
     >>> signum_correlation(data)
     0.9999999999999998
-    '''
+    """
     transform = X - np.mean(X, axis=0)
     transform = np.sign(transform)
     return reflective_correlation(transform)
 
 
 def taylor_correlation(X: np.ndarray) -> np.float64:
-    '''
+    """
     Taylor's multi-way correlation coefficient.
 
     Taylor 2020 defines this function to be
@@ -812,7 +826,7 @@ def taylor_correlation(X: np.ndarray) -> np.float64:
     >>> data = np.arange(100).reshape(10,10)
     >>> taylor_correlation(data)
     0.9486832980505138
-    '''
+    """
     d = X.shape[1]
     result = np.corrcoef(X)
     result = np.linalg.eigvals(result)
@@ -820,8 +834,9 @@ def taylor_correlation(X: np.ndarray) -> np.float64:
     result = result / np.sqrt(d)
     return result
 
+
 def trencevski_malceski_correlation(X: np.ndarray, Y: np.ndarray) -> np.float64:
-    '''
+    """
     Generalized n-inner product correlation coefficient.
 
     Computes a correlation coefficient based
@@ -851,16 +866,16 @@ def trencevski_malceski_correlation(X: np.ndarray, Y: np.ndarray) -> np.float64:
     >>> X = np.random.normal(size=1000).reshape(100,10)
     >>> trencevski_malceski_correlation(X,Y)
     3.1886981411745035e-08
-    '''
+    """
     numerator = np.linalg.det(X.T @ Y)
-    denominator = np.linalg.det(X.T @ X) *\
-                  np.linalg.det(Y.T @ Y)
+    denominator = np.linalg.det(X.T @ X) * np.linalg.det(Y.T @ Y)
     denominator = np.sqrt(denominator)
     result = numerator / denominator
     return result
 
+
 def wang_zheng_correlation(X: np.ndarray) -> np.float64:
-    '''
+    """
     Correlation coefficient due to Wang & Zheng 2014.
 
     This correlation coefficient is equivalent to
@@ -900,15 +915,16 @@ def wang_zheng_correlation(X: np.ndarray) -> np.float64:
     >>> data = np.arange(100).reshape(10,10)
     >>> wang_zheng_correlation(data)
     1.0
-    '''
+    """
     result = X.T
     result = np.corrcoef(result)
     result = np.linalg.det(result)
     result = 1 - result
     return result
 
+
 def weak_inner_correlation():
-    '''
+    """
     Raises
     ------
     NotImplementedError
@@ -916,12 +932,12 @@ def weak_inner_correlation():
     References
     ----------
     .. https://arxiv.org/pdf/1904.09542.pdf
-    '''
+    """
     raise NotImplementedError
 
 
 def partial_agnesian(X: np.ndarray, t=None, k=0):
-    '''
+    """
     Computes the partial Agnesian of order k on a
     data matrix. If a vector of parameters is not
     provided, then a parameter step size of unity
@@ -935,12 +951,12 @@ def partial_agnesian(X: np.ndarray, t=None, k=0):
         Vector parameters corresponding to the rows of X.
     k : Non-negative int
         Non-negative order of the partial Agnesian operator.
-    
+
     Returns
     -------
     : array-like[float]
         Sequence of partial Agnesian scores.
-        
+
     Examples
     --------
     >>> import numpy as np
@@ -952,14 +968,14 @@ def partial_agnesian(X: np.ndarray, t=None, k=0):
     >>> t = np.linspace(0, 10, 5)
     >>> partial_agnesian(X, k=1, t=t)
     array([1.728, 1.728, 1.728, 1.728])
-    '''
-    
+    """
+
     result = np.diff(X, n=k, axis=0)
 
     if t is not None:
-        assert t.ndim == 1, 'Parameter t must be one-dimensional.'
+        assert t.ndim == 1, "Parameter t must be one-dimensional."
         dt = np.diff(t, n=k)
         result = result / dt[:, None]
-    
+
     result = np.prod(result, axis=1)
     return result

@@ -1,11 +1,11 @@
-'''
+"""
 The Sampling module provides functions for resampling and search methods
 suitable for functions found in the Estimators module.
 
 References
 ----------
-.. [1] "Resampling.", https://en.wikipedia.org/wiki/Resampling_(statistics)
-'''
+.. "Resampling.", https://en.wikipedia.org/wiki/Resampling_(statistics)
+"""
 
 from itertools import combinations
 
@@ -14,7 +14,7 @@ import tqdm
 
 
 def permute_columns(x):
-    '''
+    """
     Permutes the columns of a data matrix.
 
     Parameters
@@ -48,13 +48,14 @@ def permute_columns(x):
        [10,  1, 42, 93, 84, 25, 36, 17, 68, 39],
        [70, 31, 72, 23, 44,  5, 56,  7, 38, 19],
        [20, 21, 52, 13, 74, 45, 66, 27,  8, 89]])
-    '''
+    """
     ix_i = np.random.sample(x.shape).argsort(axis=0)
     ix_j = np.tile(np.arange(x.shape[1]), (x.shape[0], 1))
     return x[ix_i, ix_j]
 
+
 def statistic_permute(X, stat_func=lambda x: x, iters=100):
-    '''
+    """
     Performs a permutation Monte Carlo of a statistical
     function applied to a given dataset.
 
@@ -88,37 +89,39 @@ def statistic_permute(X, stat_func=lambda x: x, iters=100):
     >>> data = np.arange(9).reshape(3,3)
     >>> statistic_permute(data, np.mean, 2)
     [4.0, 4.0]
-    '''
+    """
     y = []
     for r in tqdm.tqdm(range(iters), total=iters):
         y.append(stat_func(permute_columns(X)))
     return y
 
+
 def powerset_search(f, X, leastarity=1):
-    '''
+    """
     Computes a set function on the whole powerset
     of sets of variables.
 
     Parameters
     ----------
     f : function
-    	Estimator
+        Estimator
     X : np.ndarray-like
-    	Data matrix
-    	
+        Data matrix
+
     Returns
     -------
     results : dict
-    	Computing values of f.
-    '''
+        Computing values of f.
+    """
     n = X.shape[1]
-    for arity in range(leastarity, n+1):
+    for arity in range(leastarity, n + 1):
         for comb in combinations(range(n), arity):
-            results[comb] = f(X[:,comb])
+            results[comb] = f(X[:, comb])
     return results
 
+
 def isoarity_search(f, X, arity):
-    '''
+    """
     For a given arity of relation,
     compute set function on all sets
     whose cardinality equals that arity.
@@ -126,25 +129,26 @@ def isoarity_search(f, X, arity):
     Parameters
     ----------
     f : function
-    	Estimator
+        Estimator
     X : np.ndarray-like
-    	Data matrix
+        Data matrix
     arity : int
-    	Arity to compute f at; number of variables.
-    	
+        Arity to compute f at; number of variables.
+
     Returns
     -------
     results : dict
-    	Results of computing function f on columns of X.
-    '''
+        Results of computing function f on columns of X.
+    """
     n = X.shape[1]
     results = {}
     for comb in combinations(range(n), arity):
-    	results[comb] = f(X[:, comb])
+        results[comb] = f(X[:, comb])
     return results
 
+
 def heuristic_downward_closure_search(f, X, tau=0.1, abscomp=False, leastarity=2):
-    '''
+    """
     Search via the downward closure heuristic.
 
     Parameters
@@ -163,21 +167,25 @@ def heuristic_downward_closure_search(f, X, tau=0.1, abscomp=False, leastarity=2
     Returns
     -------
     d : dict[dict]
-    	Computing values of f.
-    '''
-    d = {leastarity:{}}
+        Computing values of f.
+    """
+    d = {leastarity: {}}
     for comb in combinations(range(X.shape[1]), leastarity):
         d[leastarity][frozenset(comb)] = f(X[:, comb])
 
-    for arity in range(leastarity+1, X.shape[1] + 1):
+    for arity in range(leastarity + 1, X.shape[1] + 1):
         print(arity)
         d[arity] = {}
-        prev_keys = list(d[arity-1].keys())
+        prev_keys = list(d[arity - 1].keys())
         for i, key_i in enumerate(tqdm(prev_keys)):
-            if d[arity-1][key_i] > tau or (abscomp and np.abs(d[arity-1][key_i]) > tau):
-                for j in range(i+1, len(prev_keys)):
+            if d[arity - 1][key_i] > tau or (
+                abscomp and np.abs(d[arity - 1][key_i]) > tau
+            ):
+                for j in range(i + 1, len(prev_keys)):
                     key_j = prev_keys[j]
-                    if d[arity-1][key_j] > tau or (abscomp and np.abs(d[arity-1][key_i]) > tau):
+                    if d[arity - 1][key_j] > tau or (
+                        abscomp and np.abs(d[arity - 1][key_i]) > tau
+                    ):
                         union = key_i.union(key_j)
                         if len(union) == arity:
                             d[arity][union] = f(X[:, tuple(union)])
@@ -191,5 +199,5 @@ def heuristic_downward_closure_search(f, X, tau=0.1, abscomp=False, leastarity=2
             del d[arity]
             return d
         else:
-            print(f'Found {len(d[arity])} results.')
+            print(f"Found {len(d[arity])} results.")
     return d

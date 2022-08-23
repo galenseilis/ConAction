@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: conaction
-Version: 0.0.38
+Version: 0.0.39
 Summary: Efficient implmenetations of instantiations of the Trinity of Covariation.
 Home-page: https://github.com/galenseilis/ConAction
 Author: Galen Seilis
@@ -12,6 +12,8 @@ Classifier: Operating System :: OS Independent
 Requires-Python: >=3.6
 Description-Content-Type: text/markdown
 License-File: LICENSE
+
+[![Documentation Status](https://readthedocs.org/projects/conaction/badge/?version=latest)](https://conaction.readthedocs.io/en/latest/?badge=latest)
 
 # ConAction
 
