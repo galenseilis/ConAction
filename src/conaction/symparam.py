@@ -140,8 +140,8 @@ def covariance(F, var, a, b):
 
     References
     ----------
-    .. [1] "Covariance.", https://en.wikipedia.org/wiki/Covariance
-    .. [2] "Mixed moment.", https://en.wikipedia.org/wiki/Moment_(mathematics)#Mixed_moments
+    .. "Covariance.", https://en.wikipedia.org/wiki/Covariance
+    .. "Mixed moment.", https://en.wikipedia.org/wiki/Moment_(mathematics)#Mixed_moments
 
     Examples
     --------
@@ -181,8 +181,8 @@ def pearson_correlation(F, var, a, b):
 
     References
     ----------
-    .. [1] "Correlation.", https://en.wikipedia.org/wiki/Correlation
-    .. [2] "Pearson correlation coefficient.", https://en.wikipedia.org/wiki/Pearson_correlation_coefficient
+    .. "Correlation.", https://en.wikipedia.org/wiki/Correlation
+    .. "Pearson correlation coefficient.", https://en.wikipedia.org/wiki/Pearson_correlation_coefficient
 
     Examples
     --------
@@ -222,8 +222,8 @@ def reflective_correlation(F, var, a, b):
 
     References
     ----------
-    .. [1] "Correlation.", https://en.wikipedia.org/wiki/Correlation
-    .. [2] "Circular correlation coefficient.", https://en.wikipedia.org/wiki/Pearson_correlation_coefficient#Reflective_correlation_coefficient
+    .. "Correlation.", https://en.wikipedia.org/wiki/Correlation
+    .. "Circular correlation coefficient.", https://en.wikipedia.org/wiki/Pearson_correlation_coefficient#Reflective_correlation_coefficient
 
     Examples
     --------
@@ -267,8 +267,8 @@ def circular_correlation(F, var, a, b):
 
     References
     ----------
-    .. [1] "Correlation.", https://en.wikipedia.org/wiki/Correlation
-    .. [2] "Circular correlation coefficient.", https://en.wikipedia.org/wiki/Pearson_correlation_coefficient#Circular_correlation_coefficient
+    .. "Correlation.", https://en.wikipedia.org/wiki/Correlation
+    .. "Circular correlation coefficient.", https://en.wikipedia.org/wiki/Pearson_correlation_coefficient#Circular_correlation_coefficient
 
     Examples
     --------
@@ -313,7 +313,7 @@ def signum_correlation(F, var, a, b):
 
     References
     ----------
-    .. [1] "Correlation.", https://en.wikipedia.org/wiki/Correlation
+    .. "Correlation.", https://en.wikipedia.org/wiki/Correlation
 
     Examples
     --------
@@ -355,7 +355,7 @@ def misiak_correlation(fx, fy, F, var, a, b):
 
     References
     ----------
-    .. [1] Misiak, Aleksander. Ryz, Alicja. 2000. "n-Inner Product Spaces and Projections.", https://www.emis.de/journals/MB/125.1/mb125_1_5.pdf
+    .. Misiak, Aleksander. Ryz, Alicja. 2000. "n-Inner Product Spaces and Projections.", https://www.emis.de/journals/MB/125.1/mb125_1_5.pdf
 
     Examples
     --------
@@ -424,7 +424,7 @@ def taylor_correlation(F, var, a, b):
 
     References
     ----------
-    .. [1] Taylor, BM. 2020. "A Multi-Way Correlation Coefficient", https://arxiv.org/abs/2003.02561
+    .. Taylor, BM. 2020. "A Multi-Way Correlation Coefficient", https://arxiv.org/abs/2003.02561
 
     Examples
     --------
@@ -480,7 +480,7 @@ def trencevski_malceski_correlation(Fx, Fy, var, a, b):
 
     References
     ----------
-    .. [1] Trencevski, Kostadin. Malceski, Risto. 2006. "On a generalized n-inner product and the corresponding Cauchy-Schwarz inequality", https://www.researchgate.net/publication/268999118_On_a_generalized_n-inner_product_and_the_corresponding_Cauchy-Schwarz_inequality
+    .. Trencevski, Kostadin. Malceski, Risto. 2006. "On a generalized n-inner product and the corresponding Cauchy-Schwarz inequality", https://www.researchgate.net/publication/268999118_On_a_generalized_n-inner_product_and_the_corresponding_Cauchy-Schwarz_inequality
 
     Examples
     --------
@@ -548,7 +548,7 @@ def wang_zheng_correlation(F, var, a, b):
 
     References
     ----------
-    .. [1] Wang, Jianji. Zheng, Nanning. 2014. "Measures of Correlation for Multiple Variables", https://arxiv.org/abs/1401.4827
+    .. Wang, Jianji. Zheng, Nanning. 2014. "Measures of Correlation for Multiple Variables", https://arxiv.org/abs/1401.4827
 
     Examples
     --------
