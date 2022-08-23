@@ -10,4 +10,5 @@ src/conaction/symparam.py
 src/conaction.egg-info/PKG-INFO
 src/conaction.egg-info/SOURCES.txt
 src/conaction.egg-info/dependency_links.txt
+src/conaction.egg-info/requires.txt
 src/conaction.egg-info/top_level.txt
