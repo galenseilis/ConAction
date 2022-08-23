@@ -22,7 +22,7 @@ copyright = '2022, Galen Seilis'
 author = 'Galen Seilis'
 
 # The full version, including alpha/beta/rc tags
-release = '0.0.26'
+release = '0.0.34'
 
 
 # -- General configuration ---------------------------------------------------
@@ -55,4 +55,4 @@ html_theme = "sphinx_rtd_theme"
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
+html_static_path = []
