@@ -700,7 +700,7 @@ def nightingale_correlation(X: np.ndarray, p=1, alphas=None):
     normalized Nightingale covariance onto the interval
     of [0,1].
 
-    Paramaters
+    Parameters
     ----------
         X: array-like
             m x n data matrix
