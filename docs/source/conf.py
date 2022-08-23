@@ -22,7 +22,7 @@ copyright = '2022, Galen Seilis'
 author = 'Galen Seilis'
 
 # The full version, including alpha/beta/rc tags
-release = '0.0.37'
+release = '0.0.38'
 
 
 # -- General configuration ---------------------------------------------------
