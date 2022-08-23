@@ -31,9 +31,9 @@ def pnorm(x: np.ndarray, p=2) -> np.float64:
     
     References
     ----------
-    .. [1] "Norm (mathematics).", https://en.wikipedia.org/wiki/Norm_(mathematics)
-    .. [2] "Norm.", https://mathworld.wolfram.com/Norm.html
-    .. [3] "Vector Norm.", https://mathworld.wolfram.com/VectorNorm.html
+    .. "Norm (mathematics).", https://en.wikipedia.org/wiki/Norm_(mathematics)
+    .. "Norm.", https://mathworld.wolfram.com/Norm.html
+    .. "Vector Norm.", https://mathworld.wolfram.com/VectorNorm.html
     '''
     result = np.abs(x)
     result = np.power(result, p)
@@ -69,7 +69,7 @@ def kendall_tau(X: np.ndarray, method='A', n_jobs=1) -> np.float64:
 
     References
     ----------
-    .. [1] "Kendall's Tau.", https://en.wikipedia.org/wiki/Kendall_rank_correlation_coefficient
+    .. "Kendall's Tau.", https://en.wikipedia.org/wiki/Kendall_rank_correlation_coefficient
 
     Examples
     --------
@@ -144,13 +144,13 @@ def grade_entropy(X, normalize=True):
 
     References
     ----------
-    .. [1] "Graded Poset.", https://en.wikipedia.org/wiki/Graded_poset
-    .. [2] "Entropy (Information Theory).", https://en.wikipedia.org/wiki/Entropy_(information_theory)
-    .. [3] "Partially Ordered Set.", https://en.wikipedia.org/wiki/Partially_ordered_set
-    .. [4] "Partially Ordered Set.", https://mathworld.wolfram.com/PartiallyOrderedSet.html
-    .. [5] "Product Order.", https://en.wikipedia.org/wiki/Product_order
-    .. [6] "Ranked Poset.", https://en.wikipedia.org/wiki/Ranked_poset
-    .. [7] "Total Order.", https://en.wikipedia.org/wiki/Total_order
+    .. "Graded Poset.", https://en.wikipedia.org/wiki/Graded_poset
+    .. "Entropy (Information Theory).", https://en.wikipedia.org/wiki/Entropy_(information_theory)
+    .. "Partially Ordered Set.", https://en.wikipedia.org/wiki/Partially_ordered_set
+    .. "Partially Ordered Set.", https://mathworld.wolfram.com/PartiallyOrderedSet.html
+    .. "Product Order.", https://en.wikipedia.org/wiki/Product_order
+    .. "Ranked Poset.", https://en.wikipedia.org/wiki/Ranked_poset
+    .. "Total Order.", https://en.wikipedia.org/wiki/Total_order
 
     Examples
     --------
@@ -220,13 +220,13 @@ def pseudograde_entropy(X: np.ndarray, n_jobs=1) -> np.float64:
 
     References
     ----------
-    .. [1] "Graded Poset.", https://en.wikipedia.org/wiki/Graded_poset
-    .. [2] "Entropy (Information Theory).", https://en.wikipedia.org/wiki/Entropy_(information_theory)
-    .. [3] "Partially Ordered Set.", https://en.wikipedia.org/wiki/Partially_ordered_set
-    .. [4] "Partially Ordered Set.", https://mathworld.wolfram.com/PartiallyOrderedSet.html
-    .. [5] "Product Order.", https://en.wikipedia.org/wiki/Product_order
-    .. [6] "Ranked Poset.", https://en.wikipedia.org/wiki/Ranked_poset
-    .. [7] "Total Order.", https://en.wikipedia.org/wiki/Total_order
+    .. "Graded Poset.", https://en.wikipedia.org/wiki/Graded_poset
+    .. "Entropy (Information Theory).", https://en.wikipedia.org/wiki/Entropy_(information_theory)
+    .. "Partially Ordered Set.", https://en.wikipedia.org/wiki/Partially_ordered_set
+    .. "Partially Ordered Set.", https://mathworld.wolfram.com/PartiallyOrderedSet.html
+    .. "Product Order.", https://en.wikipedia.org/wiki/Product_order
+    .. "Ranked Poset.", https://en.wikipedia.org/wiki/Ranked_poset
+    .. "Total Order.", https://en.wikipedia.org/wiki/Total_order
 
     Examples
     --------
