@@ -1,3 +1,7 @@
+.. image:: https://readthedocs.org/projects/conaction/badge/?version=latest
+    :target: https://conaction.readthedocs.io/en/latest/?badge=latest
+    :alt: Documentation Status
+
 # ConAction
 
 <img src="imgs/trinity_of_covariation.png" alt='Instantiations of the Trinity of Covariation' width="300"/>
