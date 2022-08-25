@@ -12,7 +12,7 @@ Supervisory Committee Members
 - Supervisor: [Dr. Edward Dobrowolski](https://www2.unbc.ca/people/dobrowolski-dr-edward) ([Department of Mathematics and Statistics, UNBC](https://www2.unbc.ca/math-statistics))
 - Committee Member: [Dr. Brent Murray](https://web.unbc.ca/~murrayb/) ([Department of Biology, UNBC](https://www2.unbc.ca/biology))
 - Committee Member: [Dr. Mohammad El Smaily](https://smaily.opened.ca/) ([Department of Mathematics and Statistics, UNBC](https://www2.unbc.ca/math-statistics))
-- External Examiner: TBA
+- External Examiner: [Dr. Anne Condon](https://www.cs.ubc.ca/~condon/) ([Department of Computer Science](https://www.cs.ubc.ca/about))
 
 The code in this repository is intended to support researchers analyzing multivariate data.
 
