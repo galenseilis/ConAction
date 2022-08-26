@@ -1,3 +1,4 @@
+[![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.png?v=103)](https://github.com/ellerbrock/open-source-badges/)
 [![Documentation Status](https://readthedocs.org/projects/conaction/badge/?version=latest)](https://conaction.readthedocs.io/en/latest/?badge=latest)
 [![PyPI version](https://badge.fury.io/py/conaction.svg)](https://badge.fury.io/py/conaction)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/conaction)
