@@ -1,7 +1,6 @@
 [![Documentation Status](https://readthedocs.org/projects/conaction/badge/?version=latest)](https://conaction.readthedocs.io/en/latest/?badge=latest)
 [![PyPI version](https://badge.fury.io/py/conaction.svg)](https://badge.fury.io/py/conaction)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/conaction)
-![Hits](https://hitcounter.pythonanywhere.com/count/tag.svg?url=https://github.com/galenseilis/ConAction)
 
 # ConAction
 
