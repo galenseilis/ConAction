@@ -7,8 +7,9 @@ import statistics
 
 import numpy as np
 
-def kendall_tau(X, method='A'):
-    '''
+
+def kendall_tau(X, method="A"):
+    """
     Multilinear Kendall's tau
 
     Parameters
@@ -20,7 +21,7 @@ def kendall_tau(X, method='A'):
     -------
       : float
           Kendall's tau score
-    '''
+    """
     concordant = 0
     discordant = 0
 
@@ -30,7 +31,7 @@ def kendall_tau(X, method='A'):
                 left_compare = [xik < xjk for xik, xjk in zip(xi, xj)]
                 middle_compare = [xik == xjk for xik, xjk in zip(xi, xj)]
                 right_compare = [xik > xjk for xik, xjk in zip(xi, xj)]
-                if (all(left_compare) or all(right_compare)):
+                if all(left_compare) or all(right_compare):
                     concordant += 1
                 elif any(middle_compare):
                     continue
@@ -38,20 +39,20 @@ def kendall_tau(X, method='A'):
                     discordant += 1
             else:
                 continue
-    if method == 'A':
-        return (concordant - discordant) / ((len(X) **2 - len(X)) / 2)
-    elif method == 'B':
-        raise NotImplementedError ('Method B is not implemented yet.')
-    elif method == 'C':
+    if method == "A":
+        return (concordant - discordant) / ((len(X) ** 2 - len(X)) / 2)
+    elif method == "B":
+        raise NotImplementedError("Method B is not implemented yet.")
+    elif method == "C":
         m = min((len(X), len(list(zip(*X)))))
-        result =  2 * (concordant - discordant)
-        result /= len(X)**2
-        result /= (m-1) / m
+        result = 2 * (concordant - discordant)
+        result /= len(X) ** 2
+        result /= (m - 1) / m
         return result
-    
+
 
 def grade_entropy(X):
-    '''
+    """
     Grade entropy of strict
     product order.
 
@@ -64,7 +65,7 @@ def grade_entropy(X):
     -------
       : float
           Grade entropy score
-    '''
+    """
     scores = []
     for i, xi in enumerate(X):
         score_i = 0
@@ -80,10 +81,10 @@ def grade_entropy(X):
     entropy = sum(surprises)
     normalized_entropy = entropy / math.log(len(scores))
     return normalized_entropy
-    
+
 
 def reflective_correlation(x):
-    '''
+    """
     Naive implementation of multilinear
     reflective correlation coefficient.
 
@@ -96,7 +97,7 @@ def reflective_correlation(x):
     -------
       : float
           correlation score
-    '''
+    """
     order = len(x[0])
     xt = list(zip(*x))
 
@@ -104,15 +105,16 @@ def reflective_correlation(x):
         return sum(x) / len(x)
 
     abs_xt = map(lambda y: list(map(abs, y)), xt)
-    SPR = map(lambda y: list(map(lambda z: pow(z,order), y)), abs_xt)
+    SPR = map(lambda y: list(map(lambda z: pow(z, order), y)), abs_xt)
     MPE = map(mean, SPR)
-    denom = pow(functools.reduce(mul, MPE, 1), 1/order)
+    denom = pow(functools.reduce(mul, MPE, 1), 1 / order)
     cov = list(map(lambda x: functools.reduce(mul, x, 1), zip(*xt)))
     cov = sum(cov) / len(cov)
-    return  cov / denom
+    return cov / denom
+
 
 def pearson_correlation(x):
-    '''
+    """
     Naive implementation of multilinear
     Pearson correlation coefficient.
 
@@ -125,13 +127,13 @@ def pearson_correlation(x):
     -------
       : float
           correlation score
-    '''
+    """
     order = len(x[0])
     xt = list(zip(*x))
 
     def mean(x):
         return sum(x) / len(x)
-    
+
     def residual(x):
         y, yhat = x
         return [yi - yhat for yi in y]
@@ -139,15 +141,16 @@ def pearson_correlation(x):
     means = map(lambda x: sum(x) / len(x), xt)
     residuals = list(map(residual, zip(xt, means)))
     abs_residuals = map(lambda y: list(map(abs, y)), residuals)
-    SPR = map(lambda y: list(map(lambda z: pow(z,order), y)), abs_residuals)
+    SPR = map(lambda y: list(map(lambda z: pow(z, order), y)), abs_residuals)
     MPE = map(mean, SPR)
-    denom = pow(functools.reduce(mul, MPE, 1), 1/order)
+    denom = pow(functools.reduce(mul, MPE, 1), 1 / order)
     cov = list(map(lambda x: functools.reduce(mul, x, 1), zip(*residuals)))
     cov = sum(cov) / len(cov)
-    return  cov / denom
+    return cov / denom
+
 
 def circular_correlation(x):
-    '''
+    """
     Naive implementation of multivariate
     circular correlation coefficient.
 
@@ -160,12 +163,12 @@ def circular_correlation(x):
     -------
       : float
           correlation score
-    '''
+    """
     xt = list(zip(*x))
 
     def mean(x):
         return sum(x) / len(x)
-    
+
     def residual(x):
         y, yhat = x
         return [yi - yhat for yi in y]
@@ -177,8 +180,9 @@ def circular_correlation(x):
     y = list(zip(*transformed))
     return reflective_correlation(y)
 
+
 def signum_correlation(X):
-    '''
+    """
     Naive implementation of multivariate
     signum correlation coefficient.
 
@@ -199,7 +203,8 @@ def signum_correlation(X):
     >>> X = [[float(j) for j in i] for i in X]
     >>> signum_correlation(X)
     1.0
-    '''
+    """
+
     def sign(x):
         if x > 0:
             return 1.0
@@ -207,7 +212,7 @@ def signum_correlation(X):
             return -1.0
         else:
             return 0
-        
+
     def transform(x):
         y, yhat = x
         return [sign(yi - yhat) for yi in y]
@@ -218,8 +223,9 @@ def signum_correlation(X):
     y = list(zip(*transformed))
     return reflective_correlation(y)
 
+
 def spearman_correlation(x):
-    '''
+    """
     Naive implementation of multilinear
     Spearman correlation coefficient.
 
@@ -232,14 +238,15 @@ def spearman_correlation(x):
     -------
       : float
           correlation score
-    '''
+    """
     xt = list(zip(*x))
     transformed = list(map(rankdata, xt))
     y = list(zip(*transformed))
     return pearson_correlation(y)
 
+
 def minkowski_deviation(x, order=2):
-    '''
+    """
     Naive implementation Minkowski
     deviation of order p.
 
@@ -254,13 +261,14 @@ def minkowski_deviation(x, order=2):
     -------
       : float
           Score
-    '''
+    """
     mu = statistics.mean(x)
-    pdev = [abs(xi - mu)**order for xi in x]
+    pdev = [abs(xi - mu) ** order for xi in x]
     return statistics.mean(pdev) ** (1 / order)
 
+
 def misiak_correlation(x, y, X):
-    '''
+    """
     Naive implementation of Misiak
     correlation.
 
@@ -277,36 +285,37 @@ def misiak_correlation(x, y, X):
     -------
       : float
           correlation score
-    '''
+    """
     if len(set([len(i) for i in X])) != 1:
-        raise ValueError('Incorrect shape.')
-    m = len(X)+1
-    n = len(X[0])+1
+        raise ValueError("Incorrect shape.")
+    m = len(X) + 1
+    n = len(X[0]) + 1
     Xt = list(zip(*X))
     M = matmult(Xt, X)
     G = [[None] * n] + [[None] + row for row in M]
-    G[0][0] = dot(x,y)
-    for i,xi in enumerate(Xt):
-        G[0][i+1] = dot(x, xi)
-        G[i+1][0] = dot(y,xi)
+    G[0][0] = dot(x, y)
+    for i, xi in enumerate(Xt):
+        G[0][i + 1] = dot(x, xi)
+        G[i + 1][0] = dot(y, xi)
     numerator = determinant(G)
     G = [[None] * n] + [[None] + row for row in M]
-    G[0][0] = dot(x,x)
-    for i,xi in enumerate(Xt):
-        G[0][i+1] = dot(x, xi)
-        G[i+1][0] = dot(x,xi)
+    G[0][0] = dot(x, x)
+    for i, xi in enumerate(Xt):
+        G[0][i + 1] = dot(x, xi)
+        G[i + 1][0] = dot(x, xi)
     denominator = determinant(G)
     G = [[None] * n] + [[None] + row for row in M]
     G[0][0] = dot(y, y)
-    for i,xi in enumerate(Xt):
-        G[0][i+1] = dot(y, xi)
-        G[i+1][0] = dot(y, xi)
+    for i, xi in enumerate(Xt):
+        G[0][i + 1] = dot(y, xi)
+        G[i + 1][0] = dot(y, xi)
     denominator *= determinant(G)
     denominator = math.sqrt(denominator)
     return numerator / denominator
 
+
 def multisemideviation(X, p=1):
-    '''
+    """
     Naive implementation of multisemideviation
     of order p.
 
@@ -320,21 +329,22 @@ def multisemideviation(X, p=1):
     -------
       : float
           Multisemideviation score
-    '''
+    """
     Xt = list(zip(*X))
     means = [statistics.mean(xj) for xj in Xt]
 
     def residual(x):
         y, yhat = x
-        return [abs(yi - yhat)**p for yi in y]
+        return [abs(yi - yhat) ** p for yi in y]
 
     pdevs = list(map(residual, zip(Xt, means)))
     pcov = list(map(lambda x: functools.reduce(mul, x, 1), zip(*pdevs)))
     pcov = statistics.mean(pcov)
     return pcov ** (1 / p)
 
+
 def taylor_correlation(X):
-    '''
+    """
     Naive implementation of Taylor
     correlation.
 
@@ -347,7 +357,7 @@ def taylor_correlation(X):
     -------
       : float
           correlation score
-    '''
+    """
     Xt = list(zip(*X))
 
     R = [[None] * len(Xt)] * len(Xt)
@@ -358,8 +368,9 @@ def taylor_correlation(X):
     lambdas = list(np.linalg.eigvals(R))
     return statistics.stdev(lambdas) / math.sqrt(len(Xt))
 
+
 def trencevski_malceski_correlation(X, Y):
-    '''
+    """
     Naive implementation of Trencevski-Malceski
     correlation.
 
@@ -385,18 +396,19 @@ def trencevski_malceski_correlation(X, Y):
     >>> Y = [[float(j) for j in i] for i in Y]
     >>> trencevski_malceski_correlation(X, Y)
     3.1886981411744896e-08
-    '''
+    """
     Xt = list(zip(*X))
     Yt = list(zip(*Y))
-    numerator = matmult(Xt,Y)
+    numerator = matmult(Xt, Y)
     numerator = determinant(numerator)
     denominator = determinant(matmult(Xt, X))
     denominator *= determinant(matmult(Yt, Y))
     denominator = math.sqrt(denominator)
     return numerator / denominator
 
+
 def wang_zheng_correlation(X):
-    '''
+    """
     Naive implementation of Wang-Zheng
     correlation.
 
@@ -417,7 +429,7 @@ def wang_zheng_correlation(X):
     >>> X = [[float(j) for j in i] for i in X]
     >>> wang_zheng_correlation(X)
     1.0
-    '''
+    """
     Xt = list(zip(*X))
 
     R = [[None] * len(Xt)] * len(Xt)
@@ -427,44 +439,47 @@ def wang_zheng_correlation(X):
             R[i][j] = pearson_correlation(Xij)
     return 1 - determinant(R)
 
+
 def rank_simple(vector):
     return sorted(range(len(vector)), key=vector.__getitem__)
 
-def rankdata(a, method='average'):
-    '''
+
+def rankdata(a, method="average"):
+    """
     Computes the rank of a list of numbers.
 
 
     https://stackoverflow.com/a/30801799/4348400
-    '''
+    """
     n = len(a)
-    ivec=rank_simple(a)
-    svec=[a[rank] for rank in ivec]
+    ivec = rank_simple(a)
+    svec = [a[rank] for rank in ivec]
     sumranks = 0
     dupcount = 0
-    newarray = [0]*n
+    newarray = [0] * n
     for i in range(n):
         sumranks += i
         dupcount += 1
-        if i==n-1 or svec[i] != svec[i+1]:
-            for j in range(i-dupcount+1,i+1):
-                if method=='average':
+        if i == n - 1 or svec[i] != svec[i + 1]:
+            for j in range(i - dupcount + 1, i + 1):
+                if method == "average":
                     averank = sumranks / float(dupcount) + 1
                     newarray[ivec[j]] = averank
-                elif method=='max':
-                    newarray[ivec[j]] = i+1
-                elif method=='min':
-                    newarray[ivec[j]] = i+1 -dupcount+1
+                elif method == "max":
+                    newarray[ivec[j]] = i + 1
+                elif method == "min":
+                    newarray[ivec[j]] = i + 1 - dupcount + 1
                 else:
-                    raise ValueError('Unsupported method')
+                    raise ValueError("Unsupported method")
 
             sumranks = 0
             dupcount = 0
 
     return newarray
 
-def dot(x,y):
-    '''
+
+def dot(x, y):
+    """
     Dot product between two vectors.
 
     Parameters
@@ -478,14 +493,15 @@ def dot(x,y):
     ------
       : float
           Vector dot product
-    '''
+    """
     result = 0.0
-    for xi, yi in zip(x,y):
+    for xi, yi in zip(x, y):
         result += xi * yi
     return result
 
-def matmult(a,b):
-    '''
+
+def matmult(a, b):
+    """
     Matrix multiplication.
 
     Parameters
@@ -499,16 +515,19 @@ def matmult(a,b):
     ------
       : float
           Matrix product
-    
+
     https://stackoverflow.com/questions/10508021/matrix-multiplication-in-pure-python
-    '''
+    """
     zip_b = zip(*b)
     zip_b = list(zip_b)
-    return [[sum(ele_a*ele_b for ele_a, ele_b in zip(row_a, col_b)) 
-             for col_b in zip_b] for row_a in a]
+    return [
+        [sum(ele_a * ele_b for ele_a, ele_b in zip(row_a, col_b)) for col_b in zip_b]
+        for row_a in a
+    ]
+
 
 def determinant(X):
-    '''
+    """
     Determinant of a matrix.
 
     Parameters
@@ -520,20 +539,20 @@ def determinant(X):
     ------
       : float
           determinant
-    '''
+    """
     n = len(X)
     M = deepcopy(X)
- 
+
     for k in range(n):
-        for i in range(k+1,n):
+        for i in range(k + 1, n):
             if M[k][k] == 0:
                 M[k][k] = 1.0e-18
             s = M[i][k] / M[k][k]
-            for j in range(n): 
+            for j in range(n):
                 M[i][j] = M[i][j] - s * M[k][j]
 
     product = 1.0
     for i in range(n):
-        product *= M[i][i] 
- 
+        product *= M[i][i]
+
     return product
