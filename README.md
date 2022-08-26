@@ -1,4 +1,5 @@
 [![Documentation Status](https://readthedocs.org/projects/conaction/badge/?version=latest)](https://conaction.readthedocs.io/en/latest/?badge=latest)
+[![PyPI version](https://badge.fury.io/py/conaction.svg)](https://badge.fury.io/py/conaction)
 
 # ConAction
 
