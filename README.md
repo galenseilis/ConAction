@@ -1,7 +1,7 @@
 [![Documentation Status](https://readthedocs.org/projects/conaction/badge/?version=latest)](https://conaction.readthedocs.io/en/latest/?badge=latest)
 [![PyPI version](https://badge.fury.io/py/conaction.svg)](https://badge.fury.io/py/conaction)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/conaction)
-[![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
+[![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](https://github.com/galenseilis/ConAction/blob/main/LICENSE)
 
 # ConAction
 
