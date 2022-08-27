@@ -7,7 +7,9 @@
 
 # ConAction
 
-<img src="imgs/trinity_of_covariation.png" alt='Instantiations of the Trinity of Covariation' width="300"/>
+<p
+	<img src="imgs/trinity_of_covariation.png" alt='Instantiations of the Trinity of Covariation' width="300"/>
+</p>
 
 ## Project Description
 The ConAction library provides mathematical functions that are inspired from the metaphor of the Trinity of Covariation as part of the MSc thesis of Galen Seilis.
