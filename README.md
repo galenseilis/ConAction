@@ -4,7 +4,12 @@
 	<img src="imgs/trinity_of_covariation.png" alt='Instantiations of the Trinity of Covariation' width="300"/>
 </p>
 
-[![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.png?v=103)](https://github.com/ellerbrock/open-source-badges/)
+<p align="center">
+	<a href="https://github.com/ellerbrock/open-source-badges/" target="_blank">
+		<img alt="Open Source Love" src="https://badges.frapsoft.com/os/v1/open-source.png?v=103">
+	</a>
+</p>
+
 [![Documentation Status](https://readthedocs.org/projects/conaction/badge/?version=latest)](https://conaction.readthedocs.io/en/latest/?badge=latest)
 [![PyPI version](https://badge.fury.io/py/conaction.svg)](https://badge.fury.io/py/conaction)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/conaction)
