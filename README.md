@@ -66,7 +66,7 @@ Coming soon.
 
 ```
 
-@mastersthesis{@seilis2022,
+@mastersthesis{seilisthesis2022,
   author  = "Galen Seilis",
   title   = "ConAction: Efficient Implementations and Applications of Functions Inspired by the Trinity of Covariation",
   school  = "University of Northern British Columbia",
