@@ -10,6 +10,7 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
+from datetime import datetime
 import os
 import sys
 sys.path.insert(0, os.path.abspath('../../src'))
@@ -18,7 +19,7 @@ sys.path.insert(0, os.path.abspath('../../src'))
 # -- Project information -----------------------------------------------------
 
 project = 'ConAction'
-copyright = '2022, Galen Seilis'
+copyright = f'{datetime.now().year}, Galen Seilis'
 author = 'Galen Seilis'
 
 # The full version, including alpha/beta/rc tags
@@ -55,5 +56,5 @@ html_theme = "sphinx_rtd_theme"
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = []
+html_static_path = ['_static']
 html_logo = "../../imgs/trinity_of_covariation.png"
