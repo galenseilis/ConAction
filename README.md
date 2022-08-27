@@ -8,13 +8,22 @@
 	<a href="https://github.com/ellerbrock/open-source-badges/" target="_blank">
 		<img alt="Open Source Love" src="https://badges.frapsoft.com/os/v1/open-source.png?v=103">
 	</a>
+	<a href="https://conaction.readthedocs.io/en/latest/?badge=latest" target="_blank">
+		<img alt="Documentation Status" src="https://readthedocs.org/projects/conaction/badge/?version=latest">
+	</a>
+	<a href="https://badge.fury.io/py/conaction" target="_blank">
+		<img alt="PyPI version" src="https://badge.fury.io/py/conaction.svg">
+	</a>
+	<a href="https://img.shields.io/pypi/dm/conaction" target="_blank">
+		<img alt="PyPI - Downloads" src="https://img.shields.io/pypi/dm/conaction">
+	</a>
+	<a href="https://github.com/galenseilis/ConAction/blob/main/LICENSE" target="_blank">
+		<img alt="License" src="https://img.shields.io/badge/License-BSD_3--Clause-blue.svg">
+	</a>
+	<a href="https://github.com/psf/black" target="_blank">
+		<img alt="Code style: Black" src="https://img.shields.io/badge/code%20style-black-000000.svg">
+	</a>
 </p>
-
-[![Documentation Status](https://readthedocs.org/projects/conaction/badge/?version=latest)](https://conaction.readthedocs.io/en/latest/?badge=latest)
-[![PyPI version](https://badge.fury.io/py/conaction.svg)](https://badge.fury.io/py/conaction)
-![PyPI - Downloads](https://img.shields.io/pypi/dm/conaction)
-[![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](https://github.com/galenseilis/ConAction/blob/main/LICENSE)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 
 ## Project Description
