@@ -6,10 +6,6 @@
 Welcome to ConAction's documentation!
 =====================================
 
-.. image:: ../../imgs/trinity_of_covariation.png
-    :width: 600
-    :alt:
-
 *Covariation as coordinated changes in structure.* ConAction is a Python (3.6+) package that provides mathematical functions for exploring and making inferences about multivariate data.
 
 .. toctree::
