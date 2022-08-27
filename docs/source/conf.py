@@ -6,10 +6,11 @@
 
 # -- Path setup --------------------------------------------------------------
 
-# If extensions (or modules to document with autodoc) are in another directory,
+#sdf If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
+from configparser import ConfigParser
 from datetime import datetime
 import os
 import sys
@@ -18,12 +19,14 @@ sys.path.insert(0, os.path.abspath('../../src'))
 
 # -- Project information -----------------------------------------------------
 
+config = ConfigParser()
+config.read_file(open('../../setup.cfg'))
 project = 'ConAction'
 copyright = f'{datetime.now().year}, Galen Seilis'
 author = 'Galen Seilis'
 
 # The full version, including alpha/beta/rc tags
-release = '0.0.42'
+release = config.get('metadata', 'version')
 
 
 # -- General configuration ---------------------------------------------------
