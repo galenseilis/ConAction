@@ -1,3 +1,9 @@
+# ConAction
+
+<p align="center">
+	<img src="imgs/trinity_of_covariation.png" alt='Instantiations of the Trinity of Covariation' width="300"/>
+</p>
+
 [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.png?v=103)](https://github.com/ellerbrock/open-source-badges/)
 [![Documentation Status](https://readthedocs.org/projects/conaction/badge/?version=latest)](https://conaction.readthedocs.io/en/latest/?badge=latest)
 [![PyPI version](https://badge.fury.io/py/conaction.svg)](https://badge.fury.io/py/conaction)
@@ -5,11 +11,6 @@
 [![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](https://github.com/galenseilis/ConAction/blob/main/LICENSE)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-# ConAction
-
-<p align="center">
-	<img src="imgs/trinity_of_covariation.png" alt='Instantiations of the Trinity of Covariation' width="300"/>
-</p>
 
 ## Project Description
 The ConAction library provides mathematical functions that are inspired from the metaphor of the Trinity of Covariation as part of the MSc thesis of Galen Seilis.
