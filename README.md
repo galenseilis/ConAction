@@ -7,7 +7,7 @@
 
 # ConAction
 
-<p
+<p align="center">
 	<img src="imgs/trinity_of_covariation.png" alt='Instantiations of the Trinity of Covariation' width="300"/>
 </p>
 
