@@ -708,7 +708,7 @@ def nightingale_covariance(X: np.ndarray, p=1) -> np.float64:
     return result
 
 
-def nightingale_correlation(X: np.ndarray, p=1, alphas=None):
+def nightingale_correlation(X: np.ndarray, p=1, alphas=None) -> np.float64:
     """
     Calculates the Nightingale correlation which is a
     normalized Nightingale covariance onto the interval

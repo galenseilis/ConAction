@@ -78,10 +78,10 @@ def standard_deviation(f, t, a, b):
     return sympy.sqrt(1 / (b - a) * sympy.integrate(f, (t, a, b)))
 
 
-def minkowski_deviation(f, var, a, b, p=2):
+def nightingale_deviation(f, var, a, b, p=2):
     """
     Symbolically computes the definite
-    integral representing the Minkowski deviation of
+    integral representing the Nightingale deviation of
     order p of a function using uniform probability measure.
 
     Parameters
@@ -98,12 +98,12 @@ def minkowski_deviation(f, var, a, b, p=2):
     Returns
     -------
     result : SymPy expression.
-        Definite Minkowski deviation of order p of function over given interval.
+        Definite Nightingale deviation of order p of function over given interval.
 
     Examples
     --------
     >>> x = sympy.Symbol('x')
-    >>> minkowski_deviation(x ** 2, x, 0, 1, 1).evalf()
+    >>> nightingale_deviation(x ** 2, x, 0, 1, 1).evalf()
     0.256600174703415
     """
     result = mean(f, var, a, b)
@@ -156,6 +156,85 @@ def covariance(F, var, a, b):
     result = 1 / (b - a) * result
     return result
 
+def nightingale_covariance(F, var, a, b, p):
+    """
+    Symbolically computes the Nightingale covariance of a
+    collection of functions over a given interval by integrating
+    over a shared parameter.
+
+    Parameters
+    ----------
+    F : array-like[SymPy expressions]
+        Sequence of functions to compute Nightingale covariance upon.
+    var : SymPy Symbol
+        Independent parameter for integration.
+    a : Undefined.
+        Lower bound of integration.
+    b : Undefined.
+        Upper bound of integration.
+
+    Returns
+    -------
+    result : SymPy expression.
+        Definite Nightingale covariance.
+
+    References
+    ----------
+    .. "Covariance.", https://en.wikipedia.org/wiki/Covariance
+    .. "Mixed moment.", https://en.wikipedia.org/wiki/Moment_(mathematics)#Mixed_moments
+
+    Examples
+    --------
+    >>> x = sympy.Symbol('x')
+    >>> F = [x ** (i+1) for i in range(2)]
+    >>> nightingale_covariance(F, x, 0, 1, 2)
+    0.115010926557059
+    """
+    result = [f - mean(f, var, a, b) for f in F]
+    result = sympy.Abs(np.prod(result)) ** p
+    result = sympy.integrate(result, (var, a, b))
+    result = 1 / (b - a) * result
+    result = result ** (1 / p)
+    return result
+
+def nightingale_correlation(F, var, a, b, p):
+    """
+    Symbolically computes the Nightingale
+    correlation coefficient on a collection of functions over a given
+    interval by integrating over a shared parameter.
+
+    Parameters
+    ----------
+    F : array-like[SymPy expressions]
+        Sequence of functions to compute correlation coefficient upon.
+    var : SymPy Symbol
+        Independent parameter for integration.
+    a : Undefined.
+        Lower bound of integration.
+    b : Undefined.
+        Upper bound of integration.
+
+    Returns
+    -------
+    result : SymPy expression.
+        Definite Nightingale's correlation.
+
+    References
+    ----------
+    .. "Correlation.", https://en.wikipedia.org/wiki/Correlation
+
+    Examples
+    --------
+    >>> x = sympy.Symbol('x')
+    >>> F = [x ** (i+1) for i in range(2)]
+    >>> nightingale_correlation(F, x, 0, 100, 1).evalf()
+    0.970246182902770
+    """
+    numerator = nightingale_covariance(F, var, a, b, p)
+    denominator = [nightingale_deviation(f, var, a, b, p=len(F)) for f in F]
+    denominator = np.prod(denominator)
+    result = numerator / denominator
+    return result
 
 def pearson_correlation(F, var, a, b):
     """
@@ -192,7 +271,7 @@ def pearson_correlation(F, var, a, b):
     0.398761062646958
     """
     numerator = covariance(F, var, a, b)
-    denominator = [minkowski_deviation(f, var, a, b, p=len(F)) for f in F]
+    denominator = [nightingale_deviation(f, var, a, b, p=len(F)) for f in F]
     denominator = np.prod(denominator)
     result = numerator / denominator
     return result
@@ -566,9 +645,9 @@ def wang_zheng_correlation(F, var, a, b):
     return result
 
 
-def partial_differential_covariance(F, var, order):
+def partial_agnesian(F, var, order):
     """
-    Computes the partial differential covariance of a
+    Computes the partial Agnesian of a
     given order with respect to a given
     variable.
 
@@ -579,7 +658,7 @@ def partial_differential_covariance(F, var, order):
     var : SymPy Symbol
         Independent parameter for differentiation/integration.
     order : int
-        Order of the partial differential covariance.
+        Order of the partial Agnesian.
 
     Returns
     -------
@@ -589,7 +668,7 @@ def partial_differential_covariance(F, var, order):
     --------
     >>> t = sympy.Symbol('t')
     >>> F = [t**i for i in range(1,4)]
-    >>> partial_differential_covariance(F, t, 2)
+    >>> partial_agnesian(F, t, 2)
     0
     """
     if not isinstance(order, int):
@@ -612,9 +691,9 @@ def partial_differential_covariance(F, var, order):
         return result
 
 
-def multi_partial_differential_covariance(F, Vars, order):
+def partial_multiagnesian(F, Vars, order):
     """
-    Computes the multi-partial differential covariance
+    Computes the partial multiagnesian
      of a given order with respect to a given collection of
      variables.
 
@@ -625,7 +704,7 @@ def multi_partial_differential_covariance(F, Vars, order):
     Vars : array-like[SymPy Symbols]
         Independent parameters for differentiation/integration.
     order : int
-        Order of the multi-partial differential covariance.
+        Order of the partial multiagnesian.
 
     Returns
     -------
@@ -635,16 +714,10 @@ def multi_partial_differential_covariance(F, Vars, order):
     --------
     >>> t1, t2 = sympy.var('t1 t2')
     >>> F = [(t1+i)**(t2+i) for i in range(1,4)]
-    >>> multi_partial_differential_covariance(F, [t1, t2], 0)
+    >>> partial_multiagnesian(F, [t1, t2], 0)
     (t1 + 1)**(2*t2 + 2)*(t1 + 2)**(2*t2 + 4)*(t1 + 3)**(2*t2 + 6)
     """
     result = 1
     for var in Vars:
         result *= partial_differential_covariance(F, var, order)
     return result
-
-
-if __name__ == "__main__":
-    x = sympy.Symbol("x")
-    F = [x ** (i + 1) for i in range(2)]
-    print(signum_correlation(F, x, 0, 1))
