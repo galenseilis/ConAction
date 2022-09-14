@@ -715,7 +715,7 @@ def trencevski_malceski_correlation(Fx, Fy, I, *args, **kwargs):
     --------
     >>> Fx = [lambda x : x**4, lambda x: x / 3]
     >>> Fy = [lambda x: np.exp(x), lambda x: x ** 3]
-    I = [(0, 2)]
+    >>> I = [(0, 2)]
     >>> trencevski_malceski_correlation(Fx, Fy, I)
     0.7071067811865445
     """

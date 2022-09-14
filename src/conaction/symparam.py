@@ -719,5 +719,5 @@ def partial_multiagnesian(F, Vars, order):
     """
     result = 1
     for var in Vars:
-        result *= partial_differential_covariance(F, var, order)
+        result *= partial_agnesian(F, var, order)
     return result
