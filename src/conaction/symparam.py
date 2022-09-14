@@ -398,8 +398,8 @@ def signum_correlation(F, var, a, b):
     --------
     >>> x = sympy.Symbol('x')
     >>> F = [x ** (i+1) for i in range(2)]
-    >>> signum_correlation(F, x, 0, 100)
-    0.845299461620749
+    >>> signum_correlation(F, x, 0, 1).evalf()
+    0.8
     """
     result = [sympy.sign(f - mean(f, var, a, b)) for f in F]
     result = reflective_correlation(result, var, a, b)
