@@ -87,8 +87,10 @@ Coming soon.
   author  = "Galen Seilis",
   title   = "ConAction: Efficient Implementations and Applications of Functions Inspired by the Trinity of Covariation",
   school  = "University of Northern British Columbia",
-  year    = "Unpublished",
+  year    = "2022",
   address = "3333 University Way, Prince George, British Columbia, V2N 4Z9, Canada",
-  month   = "TBA",
+  month   = "September",
+  doi = 10.24124/2022/59312,
+  url = https://doi.org/10.24124/2022/59312
 }
 ```
