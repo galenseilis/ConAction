@@ -95,4 +95,4 @@ Coming soon.
 }
 ```
 
-![Star History Chart](https://api.star-history.com/svg?repos=galenseilis/ConAction&type=Date)(https://star-history.com/#galenseilis/ConAction&Date)
+![Star History Chart](https://api.star-history.com/svg?repos=galenseilis/ConAction&type=Date)
