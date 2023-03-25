@@ -94,3 +94,5 @@ Coming soon.
   url = https://doi.org/10.24124/2022/59312
 }
 ```
+
+![Star History Chart](https://api.star-history.com/svg?repos=galenseilis/ConAction&type=Date)(https://star-history.com/#galenseilis/ConAction&Date)
