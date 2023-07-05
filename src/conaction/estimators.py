@@ -60,7 +60,7 @@ def product_rank(X, monotone=False):
     else:
         def eval_(x,y):
             return x >= y
-        
+    # Tally the dominance of each point over others    
     m = X.shape[0]
     ranks = np.zeros(m)
     for i in range(m):
@@ -69,11 +69,28 @@ def product_rank(X, monotone=False):
                 ranks[i] += np.all(eval_(X[i], X[j]))
     return ranks
 
-def product_percentiles(X):
+def product_percentiles(X:np.array) -> np.array:
+    '''Compute joint percentiles under a product order.
+
+    PARAMETERS
+    ----------
+    X: np.array[float]
+        Data matrix.
+
+    RETURNS
+    -------
+        :float
+        Joint percentiles.
+    '''
     ranks = product_rank(X)
     return ranks / np.max(ranks)
 
-def independence_gap(x):
+def independence_gap(x:np.array) -> np.array:
+    marginal_ranks = rankdata(x, axis=0, method='dense')
+    marginal_percentiles = marginal_ranks / np.max(marginal_ranks, axi=0)
+    prod_marg_percentiles = np.prod(marginal_percentiles, axis=1)
+    joint_percentiles = product_percentiles(x)
+    return joint_percentiles - prod_marg_percentiles
 
 
 def pnorm(x: np.ndarray, p=2) -> np.float64:
