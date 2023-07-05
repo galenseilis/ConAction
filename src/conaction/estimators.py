@@ -3,6 +3,7 @@ The Estimators module contains a variety of statistical estimators that can be a
 """
 
 import os
+import typing
 
 import networkx as nx
 import numpy as np
@@ -11,6 +12,68 @@ from numpy import mean
 from numpy import std as standard_deviation
 from pathos.pools import ProcessPool
 from scipy.stats import rankdata
+
+def reach_rank(g:nx.DiGraph) -> typing.Dict[int,int]:
+    '''Reachable rank of nodes in a digraph.
+
+    PARAMETERS
+    ----------
+    g : nx.DiGraph
+        NetworkX DiGraph.
+
+    RETURNS
+    -------
+        : dict[int,int]
+        Reach rank for each node. 
+    '''
+    return {node:len(nx.descendents(g, node)) for node in g}
+
+def reach_percentiles(g:nx.DiGraph) -> typing.Dict[int,float]:
+    '''Compute reach percentiles from a digraph.
+
+    PARAMETERS
+    ----------
+    g : nx.DiGraph
+        NetworkX DiGraph.
+
+    RETURNS
+    -------
+        : dict[int,float]
+    '''
+    ranks = reach_rank(g)
+    total = sum(ranks.values())
+    return {node:count / total for node, total in ranks.items()}
+
+def product_rank(X, monotone=False):
+    '''Assign product order rank to each point.
+
+    PARAMETERS
+    ----------
+    X: np.array
+        Data matrix.
+    montone: bool
+        Whether to rank monotonically or antimonotonically.
+    '''
+    if monotone:
+        def eval_(x,y):
+            return x <= y
+    else:
+        def eval_(x,y):
+            return x >= y
+        
+    m = X.shape[0]
+    ranks = np.zeros(m)
+    for i in range(m):
+        for j in range(m):
+            if i != j:
+                ranks[i] += np.all(eval_(X[i], X[j]))
+    return ranks
+
+def product_percentiles(X):
+    ranks = product_rank(X)
+    return ranks / np.max(ranks)
+
+def independence_gap(x):
 
 
 def pnorm(x: np.ndarray, p=2) -> np.float64:
