@@ -71,14 +71,6 @@ cd /path/to/conaction/docs
 make html
 ```
 
-## Tutorials
-
-Coming soon.
-
-## Publications
-
-Coming soon.
-
 ## Citation
 
 ```
